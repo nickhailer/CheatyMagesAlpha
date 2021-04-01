@@ -1,6 +1,8 @@
 package edu.up.cs301.game.cheatymages;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Random;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
@@ -19,8 +21,8 @@ public class CMGameState extends GameState{
     //Holds each player's hand of cards
     private ArrayList<SpellCard>[] hands;
 
-    //Holds each player's coins
-    private int[] playerCoins;
+    //Holds each player's gold
+    private int[] gold;
 
     //Holds each player's bets
     private ArrayList<Integer>[] bets;
@@ -64,7 +66,7 @@ public class CMGameState extends GameState{
 
         this.numPlayers = numPlayers;
 
-        this.decks = new Decks();
+        this.decks = new Decks(numPlayers);
 
         this.hands = new ArrayList[numPlayers];
         for(int i = 0; i < numPlayers; i++){
@@ -72,9 +74,9 @@ public class CMGameState extends GameState{
         }
         fillPlayerHands();
 
-        this.playerCoins = new int[numPlayers];
+        this.gold = new int[numPlayers];
         for(int i = 0; i < numPlayers; i++){
-            this.playerCoins[i] = 2;
+            this.gold[i] = 2;
         }
 
         this.bets = new ArrayList[numPlayers];
@@ -112,7 +114,7 @@ public class CMGameState extends GameState{
     /**
      * Fills each player's hand at the start of the game
      */
-    public void fillPlayerHands(){
+    private void fillPlayerHands(){
         int handSize;
         if(numPlayers == 6){
             handSize = 5;
@@ -131,9 +133,10 @@ public class CMGameState extends GameState{
     }
 
     /**
-     * Draws cards for each player at the end of the round
+     * Draws cards for the player at the end of the round
+     * @param id the id of the player drawing cards
      */
-    public void drawCards(){
+    private void drawCards(int id){
         int handSize;
         int drawAmount;
         if(numPlayers <= 4) {
@@ -144,36 +147,41 @@ public class CMGameState extends GameState{
             handSize = 6;
             drawAmount = 3;
         }
-        for(int i = 0; i < numPlayers; i++) {
-            for(int j = 0; j < drawAmount; j++){
-                if(hands[i].size() >= handSize){
-                    break;
-                }
-                hands[i].add(decks.drawSpellCard());
+        for(int j = 0; j < drawAmount; j++){
+            if(hands[id].size() >= handSize){
+                break;
             }
+            hands[id].add(decks.drawSpellCard());
         }
     }
 
     /**
      * Replaces the fighters in play
      */
-    public void resetFighters(){
+    private void resetFighters(){
         FighterCard temp;
         for(int i = 0; i < 5; i++){
             temp = decks.drawFighterCard();
             decks.addFighterCard(fighters[i]);
-            for(int j = 0; j < attachedSpells[i].size(); j++){
-                discardPile.add(attachedSpells[i].get(j));
-            }
-            attachedSpells[i] = new ArrayList<SpellCard>();
+            discardCardsFromFighter(i);
             fighters[i] = temp;
+        }
+    }
+
+    /**
+     * Removes all spell cards from a fighter and places them in the discard pile
+     * @param fighter the index of the target fighter
+     */
+    private void discardCardsFromFighter(int fighter){
+        for(int i = attachedSpells[fighter].size() - 1; i >= 0; i--){
+            discardPile.remove(attachedSpells[fighter].get(i));
         }
     }
 
     /**
      * Replaces the current judge
      */
-    public void resetJudge(){
+    private void resetJudge(){
         discardPile.add(judge);
         judge = decks.drawJudgeCard();
     }
@@ -212,7 +220,7 @@ public class CMGameState extends GameState{
         consecutivePasses = 0;
         //ends round
         playerTurn = -2;
-        combatPhase();
+        endRound();
         return true;
     }
 
@@ -247,12 +255,140 @@ public class CMGameState extends GameState{
         //discards target spell from your hand
         discardPile.add(hands[id].remove(spell));
         //reveals all cards on target fighter for the player
+        ArrayList<Boolean> isFaceUp;
         for(int i = 0; i < attachedSpells[target].size(); i++){
-            attachedSpells[target].get(i).isFaceUp.set(id, true);
+            //gets the array determining whether the card is face up or not
+            isFaceUp = attachedSpells[target].get(i).getFaceUp();
+            //sets the card to be face up for the player only
+            isFaceUp.set(id, true);
+            //sends updated array back to the spell card
+            attachedSpells[target].get(i).setFaceUp(isFaceUp);
         }
     }
 
-    public void combatPhase(){
+    private void applyJudgement(){
+        //Iterates through each fighter and checks their mana total
+        int manaTotal;
+        for(int i = 0; i < 5; i++){
+            //Adds up the mana of all attached spells
+            manaTotal = 0;
+            for(int j = 0; j < attachedSpells[i].size(); j++){
+                manaTotal += attachedSpells[i].get(j).getMana();
+            }
+            //Checks if mana total is above the judge's mana limit
+            if(manaTotal > judge.getManaLimit()){
+                //Applies judge's judgement
+                if(judge.getJudgementType() == 'd'){
+                    discardCardsFromFighter(i);
+                }
+                else if(judge.getJudgementType() == 'e'){
+                    //To "eject" a fighter they are replaced by a dummy fighter
+                    FighterCard dummyFighter = new FighterCard("Dummy", -999, 0, false);
+                    discardPile.add(fighters[i]);
+                    fighters[i] = dummyFighter;
+                }
+            }
+        }
+    }
+
+    private int findWinner(){
+        //Iterates through each fighter and finds the winner
+        int maxPower = -999;
+        int winningFighter = -1;
+        int power;
+        for(int i = 1; i < 5; i++){
+            power = fighters[i].getPower();
+            //Calculates the power of a given fighter
+            for(int j = 0; j < attachedSpells[i].size(); j++){
+                power += attachedSpells[i].get(j).getPowerMod();
+            }
+            //Checks if this fighter beats the current winner
+            if(power > maxPower){
+                maxPower = power;
+                winningFighter = i;
+            }
+            //Breaks ties using base power
+            else if(power == maxPower){
+                if(fighters[i].getPower() > fighters[winningFighter].getPower()){
+                    winningFighter = i;
+                }
+            }
+        }
+        return winningFighter;
+    }
+
+    private void awardGold(int winner){
+        for(int i = 0; i < numPlayers; i++){
+            //Checks if player had a winning bet
+            for(int j = 0; j < bets[i].size(); j++){
+                if(bets[i].get(j) == winner){
+                    //Awards gold to player
+                    if(bets[i].size() == 3){
+                        gold[i] += fighters[winner].getPrizeMoney() * 2;
+                    }
+                    else if(bets[i].size() == 2){
+                        gold[i] += fighters[winner].getPrizeMoney();
+                    }
+                    else if(bets[i].size() == 1){
+                        gold[i] += Math.ceil( (double)(fighters[winner].getPrizeMoney()) / 2);
+                    }
+                    break;
+                }
+            }
+        }
+    }
+
+    private void endRound(){
+
+        //Applies judge's judgement
+        applyJudgement();
+
+        //Finds the winning fighter and awards gold to the players
+        awardGold(findWinner());
+
+        //Moves game to the next round
+        roundNum++;
+        if(roundNum > 3){
+            endGame();
+            return;
+        }
+        playerTurn = -2;
+
+    }
+
+    /**
+     * Discards the chosen cards from a player's hand
+     * @param id the id of the player discarding
+     * @param discards the cards you wish to get rid of listed from greatest index to smallest
+     * @return true if all players have finished discarding
+     */
+    public boolean discardCards(int id, ArrayList<Integer> discards){
+
+        //TODO THIS CAN BE REMOVED IF DISCARDS IS ALWAYS FROM GREATEST TO SMALLEST INT
+        Collections.sort(discards);
+        Collections.reverse(discards);
+
+        //Removes cards from your hand and adds them to the discard pile
+        for(int i = 0; i < discards.size(); i++){
+            discardPile.add(hands[id].remove((int) discards.get(i)));
+        }
+        //Draws you new cards
+        drawCards(id);
+
+        //Checks if all players have finished discarding
+        finishedDiscarding++;
+        if(finishedDiscarding < numPlayers){
+            return false;
+        }
+
+        //Moves game to the betting phase
+        playerTurn = -1;
+        return true;
+
+    }
+
+    //TODO: IMPLEMENT END GAME FUNCTION
+    private void endGame(){
 
     }
 

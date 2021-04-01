@@ -6,13 +6,26 @@ import edu.up.cs301.game.cheatymages.Cards.*;
 
 public class Decks {
 
+    //The decks containing the cards
     private ArrayList<SpellCard> spellDeck;
     private ArrayList<FighterCard> fighterDeck;
     private ArrayList<JudgeCard> judgeDeck;
 
+    //Random number generator
     protected Random rng;
 
-    public Decks(){
+    /**
+     * Decks Constructor
+     */
+    public Decks(int numPlayers){
+
+        ArrayList<Boolean> isFaceUp = new ArrayList<>();
+        for(int i = 0; i < numPlayers; i++){
+            isFaceUp.add(false);
+        }
+
+        //put cards here
+
         rng = new Random();
     }
 

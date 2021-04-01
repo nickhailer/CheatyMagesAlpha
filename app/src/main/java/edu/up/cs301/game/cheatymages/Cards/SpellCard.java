@@ -4,14 +4,14 @@ import java.util.ArrayList;
 
 public class SpellCard extends Card {
 
-    public int mana;
-    public int powerMod;
+    private int mana;
+    private int powerMod;
     //d = direct, e = enchant, s = support
-    public char spellType;
-    public boolean isForbidden;
+    private char spellType;
+    private boolean isForbidden;
     //This is a list of size equal to the number of players because cards are shown as
     //face up or down to different players
-    public ArrayList<Boolean> isFaceUp;
+    private ArrayList<Boolean> isFaceUp;
 
     public SpellCard(String name, ArrayList<Boolean> isFaceUp, int mana, int powerMod, char spellType,
                      boolean isForbidden) {
@@ -24,4 +24,26 @@ public class SpellCard extends Card {
         this.isForbidden = isForbidden;
     }
 
+    public int getMana() {
+        return mana;
+    }
+    public int getPowerMod() {
+        return powerMod;
+    }
+
+    public char getSpellType() {
+        return spellType;
+    }
+
+    public boolean isForbidden() {
+        return isForbidden;
+    }
+
+    public ArrayList<Boolean> getFaceUp() {
+        return isFaceUp;
+    }
+
+    public void setFaceUp(ArrayList<Boolean> isFaceUp) {
+        this.isFaceUp = isFaceUp;
+    }
 }

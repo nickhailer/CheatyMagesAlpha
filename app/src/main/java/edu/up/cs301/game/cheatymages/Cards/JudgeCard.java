@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class JudgeCard extends Card {
 
-    public int manaLimit;
+    private int manaLimit;
     //d = dispel, e = eject
-    public char judgementType;
-    public ArrayList<Character> disallowedSpells;
+    private char judgementType;
+    private ArrayList<Character> disallowedSpells;
 
     public JudgeCard(String name, int manaLimit, char judgementType, ArrayList<Character> disallowedSpells){
         super(name);
@@ -16,4 +16,15 @@ public class JudgeCard extends Card {
         this.disallowedSpells = disallowedSpells;
     }
 
+    public int getManaLimit() {
+        return manaLimit;
+    }
+
+    public char getJudgementType() {
+        return judgementType;
+    }
+
+    public ArrayList<Character> getDisallowedSpells() {
+        return disallowedSpells;
+    }
 }
