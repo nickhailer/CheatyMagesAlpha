@@ -111,6 +111,127 @@ public class CMGameState extends GameState{
 
     }
 
+    //=========================================================================
+    // PUBLIC METHODS
+    //=========================================================================
+
+    /**
+     * Makes a player place a bet
+     * @param id the id of the player who is placing the bet
+     * @param bets the bets this player wishes to place
+     * @return true if everyone has finished placing their bets
+     */
+    public boolean placeBet(int id, ArrayList<Integer> bets){
+        this.bets[id] = bets;
+        betsPlaced++;
+        if(betsPlaced < numPlayers){
+            return false;
+        }
+        playerTurn = rng.nextInt(numPlayers);
+        betsPlaced = 0;
+        return true;
+    }
+
+    /**
+     * Makes a player pass their turn
+     * @return 1 if the round is over, 2 if the game is over, 0 if neither is true
+     */
+    public int pass(){
+        //increments pass streak counter
+        consecutivePasses++;
+        //if not all players have passed consecutively
+        if(consecutivePasses < numPlayers){
+            //increments player turn
+            playerTurn = (playerTurn + 1) % numPlayers;
+            return 0;
+        }
+        //resets pass streak counter
+        consecutivePasses = 0;
+        //ends round
+        playerTurn = -2;
+        if(endRound()){
+            return 2;
+        }
+        return 1;
+    }
+
+    /**
+     * Plays a spell card from your hand onto a target
+     * @param id the id of the player using the spell
+     * @param spell the index of the spell in your hand
+     * @param target the fighter you wish to use the spell on (1-5)
+     */
+    public void playSpellCard(int id, int spell, int target){
+        //breaks pass streak
+        consecutivePasses = 0;
+        //increments player turn
+        playerTurn = (playerTurn + 1) % numPlayers;
+        //removes spell from your hand and attaches it to the target
+        attachedSpells[target].add(hands[id].remove(spell));
+        //increments player turn
+        playerTurn = (playerTurn + 1) % numPlayers;
+    }
+
+    /**
+     * Removes a spell from your hand and reveals all spell on a fighter
+     * @param id the id of the player using the spell
+     * @param spell the index of the spell in your hand
+     * @param target the fighter you wish to use the spell on (1-5)
+     */
+    public void detectMagic(int id, int spell, int target){
+        //breaks pass streak
+        consecutivePasses = 0;
+        //increments player turn
+        playerTurn = (playerTurn + 1) % numPlayers;
+        //discards target spell from your hand
+        discardPile.add(hands[id].remove(spell));
+        //reveals all cards on target fighter for the player
+        ArrayList<Boolean> isFaceUp;
+        for(int i = 0; i < attachedSpells[target].size(); i++){
+            //gets the array determining whether the card is face up or not
+            isFaceUp = attachedSpells[target].get(i).getFaceUp();
+            //sets the card to be face up for the player only
+            isFaceUp.set(id, true);
+            //sends updated array back to the spell card
+            attachedSpells[target].get(i).setFaceUp(isFaceUp);
+        }
+    }
+
+    /**
+     * Discards the chosen cards from a player's hand
+     * @param id the id of the player discarding
+     * @param discards the cards you wish to get rid of listed from greatest index to smallest
+     * @return true if all players have finished discarding
+     */
+    public boolean discardCards(int id, ArrayList<Integer> discards){
+
+        //TODO THIS CAN BE REMOVED IF DISCARDS IS ALWAYS FROM GREATEST TO SMALLEST INT
+        Collections.sort(discards);
+        Collections.reverse(discards);
+
+        //Removes cards from your hand and adds them to the discard pile
+        for(int i = 0; i < discards.size(); i++){
+            discardPile.add(hands[id].remove((int) discards.get(i)));
+        }
+        //Draws you new cards
+        drawCards(id);
+
+        //Checks if all players have finished discarding
+        finishedDiscarding++;
+        if(finishedDiscarding < numPlayers){
+            return false;
+        }
+
+        //Moves game to the betting phase
+        playerTurn = -1;
+        return true;
+
+    }
+
+    //=========================================================================
+    // PRIVATE METHODS
+    //=========================================================================
+
     /**
      * Fills each player's hand at the start of the game
      */
@@ -187,85 +308,8 @@ public class CMGameState extends GameState{
     }
 
     /**
-     * Makes a player place a bet
-     * @param id the id of the player who is placing the bet
-     * @param bets the bets this player wishes to place
-     * @return true if everyone has finished placing their bets
+     * Checks for fighters above the mana limit and applies the judge's judgement
      */
-    public boolean placeBet(int id, ArrayList<Integer> bets){
-        this.bets[id] = bets;
-        betsPlaced++;
-        if(betsPlaced < numPlayers){
-            return false;
-        }
-        playerTurn = rng.nextInt(numPlayers);
-        betsPlaced = 0;
-        return true;
-    }
-
-    /**
-     * Makes a player pass their turn
-     * @return true if the round is over
-     */
-    public boolean pass(){
-        //increments pass streak counter
-        consecutivePasses++;
-        //if not all players have passed consecutively
-        if(consecutivePasses < numPlayers){
-            //increments player turn
-            playerTurn = (playerTurn + 1) % numPlayers;
-            return false;
-        }
-        //resets pass streak counter
-        consecutivePasses = 0;
-        //ends round
-        playerTurn = -2;
-        endRound();
-        return true;
-    }
-
-    /**
-     * Plays a spell card from your hand onto a target
-     * @param id the id of the player using the spell
-     * @param spell the index of the spell in your hand
-     * @param target the fighter you wish to use the spell on (1-5)
-     */
-    public void playSpellCard(int id, int spell, int target){
-        //breaks pass streak
-        consecutivePasses = 0;
-        //increments player turn
-        playerTurn = (playerTurn + 1) % numPlayers;
-        //removes spell from your hand and attaches it to the target
-        attachedSpells[target].add(hands[id].remove(spell));
-        //increments player turn
-        playerTurn = (playerTurn + 1) % numPlayers;
-    }
-
-    /**
-     * Removes a spell from your hand and reveals all spell on a fighter
-     * @param id the id of the player using the spell
-     * @param spell the index of the spell in your hand
-     * @param target the fighter you wish to use the spell on (1-5)
-     */
-    public void detectMagic(int id, int spell, int target){
-        //breaks pass streak
-        consecutivePasses = 0;
-        //increments player turn
-        playerTurn = (playerTurn + 1) % numPlayers;
-        //discards target spell from your hand
-        discardPile.add(hands[id].remove(spell));
-        //reveals all cards on target fighter for the player
-        ArrayList<Boolean> isFaceUp;
-        for(int i = 0; i < attachedSpells[target].size(); i++){
-            //gets the array determining whether the card is face up or not
-            isFaceUp = attachedSpells[target].get(i).getFaceUp();
-            //sets the card to be face up for the player only
-            isFaceUp.set(id, true);
-            //sends updated array back to the spell card
-            attachedSpells[target].get(i).setFaceUp(isFaceUp);
-        }
-    }
-
     private void applyJudgement(){
         //Iterates through each fighter and checks their mana total
         int manaTotal;
@@ -291,6 +335,10 @@ public class CMGameState extends GameState{
         }
     }
 
+    /**
+     * Finds the winning fighter
+     * @return the index of the fighter who won combat
+     */
     private int findWinner(){
         //Iterates through each fighter and finds the winner
         int maxPower = -999;
@@ -317,6 +365,10 @@ public class CMGameState extends GameState{
         return winningFighter;
     }
 
+    /**
+     * Awards gold to the player's with correct bets
+     * @param winner the fighter who won combat
+     */
     private void awardGold(int winner){
         for(int i = 0; i < numPlayers; i++){
             //Checks if player had a winning bet
@@ -338,7 +390,11 @@ public class CMGameState extends GameState{
         }
     }
 
-    private void endRound(){
+    /**
+     * Ends the round and simulates combat
+     * @return true if the game has ended
+     */
+    private boolean endRound(){
 
         //Applies judge's judgement
         applyJudgement();
@@ -349,46 +405,10 @@ public class CMGameState extends GameState{
         //Moves game to the next round
         roundNum++;
         if(roundNum > 3){
-            endGame();
-            return;
+            return true;
         }
         playerTurn = -2;
-
-    }
-
-    /**
-     * Discards the chosen cards from a player's hand
-     * @param id the id of the player discarding
-     * @param discards the cards you wish to get rid of listed from greatest index to smallest
-     * @return true if all players have finished discarding
-     */
-    public boolean discardCards(int id, ArrayList<Integer> discards){
-
-        //TODO THIS CAN BE REMOVED IF DISCARDS IS ALWAYS FROM GREATEST TO SMALLEST INT
-        Collections.sort(discards);
-        Collections.reverse(discards);
-
-        //Removes cards from your hand and adds them to the discard pile
-        for(int i = 0; i < discards.size(); i++){
-            discardPile.add(hands[id].remove((int) discards.get(i)));
-        }
-        //Draws you new cards
-        drawCards(id);
-
-        //Checks if all players have finished discarding
-        finishedDiscarding++;
-        if(finishedDiscarding < numPlayers){
-            return false;
-        }
-
-        //Moves game to the betting phase
-        playerTurn = -1;
-        return true;
-
-    }
-
-    //TODO: IMPLEMENT END GAME FUNCTION
-    private void endGame(){
+        return false;
 
     }
 
