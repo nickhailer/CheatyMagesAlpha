@@ -1,3 +1,4 @@
+package edu.up.cs301.game.cheatymages.Cards;
 import java.util.ArrayList;
 
 public class JudgeCard extends Card {
