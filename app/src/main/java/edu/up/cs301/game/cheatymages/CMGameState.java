@@ -111,6 +111,8 @@ public class CMGameState extends GameState{
 
     }
 
+    //TODO IMPLEMENT DEEP COPY CONSTRUCTOR
+
     //=========================================================================
     // PUBLIC METHODS
     //=========================================================================
@@ -404,6 +406,7 @@ public class CMGameState extends GameState{
 
         //Moves game to the next round
         roundNum++;
+        //If the round number is over 3 the game is over
         if(roundNum > 3){
             return true;
         }
@@ -412,4 +415,55 @@ public class CMGameState extends GameState{
 
     }
 
+    public int getRoundNum() {
+        return roundNum;
+    }
+
+    public int getPlayerTurn() {
+        return playerTurn;
+    }
+
+    public ArrayList<SpellCard>[] getHands() {
+        return hands;
+    }
+
+    public int[] getGold() {
+        return gold;
+    }
+
+    public ArrayList<Integer>[] getBets() {
+        return bets;
+    }
+
+    public FighterCard[] getFighters() {
+        return fighters;
+    }
+
+    public ArrayList<SpellCard>[] getAttachedSpells() {
+        return attachedSpells;
+    }
+
+    public JudgeCard getJudge() {
+        return judge;
+    }
+
+    public ArrayList<Card> getDiscardPile() {
+        return discardPile;
+    }
+
+    public Decks getDecks() {
+        return decks;
+    }
+
+    public int getBetsPlaced() {
+        return betsPlaced;
+    }
+
+    public int getFinishedDiscarding() {
+        return finishedDiscarding;
+    }
+
+    public int getConsecutivePasses() {
+        return consecutivePasses;
+    }
 }
