@@ -207,9 +207,8 @@ public class CMGameState extends GameState{
      */
     public boolean discardCards(int id, ArrayList<Integer> discards){
 
-        //TODO THIS CAN BE REMOVED IF DISCARDS IS ALWAYS FROM GREATEST TO SMALLEST INT
-        Collections.sort(discards);
-        Collections.reverse(discards);
+        //IMPORTANT READ THIS FOR THE LOVE OF GOD
+        //IF THE DISCARD ARRAYLIST IS NOT IN ORDER OF GREATEST TO LEAST THE CODE CAN AND WILL BREAK
 
         //Removes cards from your hand and adds them to the discard pile
         for(int i = 0; i < discards.size(); i++){
@@ -329,6 +328,8 @@ public class CMGameState extends GameState{
                 }
                 else if(judge.getJudgementType() == 'e'){
                     //To "eject" a fighter they are replaced by a dummy fighter
+                    //TODO FOR THIS FUNCTION THIS "SHOULD" BE FINE BUT THIS IS NOT AN IDEAL SOLUTION
+                    //PERHAPS REPLACE THE FIGHTER WITH A NULL INSTANCE INSTEAD?
                     FighterCard dummyFighter = new FighterCard("Dummy", -999, 0, false);
                     discardPile.add(fighters[i]);
                     fighters[i] = dummyFighter;

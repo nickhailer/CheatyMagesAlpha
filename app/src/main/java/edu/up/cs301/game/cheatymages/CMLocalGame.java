@@ -1,8 +1,13 @@
 package edu.up.cs301.game.cheatymages;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Collections;
+
 import edu.up.cs301.game.GameFramework.LocalGame;
 import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
 import edu.up.cs301.game.GameFramework.players.GamePlayer;
+import edu.up.cs301.game.cheatymages.Actions.*;
 
 class CMLocalGame extends LocalGame {
 
@@ -88,8 +93,131 @@ class CMLocalGame extends LocalGame {
         return indices;
     }
 
+    /**
+     * Checks an array list for duplicates
+     * @param arr the array list you wish to check for duplicates
+     * @return true if the array list has duplicates
+     */
+    private boolean hasDuplicates(ArrayList<Integer> arr){
+
+        ArrayList<Integer> newArr = new ArrayList<Integer>();
+
+        for(int e : arr){
+            if(newArr.contains(e)){
+                return true;
+            }
+            newArr.add(e);
+        }
+
+        return false;
+    }
+
     @Override
     protected boolean makeMove(GameAction action) {
+
+        //This is for code cleanliness
+        CMGameState cmState = (CMGameState) state;
+        int playerId = getPlayerIdx(action.getPlayer());
+
+        if(action instanceof PassAction){
+
+            //If it's this player's turn they can pass
+            if(cmState.getPlayerTurn() == playerId){
+                cmState.pass();
+                return true;
+            }
+
+        }
+
+        if(action instanceof PlaySpellAction){
+
+            //Again for cleanliness
+            PlaySpellAction spellAction = (PlaySpellAction) action;
+
+            //If it is not the player's turn the move is invalid
+            if(cmState.getPlayerTurn() != playerId){
+                return false;
+            }
+
+            //If the spell index is out of range in the player's hand the move is invalid
+            if(spellAction.getSpell() < 0 || spellAction.getSpell() >= cmState.getHands()[playerId].size()){
+                return false;
+            }
+
+            //TODO CURRENTLY CODE ASSUMES THE SPELL IS TARGETING A FIGHTER
+            //If the target is invalid the mode is invalid
+            if(spellAction.getTarget() < 0 || spellAction.getTarget() >= 5){
+                return false;
+            }
+
+            if(action instanceof DetectMagicAction){
+                cmState.detectMagic(playerId, spellAction.getSpell(), spellAction.getTarget());
+            }
+            else{
+                cmState.playSpellCard(playerId, spellAction.getSpell(), spellAction.getTarget());
+            }
+
+        }
+
+        if(action instanceof BetAction){
+
+            BetAction betAction = (BetAction) action;
+
+            //If it's not the betting phase the move is invalid
+            if(cmState.getPlayerTurn() != -1){
+                return false;
+            }
+
+            //If there's more than 3 bets the move is invalid
+            if(betAction.getBets().size() > 3){
+                return false;
+            }
+
+            //If there are any duplicate bets the move is invalid
+            if(hasDuplicates(betAction.getBets())){
+                return false;
+            }
+
+            //Checks if the bets are valid indices in the fighters array
+            for(int i : betAction.getBets()){
+                if(i < 0 || i >= 5){
+                    return false;
+                }
+            }
+
+            cmState.placeBet(playerId, betAction.getBets());
+
+        }
+
+        if(action instanceof DiscardCardsAction){
+
+            DiscardCardsAction discardAction = (DiscardCardsAction) action;
+
+            //If there's any duplicates the action is invalid
+            if(hasDuplicates(discardAction.getDiscards())){
+                return false;
+            }
+
+            //Checks if all the card indices are valid
+            for(int i : discardAction.getDiscards()){
+                if(i < 0 || i >= cmState.getHands()[playerId].size()){
+                    return false;
+                }
+            }
+
+            //TODO THIS CODE SHOULD BE REDUNDANT AND REMOVED EVENTUALLY
+            //Checks to make sure the cards are listed in the correct order
+            ArrayList<Integer> temp = discardAction.getDiscards();
+            Collections.sort(temp);
+            Collections.reverse(temp);
+            if(!discardAction.getDiscards().equals(temp)){
+                return false;
+            }
+
+            cmState.discardCards(playerId, discardAction.getDiscards());
+
+        }
+
         return false;
     }
 }
