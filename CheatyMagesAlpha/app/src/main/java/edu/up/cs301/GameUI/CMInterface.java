@@ -39,7 +39,7 @@ public class CMInterface extends SurfaceView {
 
         drawJudgeCard(canvas, 15, 120, gameState.getJudge().getName(), gameState.getJudge().getManaLimit(), judgeType, gameState.getJudge().getDisallowedSpells());
 
-        for(int i=0; i<fighters.length(); i++) {
+        for(int i=0; i<gameState.getFighters().length(); i++) {
             drawFighterCard(canvas, 50, 430 + (300*i), gameState.getName(), gameState.getPower(), gameState.getGold(),
                     true);
         }
