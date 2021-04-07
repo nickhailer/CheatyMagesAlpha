@@ -1,8 +1,8 @@
-package edu.up.cs301.game.cheatymages;
+package edu.up.cs301;
 
 import junit.framework.TestCase;
-
 import java.util.ArrayList;
+import edu.up.cs301.game.cheatymages.CMGameState;
 
 public class CMGameStateTest extends TestCase {
 

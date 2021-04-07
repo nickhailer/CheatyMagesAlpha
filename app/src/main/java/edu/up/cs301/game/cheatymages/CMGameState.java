@@ -65,53 +65,68 @@ public class CMGameState extends GameState{
         super();
 
         this.numPlayers = numPlayers;
+        roundNum = 1;
+        playerTurn = -1;
 
-        this.decks = new Decks(numPlayers);
+        decks = new Decks(numPlayers);
+        discardPile = new ArrayList<Card>();
 
-        this.hands = new ArrayList[numPlayers];
-        for(int i = 0; i < numPlayers; i++){
-            this.hands[i] = new ArrayList<SpellCard>();
-        }
-        fillPlayerHands();
-
-        this.gold = new int[numPlayers];
+        gold = new int[numPlayers];
         for(int i = 0; i < numPlayers; i++){
             this.gold[i] = 2;
         }
 
-        this.bets = new ArrayList[numPlayers];
+        bets = new ArrayList[numPlayers];
         for(int i = 0; i < numPlayers; i++){
             this.bets[i] = new ArrayList<Integer>();
         }
 
-        this.roundNum = 1;
-        this.playerTurn = -1;
+        hands = new ArrayList[numPlayers];
+        for(int i = 0; i < numPlayers; i++){
+            hands[i] = new ArrayList<SpellCard>();
+        }
+        fillPlayerHands();
 
-        this.fighters = new FighterCard[5];
+        fighters = new FighterCard[5];
         for(int i = 0; i < 5; i++){
-            this.fighters[i] = decks.drawFighterCard();
+            fighters[i] = decks.drawFighterCard();
         }
 
         judge = decks.drawJudgeCard();
 
-        this.attachedSpells = new ArrayList[5];
+        attachedSpells = new ArrayList[5];
         for(int i = 0; i < 5; i++){
-            this.attachedSpells[i] = new ArrayList<SpellCard>();
+            attachedSpells[i] = new ArrayList<SpellCard>();
         }
 
-        this.discardPile = new ArrayList<Card>();
-
         betsPlaced = 0;
-
         finishedDiscarding = 0;
-
         consecutivePasses = 0;
 
         rng = new Random();
 
     }
 
-    //TODO IMPLEMENT DEEP COPY CONSTRUCTOR
+    /* INCOMPLETE
+    public CMGameState(CMGameState orig){
+
+        numPlayers = orig.numPlayers;
+        roundNum = orig.roundNum;
+        playerTurn = orig.playerTurn;
+        betsPlaced = orig.betsPlaced;
+        finishedDiscarding = orig.finishedDiscarding;
+        consecutivePasses = orig.consecutivePasses;
+
+        discardPile = new ArrayList<Card>();
+        for(int i = 0; i < orig.discardPile.size(); i++){
+            Card discardedCard = orig.discardPile.get(i);
+            if(discardedCard instanceof SpellCard){
+
+            }
+        }
+
+    }
+     */
 
     //=========================================================================
     // PUBLIC METHODS
@@ -168,10 +183,16 @@ public class CMGameState extends GameState{
         consecutivePasses = 0;
         //increments player turn
         playerTurn = (playerTurn + 1) % numPlayers;
+        //checks if the spell card violates the judge's rules
+        for(int i = 0; i < judge.getDisallowedSpells().size(); i++) {
+            //if the spell is disallowed discard it instead
+            if(hands[id].get(spell).getSpellType() == judge.getDisallowedSpells().get(i)){
+                discardPile.add(hands[id].remove(spell));
+                return;
+            }
+        }
         //removes spell from your hand and attaches it to the target
         attachedSpells[target].add(hands[id].remove(spell));
-        //increments player turn
-        playerTurn = (playerTurn + 1) % numPlayers;
     }
 
     /**
