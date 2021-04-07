@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\Users\\dewey\\Downloads\\CheatyMagesAlpha-BenChong\\CheatyMages\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h720dp-v13\\values-h720dp-v13.xml",
+            "outputFile": "C:\\Users\\dewey\\AndroidStudioProjects\\CheatyMagesAlpha\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-h720dp-v13\\values-h720dp-v13.xml",
             "map": [
                 {
                     "source": "C:\\Users\\dewey\\.gradle\\caches\\transforms-1\\files-1.1\\appcompat-v7-27.1.1.aar\\6275ef7deeb59d317bcf814e60422198\\res\\values-h720dp-v13\\values-h720dp-v13.xml",
