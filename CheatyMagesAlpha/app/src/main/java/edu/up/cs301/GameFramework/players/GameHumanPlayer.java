@@ -1,19 +1,19 @@
 package edu.up.cs301.GameFramework.players;
 
-import edu.up.cs301.game.GameFramework.Game;
-import edu.up.cs301.game.GameFramework.GameMainActivity;
-import edu.up.cs301.game.GameFramework.actionMessage.GameOverAckAction;
-import edu.up.cs301.game.GameFramework.actionMessage.MyNameIsAction;
-import edu.up.cs301.game.GameFramework.actionMessage.ReadyAction;
-import edu.up.cs301.game.GameFramework.infoMessage.BindGameInfo;
-import edu.up.cs301.game.GameFramework.infoMessage.GameInfo;
-import edu.up.cs301.game.GameFramework.infoMessage.GameOverInfo;
-import edu.up.cs301.game.GameFramework.infoMessage.StartGameInfo;
-import edu.up.cs301.game.GameFramework.infoMessage.TimerInfo;
-import edu.up.cs301.game.GameFramework.utilities.GameTimer;
-import edu.up.cs301.game.GameFramework.utilities.Logger;
-import edu.up.cs301.game.GameFramework.utilities.MessageBox;
-import edu.up.cs301.game.GameFramework.utilities.Tickable;
+import edu.up.cs301.GameFramework.Game;
+import edu.up.cs301.GameFramework.GameMainActivity;
+import edu.up.cs301.GameFramework.actionMessage.GameOverAckAction;
+import edu.up.cs301.GameFramework.actionMessage.MyNameIsAction;
+import edu.up.cs301.GameFramework.actionMessage.ReadyAction;
+import edu.up.cs301.GameFramework.infoMessage.BindGameInfo;
+import edu.up.cs301.GameFramework.infoMessage.GameInfo;
+import edu.up.cs301.GameFramework.infoMessage.GameOverInfo;
+import edu.up.cs301.GameFramework.infoMessage.StartGameInfo;
+import edu.up.cs301.GameFramework.infoMessage.TimerInfo;
+import edu.up.cs301.GameFramework.utilities.GameTimer;
+import edu.up.cs301.GameFramework.utilities.Logger;
+import edu.up.cs301.GameFramework.utilities.MessageBox;
+import edu.up.cs301.GameFramework.utilities.Tickable;
 
 import android.content.DialogInterface;
 import android.graphics.Color;

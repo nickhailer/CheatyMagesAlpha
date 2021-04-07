@@ -1,8 +1,8 @@
 package edu.up.cs301.GameFramework;
 
-import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
-import edu.up.cs301.game.GameFramework.infoMessage.GameState;
-import edu.up.cs301.game.GameFramework.players.GamePlayer;
+import edu.up.cs301.GameFramework.actionMessage.GameAction;
+import edu.up.cs301.GameFramework.infoMessage.GameState;
+import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
  * To support remote play, this game framework has two types of Games: local

@@ -27,6 +27,7 @@ public class SpellCard extends Card {
     public int getMana() {
         return mana;
     }
+
     public int getPowerMod() {
         return powerMod;
     }

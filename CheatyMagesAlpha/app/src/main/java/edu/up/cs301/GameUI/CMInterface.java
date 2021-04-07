@@ -30,33 +30,49 @@ public class CMInterface extends SurfaceView {
     }
 
     protected void onDraw(Canvas canvas){
+        // Determines judges judgement
         if(gameState.getJudge().getJudgementType() == 'd') {
             judgeType = "Dispel";
         }
         else {
             judgeType = "Eject";
         }
-
+        // Draws judge card
         drawJudgeCard(canvas, 15, 120, gameState.getJudge().getName(), gameState.getJudge().getManaLimit(), judgeType, gameState.getJudge().getDisallowedSpells());
 
+        // Draws 5 random fighter cards
         for(int i=0; i<gameState.getFighters().length(); i++) {
             drawFighterCard(canvas, 50, 430 + (300*i), gameState.getFighters()[i].getName(), gameState.getFighters()[i].getPower(), gameState.getFighters()[i].getPrizeMoney(),
-                    true;
+                    true);
             //fix
         }
 
-        for(int i=0; i<hands.size; i++) {
-            drawSpellCard(canvas, 50 + (200*i), 2000, gameState.hands.getName(i), gameState.hands.getMana(i), gameState.hands.getSpellType(i),gameState.hands.getPowerMod(i),
+        // Draws hand of spell cards
+        for(int i=0; i<gameState.getHands()[i].size(); i++) {
+            drawSpellCard(canvas, 50 + (200*i), 2000, gameState.getHands()[i].get(i).getName(), gameState.getHands()[i].get(i).getMana(), gameState.getHands()[i].get(i).getSpellType(), gameState.getHands()[i].get(i).getPowerMod(),
                     false, "", false);
         }
 
-        drawSpellCard(canvas, 300, 430, "Healing", 1, 1,+4,
+        // Draws played spell cards
+        // figure out y coordinates------------
+        for(int i=0; i<gameState.getAttachedSpells()[i].size(); i++) {
+            if(gameState.getAttachedSpells()[i].get(i).getSpellType().equals('e')) {
+                drawFaceDownCard(canvas, 300 + (250*i), 1030, Color.GRAY);
+            }
+            else {
+                drawSpellCard(canvas, 300 + (250*i), 430, gameState.getAttachedSpells()[i].get(i).getName(), gameState.getAttachedSpells()[i].get(i).getMana(),
+                        gameState.getAttachedSpells()[i].get(i).getSpellType(), gameState.getAttachedSpells()[i].get(i).getPowerMod(),
+                        false, "", false);
+            }
+        }
+
+        drawSpellCard(canvas, 300, 430, "Healing", 1, 'd',+4,
                 false, "", false);
-        drawSpellCard(canvas, 300, 730, "Blizzard", 4, 1,-6,
+        drawSpellCard(canvas, 300, 730, "Blizzard", 4, 'd',-6,
                 false, "", false);
         drawFaceDownCard(canvas, 300, 1030, Color.GRAY);
 
-
+        // draws coin label
         drawCoin(canvas, 1400, -45, "C");
     }
 
@@ -101,9 +117,9 @@ public class CMInterface extends SurfaceView {
     //draws a spell card on the screen
     //if hasCardText is true the card is printed with textEffect at the bottom
     //else if hasCardText is false the card only has a power modifier
-    //spell types: 1 = direct, 2 = enchant, 3 = support
+    //spell types: d = direct, e = enchant, s = support
     protected void drawSpellCard(Canvas canvas, float x, float y, String spellName, int mana,
-                                 int spellType, int powerMod, boolean hasCardText,
+                                 char spellType, int powerMod, boolean hasCardText,
                                  String effectText, boolean isForbidden){
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, spellName);
@@ -111,17 +127,16 @@ public class CMInterface extends SurfaceView {
         //draws a symbol according to the spell's type
         //colored circles are used as stand ins for now
         Paint spellTypeSymbolPaint = new Paint();
-        switch(spellType){
-            case 1:
-                spellTypeSymbolPaint.setColor(Color.RED);
-                break;
-            case 2:
-                spellTypeSymbolPaint.setColor(Color.BLUE);
-                break;
-            case 3:
-                spellTypeSymbolPaint.setColor(0xFFFFD700);
-                break;
+        if(spellType == 'd') {
+            spellTypeSymbolPaint.setColor(Color.RED);
         }
+        else if(spellType == 'e') {
+            spellTypeSymbolPaint.setColor(Color.BLUE);
+        }
+        else {
+            spellTypeSymbolPaint.setColor(0xFFFFD700);
+        }
+
         canvas.drawCircle(x + 25.0f, y + 75.0f, 12.5f, spellTypeSymbolPaint);
 
         //draws mana cost on the card

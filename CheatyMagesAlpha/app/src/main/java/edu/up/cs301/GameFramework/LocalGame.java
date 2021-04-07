@@ -1,21 +1,21 @@
 package edu.up.cs301.GameFramework;
 
-import edu.up.cs301.game.GameFramework.actionMessage.EndTurnAction;
-import edu.up.cs301.game.GameFramework.actionMessage.GameAction;
-import edu.up.cs301.game.GameFramework.actionMessage.GameOverAckAction;
-import edu.up.cs301.game.GameFramework.actionMessage.MyNameIsAction;
-import edu.up.cs301.game.GameFramework.actionMessage.ReadyAction;
-import edu.up.cs301.game.GameFramework.actionMessage.TimerAction;
-import edu.up.cs301.game.GameFramework.infoMessage.BindGameInfo;
-import edu.up.cs301.game.GameFramework.infoMessage.GameOverInfo;
-import edu.up.cs301.game.GameFramework.infoMessage.GameState;
-import edu.up.cs301.game.GameFramework.infoMessage.IllegalMoveInfo;
-import edu.up.cs301.game.GameFramework.infoMessage.NotYourTurnInfo;
-import edu.up.cs301.game.GameFramework.infoMessage.StartGameInfo;
-import edu.up.cs301.game.GameFramework.players.GamePlayer;
-import edu.up.cs301.game.GameFramework.utilities.GameTimer;
-import edu.up.cs301.game.GameFramework.utilities.Tickable;
-import edu.up.cs301.game.GameFramework.utilities.Logger;
+import edu.up.cs301.GameFramework.actionMessage.EndTurnAction;
+import edu.up.cs301.GameFramework.actionMessage.GameAction;
+import edu.up.cs301.GameFramework.actionMessage.GameOverAckAction;
+import edu.up.cs301.GameFramework.actionMessage.MyNameIsAction;
+import edu.up.cs301.GameFramework.actionMessage.ReadyAction;
+import edu.up.cs301.GameFramework.actionMessage.TimerAction;
+import edu.up.cs301.GameFramework.infoMessage.BindGameInfo;
+import edu.up.cs301.GameFramework.infoMessage.GameOverInfo;
+import edu.up.cs301.GameFramework.infoMessage.GameState;
+import edu.up.cs301.GameFramework.infoMessage.IllegalMoveInfo;
+import edu.up.cs301.GameFramework.infoMessage.NotYourTurnInfo;
+import edu.up.cs301.GameFramework.infoMessage.StartGameInfo;
+import edu.up.cs301.GameFramework.players.GamePlayer;
+import edu.up.cs301.GameFramework.utilities.GameTimer;
+import edu.up.cs301.GameFramework.utilities.Tickable;
+import edu.up.cs301.GameFramework.utilities.Logger;
 
 import android.os.Handler;
 import android.os.Looper;

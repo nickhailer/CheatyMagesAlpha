@@ -1,6 +1,6 @@
 package edu.up.cs301.GameFramework.gameConfiguration;
 
-import edu.up.cs301.game.GameFramework.players.GamePlayer;
+import edu.up.cs301.GameFramework.players.GamePlayer;
 
 /**
  * class GamePlayerType
