@@ -214,6 +214,7 @@ class CMLocalGame extends LocalGame {
                 return false;
             }
 
+            //TODO THIS FUNCTIONS RETURN VALUE SHOULD BE SOMEHOW SENT TO THE UI TO FLASH THE REVEALED CARDS
             cmState.discardCards(playerId, discardAction.getDiscards());
 
         }
