@@ -103,42 +103,42 @@
 
         </LinearLayout>
 
-    <TextView
-        android:id="@+id/judgeLabel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:text="Judge"
-        android:textSize="40sp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/roundNumber"
-        app:layout_constraintStart_toStartOf="@+id/surfaceView" />
+        <TextView
+            android:id="@+id/judgeLabel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Judge"
+            android:textSize="40sp"
+            app:layout_constraintBaseline_toBaselineOf="@+id/roundNumber"
+            app:layout_constraintStart_toStartOf="@+id/surfaceView" />
 
-    <edu.up.cs301.GameUI.CMInterface
-        android:id="@+id/surfaceView"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        <edu.up.cs301.GameUI.CMInterface
+            android:id="@+id/surfaceView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
 
-    <LinearLayout
-        android:id="@+id/ButtonLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="bottom|right"
-        android:orientation="vertical"/>
+        <LinearLayout
+            android:id="@+id/ButtonLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom|right"
+            android:orientation="vertical"/>
 
         <Button
-            android:id="@+id/discardCards"
+            android:id="@+id/discardCardsButton"
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:text="Discard Cards" />
 
         <Button
-            android:id="@+id/bet"
+            android:id="@+id/betButton"
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:text="Bet" />
@@ -162,3 +162,4 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

@@ -10,7 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 
 import edu.up.cs301.GameFramework.GameMainActivity;
-import edu.up.cs301.R;
+import edu.up.cs301.game.R;
 
 /**
  * Helper-class for showing dialog boxes
@@ -90,7 +90,7 @@ public class MessageBox {
         builder.setMessage(msg);
         final EditText input = new EditText(activity);
         builder.setView(input);
-        builder.setPositiveButton("Ok", new OnClickListener() {
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
                 if(value.equals(FRAMEWORKCANCEL)){
@@ -102,7 +102,7 @@ public class MessageBox {
             }
         });
 
-        builder.setNegativeButton("Cancel", new OnClickListener() {
+        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
 
             public void onClick(DialogInterface dialog, int which) {
                 //Auto-generated method stub
@@ -126,7 +126,7 @@ public class MessageBox {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(msg);
         final CharSequence[] strings = MessageBox.getGameFileNames(activity);
-        builder.setItems(strings, new OnClickListener() {
+        builder.setItems(strings, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //Logger.log(TAG, whichButton+"");
                 if(strings[whichButton].equals(FRAMEWORKCANCEL)) {
@@ -154,7 +154,7 @@ public class MessageBox {
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
         builder.setTitle(msg);
         final CharSequence[] strings = MessageBox.getGameFileNames(activity);
-        builder.setItems(strings, new OnClickListener() {
+        builder.setItems(strings, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 //Logger.log(TAG, whichButton+"");
                 if(strings[whichButton].equals(FRAMEWORKCANCEL)) {

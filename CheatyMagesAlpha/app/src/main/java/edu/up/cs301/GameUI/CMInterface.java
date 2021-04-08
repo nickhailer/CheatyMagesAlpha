@@ -8,12 +8,13 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
+import android.view.View;
 
 import java.util.ArrayList;
 
 import edu.up.cs301.cheatymages.CMGameState;
 
-public class CMInterface extends SurfaceView {
+public class CMInterface extends SurfaceView implements View.OnClickListener{
     private float cardHeight = 240;
     private float cardWidth = 180;
     public CMGameState gameState = new CMGameState(4);
@@ -41,7 +42,7 @@ public class CMInterface extends SurfaceView {
         drawJudgeCard(canvas, 15, 120, gameState.getJudge().getName(), gameState.getJudge().getManaLimit(), judgeType, gameState.getJudge().getDisallowedSpells());
 
         // Draws 5 random fighter cards
-        for(int i=0; i<gameState.getFighters().length(); i++) {
+        for(int i=0; i<gameState.getFighters().length; i++) {
             drawFighterCard(canvas, 50, 430 + (300*i), gameState.getFighters()[i].getName(), gameState.getFighters()[i].getPower(), gameState.getFighters()[i].getPrizeMoney(),
                     true);
             //fix
@@ -56,7 +57,7 @@ public class CMInterface extends SurfaceView {
         // Draws played spell cards
         // figure out y coordinates------------
         for(int i=0; i<gameState.getAttachedSpells()[i].size(); i++) {
-            if(gameState.getAttachedSpells()[i].get(i).getSpellType().equals('e')) {
+            if(gameState.getAttachedSpells()[i].get(i).getSpellType() == 'e') {
                 drawFaceDownCard(canvas, 300 + (250*i), 1030, Color.GRAY);
             }
             else {
@@ -64,6 +65,10 @@ public class CMInterface extends SurfaceView {
                         gameState.getAttachedSpells()[i].get(i).getSpellType(), gameState.getAttachedSpells()[i].get(i).getPowerMod(),
                         false, "", false);
             }
+        }
+
+        for(int i=0; i<gameState.getAttachedSpells()[i].size(); i++) {
+
         }
 
         drawSpellCard(canvas, 300, 430, "Healing", 1, 'd',+4,
@@ -195,7 +200,7 @@ public class CMInterface extends SurfaceView {
     //disallows shows which card types this judge bans
     // In order: direct, enchant, support, forbidden
     protected void drawJudgeCard(Canvas canvas, float x, float y, String judgeName, int manaLimit,
-                                 String judgementType, ArrayList<Character> disallows){
+                                 String judgementType, ArrayList<Character> disallows) {
 
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, judgeName);
@@ -221,26 +226,21 @@ public class CMInterface extends SurfaceView {
         //draws symbols of cards this judge disallows at bottom of card
         Paint symbolPaint = new Paint();
         int symbolsDrawn = 0;
-        for(int i = 0; i < 4; i++){
-            if(disallows[i]){
-                switch(i){
-                    case 1:
-                        symbolPaint.setColor(Color.RED);
-                        break;
-                    case 2:
-                        symbolPaint.setColor(Color.BLUE);
-                        break;
-                    case 3:
-                        symbolPaint.setColor(0xFFFFD700);
-                        break;
-                    case 4:
-                        symbolPaint.setColor(Color.GREEN);
-                        break;
-                }
+        for(int i = 0; i < 4; i++) {
+            if (disallows.get(i) == 'd') {
+                symbolPaint.setColor(Color.RED);
+            } else if (disallows.get(i) == 'e') {
+                symbolPaint.setColor(Color.BLUE);
+            } else if (disallows.get(i) == 's') {
+                symbolPaint.setColor(0xFFFFD700);
+            } else {
+                symbolPaint.setColor(Color.GREEN);
+            }
+
                 canvas.drawCircle(x + 25.0f + symbolsDrawn * 25.0f, y + cardHeight - 40.0f,
                         12.5f, symbolPaint);
                 symbolsDrawn++;
-            }
+
         }
 
     }
@@ -318,5 +318,10 @@ public class CMInterface extends SurfaceView {
         statText.setTextSize(50);
         statText.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(coinDesign, x + 175.0f, y + 270.0f, statText);
+    }
+
+    @Override
+    public void onClick(View v) {
+        
     }
 }
