@@ -22,7 +22,7 @@ class CMLocalGame extends LocalGame {
 
     @Override
     protected void sendUpdatedStateTo(GamePlayer p) {
-
+        p.sendInfo(new CMGameState((CMGameState) state, getPlayerIdx(p)));
     }
 
     @Override
@@ -42,13 +42,12 @@ class CMLocalGame extends LocalGame {
             //Gets a list of players in order of gold
             int[] leaderBoard = getSortedIndices(((CMGameState) state).getGold());
 
-            //TODO IT MIGHT MAKE MORE SENSE FOR THIS TO ADD THE NAMES OF THE PLAYERS
-            //Adds each player's number to the return string in order of gold
+            //Adds each player's name to the return string in order of gold
             String returnStr = "";
             for(int i = 0; i < leaderBoard.length - 1; i++){
-                returnStr += Integer.toString(leaderBoard[i]) + ", ";
+                returnStr += playerNames[leaderBoard[i]] + ", ";
             }
-            returnStr += Integer.toString(leaderBoard[leaderBoard.length - 1]);
+            returnStr += playerNames[leaderBoard[leaderBoard.length - 1]];
 
             return returnStr;
         }
