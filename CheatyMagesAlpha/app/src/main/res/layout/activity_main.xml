@@ -2,14 +2,14 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/screen"
+    android:id="@+id/CoinTotal"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginStart="20sp"
     android:layout_marginLeft="20sp"
     android:layout_marginEnd="20sp"
     android:layout_marginRight="20sp"
-    android:background="#FFFFFF"
+    android:background="@android:color/white"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -20,26 +20,31 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:id="@+id/labelLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="100sp"
-            android:layout_marginLeft="100sp"
+            android:layout_height="190sp"
             android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/judgeLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Judge"
+                android:textSize="40sp" />
 
             <LinearLayout
                 android:id="@+id/otherPlayerLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/otherPlayers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30sp"
-                    android:layout_marginLeft="30sp"
-                    android:gravity="right"
+                    android:layout_marginStart="150sp"
+                    android:layout_marginLeft="150sp"
                     android:text="Other Players"
                     android:textSize="40sp" />
 
@@ -47,7 +52,8 @@
                     android:id="@+id/playerNum"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
+                    android:layout_marginStart="185sp"
+                    android:layout_marginLeft="185sp"
                     android:text="PL2   PL3   PL4"
                     android:textSize="25sp" />
 
@@ -55,31 +61,34 @@
                     android:id="@+id/opponetsCoins"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text=" Coins:    2          7          3"
+                    android:layout_marginStart="90sp"
+                    android:layout_marginLeft="90sp"
+                    android:text=" Coins:    02       07      03"
                     android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/opponentsBets"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text="Bets:     ?        ???       ??"
+                    android:layout_marginStart="95sp"
+                    android:layout_marginLeft="95sp"
+                    android:text="  Bets:     ?        ???       ??"
                     android:textSize="25sp" />
 
                 <TextView
                     android:id="@+id/opponentsHandSize"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="right"
-                    android:text="Hand Size:     5          3          4"
+                    android:layout_marginStart="40sp"
+                    android:layout_marginLeft="40sp"
+                    android:text=" Hand Size:    5          3          4"
                     android:textSize="25sp" />
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/coinAndRoundLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:gravity="right"
                 android:orientation="vertical">
@@ -88,7 +97,7 @@
                     android:id="@+id/roundNum"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:gravity="right"
                     android:text="Round 1"
                     android:textSize="40sp" />
 
@@ -103,42 +112,160 @@
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/judgeLabel"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:id="@+id/fighterButtonLayout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Judge"
-            android:textSize="40sp"
-            app:layout_constraintBaseline_toBaselineOf="@+id/roundNumber"
-            app:layout_constraintStart_toStartOf="@+id/surfaceView" />
+            android:layout_gravity="left"
+            android:layout_marginTop="20sp"
+            android:orientation="vertical">
 
-        <edu.up.cs301.GameUI.CMInterface
-            android:id="@+id/surfaceView"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0" />
+            <Button
+                android:id="@+id/f1Button"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginLeft="20sp" />
 
+            <Button
+                android:id="@+id/f2Button"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="15sp" />
+
+            <Button
+                android:id="@+id/f3Button"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="15sp" />
+
+            <Button
+                android:id="@+id/f4Button"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="15sp" />
+
+            <Button
+                android:id="@+id/f5Button"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginStart="20sp"
+                android:layout_marginLeft="20sp"
+                android:layout_marginTop="15sp" />
+
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/ButtonLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom|right"
-            android:orientation="vertical"/>
+            android:id="@+id/scButtonLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:layout_marginStart="5sp"
+            android:layout_marginLeft="5sp"
+            android:layout_marginTop="50sp"
+            android:layout_marginBottom="20sp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/spellC1"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/spellC2"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/spellC3"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/spellC4"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/spellC5"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/spellC6"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="3" />
+
+            <Button
+                android:id="@+id/spellC7"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/spellC8"
+                android:layout_width="100sp"
+                android:layout_height="135sp"
+                android:layout_marginEnd="10sp"
+                android:layout_marginRight="10sp"
+                android:layout_weight="1" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <edu.up.cs301.cheatymages.CMInterface
+        android:id="@+id/surfaceView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <LinearLayout
+        android:id="@+id/actionButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center|right"
+        android:orientation="vertical">
 
         <Button
-            android:id="@+id/discardCardsButton"
+            android:id="@+id/discardCards"
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:text="Discard Cards" />
 
         <Button
-            android:id="@+id/betButton"
+            android:id="@+id/bet"
             android:layout_width="100sp"
             android:layout_height="100sp"
             android:text="Bet" />
@@ -151,6 +278,7 @@
             android:text="Pass"
             android:textSize="14sp" />
 
+
         <Button
             android:id="@+id/detectMagicButton"
             android:layout_width="100dp"
@@ -162,4 +290,3 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
