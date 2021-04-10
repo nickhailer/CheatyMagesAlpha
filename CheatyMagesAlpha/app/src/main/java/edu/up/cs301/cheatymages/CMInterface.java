@@ -50,8 +50,8 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
         // Draws 5 random fighter cards
         for(int i=0; i<gameState.getFighters().length; i++) {
             drawFighterCard(canvas, 50, 430 + (300*i), gameState.getFighters()[i].getName(),
-                    gameState.getFighters()[i].getPower(), gameState.getFighters()[i].getPrizeMoney(),true);
-            //fix
+                    gameState.getFighters()[i].getPower(), gameState.getFighters()[i].getPrizeMoney(), false);
+            //fix bet
         }
 
         // Draws hand of spell cards
@@ -325,24 +325,5 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
         statText.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(coinDesign, x + 175.0f, y + 270.0f, statText);
     }
-    /*
-    @Override
-    public void onClick(View button) {
-        if(button instanceof ImageButton) {
-            BetAction betAction = new BetAction(gameState.getPlayerTurn(), gameState.getBets());
-            this.game.sendAction(rollAction);
-        }
-        else if(button instanceof ImageButton) {
-            DetectMagicAction detectMagicAction = new DetectMagicAction(gameState.getPlayerTurn(), gameState.getFighters());
-        }
-        else if(button instanceof ImageButton) {
-            PassAction passAction = new PassAction(gameState);
-        }
-        else {
-            DiscardCardsAction discardCardsAction = new DiscardCardsAction();
-            this.game.sendAction(holdAction);
-        }
-    }
 
-     */
 }
