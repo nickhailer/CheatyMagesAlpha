@@ -26,12 +26,8 @@ class CMLocalGame extends LocalGame {
     }
 
     @Override
-    //I don't think this function is actually usable in our game because of how playerTurn works
-    //Perhaps it might still be used (or must be used depending on the framework
-    //Regardless it must stay here for the code to run even if unused
     protected boolean canMove(int playerIdx) {
-
-        return false;
+        return playerIdx == ((CMGameState) state).getPlayerTurn() || ((CMGameState) state).getPlayerTurn() < 0;
     }
 
     @Override

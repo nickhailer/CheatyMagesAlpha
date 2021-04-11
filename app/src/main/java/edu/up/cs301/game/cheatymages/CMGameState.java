@@ -554,4 +554,6 @@ public class CMGameState extends GameState{
     public int getConsecutivePasses() {
         return consecutivePasses;
     }
+
+    public int getNumPlayers() { return numPlayers; }
 }
