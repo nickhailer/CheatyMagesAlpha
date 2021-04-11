@@ -33,6 +33,12 @@ public class CMGameState extends GameState{
     //Holds on spells placed on fighters in play
     private ArrayList<SpellCard>[] attachedSpells;
 
+    //Keeps track of whether a card is revealed by a player
+    //The first dimension of the array is which player this is referring to
+    //The second dimension of the array is which fighter this is referring to
+    //The array list contains the index of the card that should be revealed to them
+    private ArrayList<Integer>[][] revealedSpells;
+
     //Holds the judge currently in play
     private JudgeCard judge;
 
@@ -65,53 +71,132 @@ public class CMGameState extends GameState{
         super();
 
         this.numPlayers = numPlayers;
+        roundNum = 1;
+        playerTurn = -1;
 
-        this.decks = new Decks(numPlayers);
+        decks = new Decks(numPlayers);
+        discardPile = new ArrayList<Card>();
 
-        this.hands = new ArrayList[numPlayers];
-        for(int i = 0; i < numPlayers; i++){
-            this.hands[i] = new ArrayList<SpellCard>();
-        }
-        fillPlayerHands();
-
-        this.gold = new int[numPlayers];
-        for(int i = 0; i < numPlayers; i++){
-            this.gold[i] = 2;
-        }
-
-        this.bets = new ArrayList[numPlayers];
-        for(int i = 0; i < numPlayers; i++){
-            this.bets[i] = new ArrayList<Integer>();
-        }
-
-        this.roundNum = 1;
-        this.playerTurn = -1;
-
-        this.fighters = new FighterCard[5];
+        fighters = new FighterCard[5];
         for(int i = 0; i < 5; i++){
-            this.fighters[i] = decks.drawFighterCard();
+            fighters[i] = decks.drawFighterCard();
         }
 
         judge = decks.drawJudgeCard();
 
-        this.attachedSpells = new ArrayList[5];
+        attachedSpells = new ArrayList[5];
         for(int i = 0; i < 5; i++){
-            this.attachedSpells[i] = new ArrayList<SpellCard>();
+            attachedSpells[i] = new ArrayList<SpellCard>();
         }
 
-        this.discardPile = new ArrayList<Card>();
+        gold = new int[numPlayers];
+        for(int i = 0; i < numPlayers; i++){
+            this.gold[i] = 2;
+        }
+
+        bets = new ArrayList[numPlayers];
+        for(int i = 0; i < numPlayers; i++){
+            this.bets[i] = new ArrayList<Integer>();
+        }
+
+        hands = new ArrayList[numPlayers];
+        for(int i = 0; i < numPlayers; i++){
+            hands[i] = new ArrayList<SpellCard>();
+        }
+        fillPlayerHands();
 
         betsPlaced = 0;
-
         finishedDiscarding = 0;
-
         consecutivePasses = 0;
 
         rng = new Random();
 
     }
 
-    //TODO IMPLEMENT DEEP COPY CONSTRUCTOR
+    /**
+     * CMGameState Copy Constructor
+     * Copies an imperfect game state from a player's perspective
+     * @param orig the original game state we are copying
+     * @param id the player that this is being copied for
+     */
+    public CMGameState(CMGameState orig, int id){
+
+        //Copy all the public information over without altering it
+
+        numPlayers = orig.numPlayers;
+        roundNum = orig.roundNum;
+        playerTurn = orig.playerTurn;
+        betsPlaced = orig.betsPlaced;
+        finishedDiscarding = orig.finishedDiscarding;
+        consecutivePasses = orig.consecutivePasses;
+
+        fighters = new FighterCard[5];
+        for(int i = 0; i < 5; i++){
+            fighters[i] = orig.getFighter(i);
+        }
+
+        judge = orig.getJudge();
+
+        gold = new int[numPlayers];
+        for(int i = 0; i < numPlayers; i++){
+            gold[i] = orig.gold[i];
+        }
+
+        discardPile = new ArrayList<Card>();
+        for(int i = 0; i < orig.discardPile.size(); i++){
+            discardPile.add(orig.discardPile.get(i));
+        }
+
+        //Copies all the modified private information over
+
+        //Deck is left null
+
+        attachedSpells = new ArrayList[5];
+        for(int i = 0; i < 5; i++){
+            attachedSpells[i] = new ArrayList<>();
+            for(int j = 0; j < orig.attachedSpells[i].size(); j++){
+                if(orig.attachedSpells[i].get(i).isFaceUp()) {
+                    attachedSpells[i].add(orig.attachedSpells[i].get(i));
+                }
+                else{
+                    attachedSpells[i].add(new SpellCard("ISFACEDOWN", 0, 0,
+                            ' ', false));
+                }
+            }
+        }
+
+        bets = new ArrayList[numPlayers];
+        for(int i = 0; i < numPlayers; i++){
+            bets[i] = new ArrayList<Integer>();
+            if(i != id){
+                for(int j = 0; j < orig.bets[i].size(); j++){
+                    bets[i].add(-1);
+                }
+            }
+            else{
+                for(int j = 0; j < orig.bets[i].size(); j++){
+                    bets[i].add(orig.bets[i].get(j));
+                }
+            }
+        }
+
+        hands = new ArrayList[numPlayers];
+        for(int i = 0; i < numPlayers; i++){
+            hands[i] = new ArrayList<SpellCard>();
+            if(i != id){
+                for(int j = 0; j < orig.hands[i].size(); j++){
+                    hands[i].add(new SpellCard("ISFACEDOWN", 0, 0,
+                            ' ', false));
+                }
+            }
+            else{
+                for(int j = 0; j < orig.hands[i].size(); j++){
+                    hands[i].add(orig.hands[i].get(j));
+                }
+            }
+        }
+
+    }
 
     //=========================================================================
     // PUBLIC METHODS
@@ -168,10 +253,20 @@ public class CMGameState extends GameState{
         consecutivePasses = 0;
         //increments player turn
         playerTurn = (playerTurn + 1) % numPlayers;
-        //removes spell from your hand and attaches it to the target
+        //checks if the spell card violates the judge's rules
+        for(int i = 0; i < judge.getDisallowedSpells().size(); i++) {
+            //if the spell is disallowed discard it instead
+            if(hands[id].get(spell).getSpellType() == judge.getDisallowedSpells().get(i)){
+                discardPile.add(hands[id].remove(spell));
+                return;
+            }
+            if(hands[id].get(spell).isForbidden() && judge.getDisallowedSpells().get(i) == 'f'){
+                discardPile.add(hands[id].remove(spell));
+                return;
+            }
+        }
+        //attaches the spell to the target
         attachedSpells[target].add(hands[id].remove(spell));
-        //increments player turn
-        playerTurn = (playerTurn + 1) % numPlayers;
     }
 
     /**
@@ -180,23 +275,19 @@ public class CMGameState extends GameState{
      * @param spell the index of the spell in your hand
      * @param target the fighter you wish to use the spell on (1-5)
      */
-    public void detectMagic(int id, int spell, int target){
+    public ArrayList<SpellCard> detectMagic(int id, int spell, int target){
         //breaks pass streak
         consecutivePasses = 0;
         //increments player turn
         playerTurn = (playerTurn + 1) % numPlayers;
         //discards target spell from your hand
         discardPile.add(hands[id].remove(spell));
-        //reveals all cards on target fighter for the player
-        ArrayList<Boolean> isFaceUp;
+        //returns the spell cards that should be revealed to the player
+        ArrayList<SpellCard> revealedSpells = new ArrayList<>();
         for(int i = 0; i < attachedSpells[target].size(); i++){
-            //gets the array determining whether the card is face up or not
-            isFaceUp = attachedSpells[target].get(i).getFaceUp();
-            //sets the card to be face up for the player only
-            isFaceUp.set(id, true);
-            //sends updated array back to the spell card
-            attachedSpells[target].get(i).setFaceUp(isFaceUp);
+            revealedSpells.add(attachedSpells[target].get(i));
         }
+        return revealedSpells;
     }
 
     /**
@@ -436,13 +527,9 @@ public class CMGameState extends GameState{
         return bets;
     }
 
-    public FighterCard[] getFighters() {
-        return fighters;
-    }
+    public FighterCard getFighter(int idx) { return fighters[idx]; }
 
-    public ArrayList<SpellCard>[] getAttachedSpells() {
-        return attachedSpells;
-    }
+    public ArrayList<SpellCard>[] getAttachedSpells() { return attachedSpells; }
 
     public JudgeCard getJudge() {
         return judge;
@@ -467,4 +554,9 @@ public class CMGameState extends GameState{
     public int getConsecutivePasses() {
         return consecutivePasses;
     }
+
+    public FighterCard[] getNumFighters() {return fighters;}
+
+    public int getNumPlayers() {return numPlayers;}
+
 }

@@ -9,15 +9,13 @@ public class SpellCard extends Card {
     //d = direct, e = enchant, s = support
     private char spellType;
     private boolean isForbidden;
-    //This is a list of size equal to the number of players because cards are shown as
-    //face up or down to different players
-    private ArrayList<Boolean> isFaceUp;
+    private boolean isFaceUp;
 
-    public SpellCard(String name, ArrayList<Boolean> isFaceUp, int mana, int powerMod, char spellType,
+    public SpellCard(String name, int mana, int powerMod, char spellType,
                      boolean isForbidden) {
         super(name);
         //adds attributes of spell cards
-        this.isFaceUp = isFaceUp;
+        isFaceUp = (spellType != 'e');
         this.mana = mana;
         this.powerMod = powerMod;
         this.spellType = spellType;
@@ -40,11 +38,7 @@ public class SpellCard extends Card {
         return isForbidden;
     }
 
-    public ArrayList<Boolean> getFaceUp() {
+    public boolean isFaceUp() {
         return isFaceUp;
-    }
-
-    public void setFaceUp(ArrayList<Boolean> isFaceUp) {
-        this.isFaceUp = isFaceUp;
     }
 }

@@ -25,6 +25,11 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
     public CMGameState gameState = new CMGameState(4);
     public String judgeType;
 
+    /**
+     * Constructor
+     * @param context
+     * @param attrs
+     */
     public CMInterface(Context context, AttributeSet attrs){
         super(context, attrs);
         setWillNotDraw(false);
@@ -35,6 +40,10 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
         this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
     }
 
+    /**
+     * onDraw Method draws everything on the screen
+     * @param canvas
+     */
     protected void onDraw(Canvas canvas){
         // Determines judges judgement
         if(gameState.getJudge().getJudgementType() == 'd') {
@@ -48,15 +57,15 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
                         judgeType, gameState.getJudge().getDisallowedSpells());
 
         // Draws 5 random fighter cards
-        for(int i=0; i<gameState.getFighters().length; i++) {
-            drawFighterCard(canvas, 50, 430 + (300*i), gameState.getFighters()[i].getName(),
-                    gameState.getFighters()[i].getPower(), gameState.getFighters()[i].getPrizeMoney(), false);
-            //fix bet
+        /////////Fix everything how to know if the card is bet on
+        for(int i=0; i<gameState.getNumFighters().length; i++) {
+            drawFighterCard(canvas, 50, 430 + (300*i), gameState.getFighter(i).getName(),
+                    gameState.getFighter(i).getPower(), gameState.getFighter(i).getPrizeMoney(), false);
         }
 
-        // Draws hand of spell cards
+        // Draws players hand of spell cards
         for(int i=0; i<gameState.getHands()[i].size(); i++) {
-            drawSpellCard(canvas, 50 + (200*i), 2000, gameState.getHands()[i].get(i).getName(), gameState.getHands()[i].get(i).getMana(), gameState.getHands()[i].get(i).getSpellType(), gameState.getHands()[i].get(i).getPowerMod(),
+            drawSpellCard(canvas, 20 + (210*i), 2000, gameState.getHands()[i].get(i).getName(), gameState.getHands()[i].get(i).getMana(), gameState.getHands()[i].get(i).getSpellType(), gameState.getHands()[i].get(i).getPowerMod(),
                     false, "", false);
         }
 
@@ -73,22 +82,36 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
             }
         }
 
+        //idk what this is
         for(int i=0; i<gameState.getAttachedSpells()[i].size(); i++) {
 
         }
-
+        /*
         drawSpellCard(canvas, 300, 430, "Healing", 1, 'd',+4,
                 false, "", false);
         drawSpellCard(canvas, 300, 730, "Blizzard", 4, 'd',-6,
                 false, "", false);
         drawFaceDownCard(canvas, 300, 1030, Color.GRAY);
 
+         */
+
         // draws coin label
         drawCoin(canvas, 1400, -45, "C");
+
+        invalidate();
     }
 
-    //draws a fighter card on the screen
-    //x and y are the top left corner of the card
+    /**
+     * drawFighterCard method draws a fighter card on the screen
+     *
+     * @param canvas
+     * @param x top left corner of the card
+     * @param y top left corner of the card
+     * @param fighterName fighters name
+     * @param power fighters power level
+     * @param prizeGold fighters prize money
+     * @param hasBet of you bet on that fighter card
+     */
     protected void drawFighterCard(Canvas canvas, float x, float y, String fighterName,
                                    int power, int prizeGold, boolean hasBet){
 
@@ -125,10 +148,22 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
 
     }
 
-    //draws a spell card on the screen
-    //if hasCardText is true the card is printed with textEffect at the bottom
-    //else if hasCardText is false the card only has a power modifier
-    //spell types: d = direct, e = enchant, s = support
+    /**
+     * draws a spell card on the screen
+     * if hasCardText is true the card is printed with textEffect at the bottom
+     * else if hasCardText is false the card only has a power modifier
+     *
+     * @param canvas
+     * @param x top left corner of the card
+     * @param y top left corner of the card
+     * @param spellName Name of the spell card
+     * @param mana amount of mana on card
+     * @param spellType  spell types: d = direct, e = enchant, s = support
+     * @param powerMod power modification on card
+     * @param hasCardText cards text
+     * @param effectText explains the effect of the card
+     * @param isForbidden checks if it is a forbidden type spell
+     */
     protected void drawSpellCard(Canvas canvas, float x, float y, String spellName, int mana,
                                  char spellType, int powerMod, boolean hasCardText,
                                  String effectText, boolean isForbidden){
@@ -202,9 +237,17 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
 
     }
 
-    //draws a judge card on the screen
-    //disallows shows which card types this judge bans
-    // In order: direct, enchant, support, forbidden
+    /**
+     * draws a judge card on the screen
+     *
+     * @param canvas
+     * @param x top left corner of the card
+     * @param y top left corner of the card
+     * @param judgeName name of Judge
+     * @param manaLimit Judges mana limit
+     * @param judgementType Judges judgement (Either Eject or Dispel)
+     * @param disallows disallows shows which card types this judge bans (In order: direct, enchant, support, forbidden)
+     */
     protected void drawJudgeCard(Canvas canvas, float x, float y, String judgeName, int manaLimit,
                                  String judgementType, ArrayList<Character> disallows) {
 
@@ -251,7 +294,14 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
 
     }
 
-    //draws a face down card on the screen
+    /**
+     * draws a face down card on the screen
+     *
+     * @param canvas
+     * @param x top left corner of the card
+     * @param y top left corner of the card
+     * @param cardBackColor color of card
+     */
     protected void drawFaceDownCard(Canvas canvas, float x, float y, int cardBackColor){
         //draws the card back's base color first
         Paint cardBackFillPaint = new Paint();
@@ -271,7 +321,13 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
         canvas.drawText("MAGES", x + cardWidth/2, y + cardHeight - 70.0f, cardBackTextPaint);
     }
 
-    //draws the black border for the card outline
+    /**
+     * draws the black border for the card outline
+     *
+     * @param canvas
+     * @param x top left corner of the outline
+     * @param y top left corner of the outline
+     */
     protected void drawCardOutline(Canvas canvas, float x, float y){
         Paint outlinePaint = new Paint();
         outlinePaint.setColor(Color.BLACK);
@@ -280,7 +336,14 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
         canvas.drawRect(x, y, x + cardWidth, y + cardHeight, outlinePaint);
     }
 
-    //draws the card name at the top of the card
+    /**
+     * draws the card name at the top of the card
+     *
+     * @param canvas
+     * @param x top left corner of the text(title)
+     * @param y top left corner of the text(title)
+     * @param text the card title
+     */
     protected void drawCardTitle(Canvas canvas, float x, float y, String text){
         Paint titlePaint = new Paint();
         titlePaint.setColor(Color.BLACK);
@@ -290,9 +353,16 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
         canvas.drawText(text, x + cardWidth/2, y + 50.0f, titlePaint);
     }
 
-    //converts a string into an array of smaller strings using a max pixel width
-    //this is intended be used to wrap text within a certain width
-    //this code is functional for now but will cut off words and will need to be altered
+    /**
+     * converts a string into an array of smaller strings using a max pixel width
+     * this is intended be used to wrap text within a certain width
+     * this code is functional for now but will cut off words and will need to be altered
+     *
+     * @param text
+     * @param width
+     * @param textPaint
+     * @return
+     */
     protected ArrayList<String> textLineWrap(String text, float width, Paint textPaint){
         Rect bounds = new Rect();
         ArrayList<String> splitText = new ArrayList<String>();
@@ -308,11 +378,15 @@ public class CMInterface extends SurfaceView {//implements View.OnClickListener{
         return splitText;
     }
 
-
-    //draws a coin on the screen
-    //x and y are the top left corner of the coin
+    /**
+     *  draws a coin on the screen
+     *
+     * @param canvas
+     * @param x top left corner of the coin
+     * @param y top left corner of the coin
+     * @param coinDesign 'C' design on coin
+     */
     protected void drawCoin(Canvas canvas, float x, float y, String coinDesign) {
-
         //draws the circle for the gold coin
         Paint gold = new Paint();
         gold.setColor(Color.YELLOW);
