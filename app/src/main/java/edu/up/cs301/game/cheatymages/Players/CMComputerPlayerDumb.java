@@ -70,6 +70,5 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
 
         //If you can't do anything else pass
         game.sendAction(new PassAction(this));
-        return;
     }
 }
