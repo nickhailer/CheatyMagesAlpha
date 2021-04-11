@@ -1,6 +1,5 @@
 package edu.up.cs301;
 
-import android.view.MotionEvent;
 import android.view.View;
 
 import org.junit.Before;
@@ -15,7 +14,7 @@ import edu.up.cs301.game.GameFramework.players.GamePlayer;
 import edu.up.cs301.game.R;
 import edu.up.cs301.tictactoe.TTTLocalGame;
 import edu.up.cs301.tictactoe.TTTMainActivity;
-import edu.up.cs301.tictactoe.infoMessage.TTTState;
+import edu.up.cs301.tictactoe.tictactoe.TTTState;
 import edu.up.cs301.tictactoe.tttActionMessage.TTTMoveAction;
 
 import static org.junit.Assert.*;
