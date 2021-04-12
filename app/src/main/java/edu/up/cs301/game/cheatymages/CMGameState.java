@@ -298,9 +298,6 @@ public class CMGameState extends GameState{
      */
     public boolean discardCards(int id, ArrayList<Integer> discards){
 
-        //IMPORTANT READ THIS FOR THE LOVE OF GOD
-        //IF THE DISCARD ARRAYLIST IS NOT IN ORDER OF GREATEST TO LEAST THE CODE CAN AND WILL BREAK
-
         //Removes cards from your hand and adds them to the discard pile
         for(int i = 0; i < discards.size(); i++){
             discardPile.add(hands[id].remove((int) discards.get(i)));

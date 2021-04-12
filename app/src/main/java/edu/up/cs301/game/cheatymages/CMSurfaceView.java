@@ -8,9 +8,11 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import edu.up.cs301.game.cheatymages.Cards.JudgeCard;
 import edu.up.cs301.game.cheatymages.Cards.SpellCard;
 import edu.up.cs301.game.cheatymages.Players.CMHumanPlayer;
 
@@ -20,6 +22,8 @@ public class CMSurfaceView extends SurfaceView {
     protected final float cardWidth = 180;
     protected CMGameState state;
     protected int playerId;
+    protected boolean[] fightersSelected;
+    protected boolean[] spellsSelected;
 
     /**
      * Constructor
@@ -38,7 +42,30 @@ public class CMSurfaceView extends SurfaceView {
 
     public void setState(CMGameState state, int playerId){
         this.state = state;
+        fightersSelected = new boolean[5];
+        if(state.getNumPlayers() > 4) {
+            spellsSelected = new boolean[6];
+        }
+        else{
+            spellsSelected = new boolean[8];
+        }
         this.playerId = playerId;
+    }
+
+    public void selectFighterCard(int idx){
+        if(fightersSelected[idx]){
+            fightersSelected[idx] = false;
+            return;
+        }
+        fightersSelected[idx] = true;
+    }
+
+    public void selectSpellCard(int idx){
+        if(spellsSelected[idx]){
+            spellsSelected[idx] = false;
+            return;
+        }
+        spellsSelected[idx] = true;
     }
 
     /**
@@ -60,8 +87,9 @@ public class CMSurfaceView extends SurfaceView {
             judgementType = "Eject";
         }
         // Draws judge card
-        drawJudgeCard(canvas, 15, 120, state.getJudge().getName(), state.getJudge().getManaLimit(),
-                        judgementType, state.getJudge().getDisallowedSpells());
+        JudgeCard judge = state.getJudge();
+        drawJudgeCard(canvas, 15, 120, judge.getName(), judge.getManaLimit(),
+                        judgementType, judge.getDisallowedSpells(), judge.getName().equals("Tad"));
 
         // Draws 5 random fighter cards
         for(int i=0; i < 5; i++) {
@@ -74,7 +102,7 @@ public class CMSurfaceView extends SurfaceView {
             SpellCard spell = state.getHands()[playerId].get(i);
             drawSpellCard(canvas, 20 + (210*i), 2000, spell.getName(), spell.getMana(),
                     spell.getSpellType(), spell.getPowerMod(),false, "",
-                    spell.isForbidden());
+                    spell.isForbidden(), spellsSelected[i]);
         }
 
         // Draws played spell cards
@@ -87,7 +115,8 @@ public class CMSurfaceView extends SurfaceView {
                 }
                 else {
                     drawSpellCard(canvas, 300 + (250*i), yCoord, spell.getName(), spell.getMana(),
-                            spell.getSpellType(), spell.getPowerMod(), false, "", spell.isForbidden());
+                            spell.getSpellType(), spell.getPowerMod(), false, "",
+                            spell.isForbidden(), false);
                 }
             }
         }
@@ -163,7 +192,17 @@ public class CMSurfaceView extends SurfaceView {
      */
     protected void drawSpellCard(Canvas canvas, float x, float y, String spellName, int mana,
                                  char spellType, int powerMod, boolean hasCardText,
-                                 String effectText, boolean isForbidden){
+                                 String effectText, boolean isForbidden, boolean hasSelected){
+
+        if(hasSelected){
+            Paint outlinePaint = new Paint();
+            outlinePaint.setColor(0x70FFD700);
+            outlinePaint.setStyle(Paint.Style.STROKE);
+            outlinePaint.setStrokeWidth(10.0f);
+            canvas.drawRect(x - 10.0f, y - 10.0f, x + cardWidth + 10.0f, y + cardHeight + 10.0f,
+                    outlinePaint);
+        }
+
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, spellName);
 
@@ -246,28 +285,32 @@ public class CMSurfaceView extends SurfaceView {
      * @param disallows disallows shows which card types this judge bans (In order: direct, enchant, support, forbidden)
      */
     protected void drawJudgeCard(Canvas canvas, float x, float y, String judgeName, int manaLimit,
-                                 String judgementType, ArrayList<Character> disallows) {
+                                 String judgementType, ArrayList<Character> disallows,
+                                 boolean noManaLimit) {
 
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, judgeName);
 
-        //writes the mana limit on the card
-        Paint manaLimitTextPaint = new Paint();
-        manaLimitTextPaint.setColor(Color.BLACK);
-        manaLimitTextPaint.setTextAlign(Paint.Align.CENTER);
-        manaLimitTextPaint.setTextSize(30.0f);
-        manaLimitTextPaint.setAntiAlias(true);
-        canvas.drawText(Integer.toString(manaLimit), x + 30.0f,y + cardHeight - 75.0f,
-                manaLimitTextPaint);
+        if(!noManaLimit) {
+            //writes the mana limit on the card
+            Paint manaLimitTextPaint = new Paint();
+            manaLimitTextPaint.setColor(Color.BLACK);
+            manaLimitTextPaint.setTextAlign(Paint.Align.CENTER);
+            manaLimitTextPaint.setTextSize(30.0f);
+            manaLimitTextPaint.setAntiAlias(true);
+            canvas.drawText(Integer.toString(manaLimit), x + 30.0f, y + cardHeight - 75.0f,
+                    manaLimitTextPaint);
 
-        //writes judgement type on the card
-        Paint judgementTextPaint = new Paint();
-        judgementTextPaint.setColor(Color.BLACK);
-        judgementTextPaint.setTextSize(30.0f);
-        manaLimitTextPaint.setTextAlign(Paint.Align.RIGHT);
-        judgementTextPaint.setAntiAlias(true);
-        canvas.drawText(judgementType, x + cardWidth - 90.0f,y + cardHeight - 75.0f,
-                judgementTextPaint);
+            //writes judgement type on the card
+            Paint judgementTextPaint = new Paint();
+            judgementTextPaint.setColor(Color.BLACK);
+            judgementTextPaint.setTextSize(30.0f);
+            judgementTextPaint.setTextAlign(Paint.Align.RIGHT);
+            judgementTextPaint.setAntiAlias(true);
+            canvas.drawText(judgementType, x + cardWidth - 90.0f,y + cardHeight - 75.0f,
+                    judgementTextPaint);
+
+        }
 
         //draws symbols of cards this judge disallows at bottom of card
         Paint symbolPaint = new Paint();

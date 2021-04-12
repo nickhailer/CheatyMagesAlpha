@@ -145,6 +145,7 @@ class CMLocalGame extends LocalGame {
                 return false;
             }
 
+            //TODO THIS FUNCTIONS RETURN VALUE SHOULD BE SOMEHOW SENT TO THE UI TO FLASH THE REVEALED CARDS
             if(action instanceof DetectMagicAction){
                 cmState.detectMagic(playerId, spellAction.getSpell(), spellAction.getTarget());
             }
@@ -194,22 +195,12 @@ class CMLocalGame extends LocalGame {
             }
 
             //Checks if all the card indices are valid
-            for(int i : discardAction.getDiscards()){
-                if(i < 0 || i >= cmState.getHands()[playerId].size()){
+            for(int i : discardAction.getDiscards()) {
+                if (i < 0 || i >= cmState.getHands()[playerId].size()) {
                     return false;
                 }
             }
 
-            //TODO THIS CODE SHOULD BE REDUNDANT AND REMOVED EVENTUALLY
-            //Checks to make sure the cards are listed in the correct order
-            ArrayList<Integer> temp = discardAction.getDiscards();
-            Collections.sort(temp);
-            Collections.reverse(temp);
-            if(!discardAction.getDiscards().equals(temp)){
-                return false;
-            }
-
-            //TODO THIS FUNCTIONS RETURN VALUE SHOULD BE SOMEHOW SENT TO THE UI TO FLASH THE REVEALED CARDS
             cmState.discardCards(playerId, discardAction.getDiscards());
 
         }
