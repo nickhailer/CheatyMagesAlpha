@@ -1,0 +1,26 @@
+{
+    "logs": [
+        {
+            "outputFile": "C:\\Users\\dewey\\AndroidStudioProjects\\CheatyMagesAlpha\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-w820dp-v13\\values-w820dp-v13.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\dewey\\AndroidStudioProjects\\CheatyMagesAlpha\\app\\src\\main\\res\\values-w820dp\\color.xml",
+                    "from": {
+                        "startLines": "2,5,3,4",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "57,172,95,133",
+                        "endColumns": "36,38,36,37",
+                        "endOffsets": "89,206,127,166"
+                    },
+                    "to": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,92,131,168",
+                        "endColumns": "36,38,36,37",
+                        "endOffsets": "87,126,163,201"
+                    }
+                }
+            ]
+        }
+    ]
+}

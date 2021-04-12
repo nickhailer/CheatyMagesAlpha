@@ -2,7 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/CheatyMagesAlpha.iml" filepath="$PROJECT_DIR$/.idea/CheatyMagesAlpha.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/CheatyMagesAlpha.iml" filepath="$PROJECT_DIR$/.idea/modules/CheatyMagesAlpha.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/CheatyMagesAlpha.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/CheatyMagesAlpha.app.iml" />
     </modules>
   </component>
 </project>
