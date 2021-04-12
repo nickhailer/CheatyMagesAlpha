@@ -155,8 +155,8 @@ public class CMGameState extends GameState{
         for(int i = 0; i < 5; i++){
             attachedSpells[i] = new ArrayList<>();
             for(int j = 0; j < orig.attachedSpells[i].size(); j++){
-                if(orig.attachedSpells[i].get(i).isFaceUp()) {
-                    attachedSpells[i].add(orig.attachedSpells[i].get(i));
+                if(orig.attachedSpells[i].get(j).isFaceUp()) {
+                    attachedSpells[i].add(orig.attachedSpells[i].get(j));
                 }
                 else{
                     attachedSpells[i].add(new SpellCard("ISFACEDOWN", 0, 0,

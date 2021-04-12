@@ -23,29 +23,24 @@ public class Decks {
         fighterDeck = new ArrayList<>();
         judgeDeck = new ArrayList<>();
 
-        ArrayList<Boolean> isFaceUp = new ArrayList<>();
-        for(int i = 0; i < numPlayers; i++){
-            isFaceUp.add(false);
-        }
-
         for(int i = 0; i < 2; i++){
-            spellDeck.add(new SpellCard("Magic Missile", isFaceUp, 0, -2, 'd', false));
-            spellDeck.add(new SpellCard("Cure", isFaceUp, 0, 2, 'd', false));
+            spellDeck.add(new SpellCard("Magic Missile", 0, -2, 'd', false));
+            spellDeck.add(new SpellCard("Cure", 0, 2, 'd', false));
         }
         for(int i = 0; i < 8; i++){
-            spellDeck.add(new SpellCard("Healing", isFaceUp, 1, 4, 'd', false));
-            spellDeck.add(new SpellCard("Fireball", isFaceUp, 1, -4, 'd', false));
-            spellDeck.add(new SpellCard("Strengthen", isFaceUp, 2, 3, 'e', false));
-            spellDeck.add(new SpellCard("Weaken", isFaceUp, 2, -3, 'e', false));
-            spellDeck.add(new SpellCard("Regeneration", isFaceUp, 3, 3, 'd', false));
-            spellDeck.add(new SpellCard("Blizzard", isFaceUp, 4, -6, 'd', false));
-            spellDeck.add(new SpellCard("Might", isFaceUp, 4, 5, 'e', false));
-            spellDeck.add(new SpellCard("Slow", isFaceUp, 6, -4, 'e', false));
+            spellDeck.add(new SpellCard("Healing", 1, 4, 'd', false));
+            spellDeck.add(new SpellCard("Fireball", 1, -4, 'd', false));
+            spellDeck.add(new SpellCard("Strengthen", 2, 3, 'e', false));
+            spellDeck.add(new SpellCard("Weaken", 2, -3, 'e', false));
+            spellDeck.add(new SpellCard("Regeneration", 3, 3, 'd', false));
+            spellDeck.add(new SpellCard("Blizzard", 4, -6, 'd', false));
+            spellDeck.add(new SpellCard("Might", 4, 5, 'e', false));
+            spellDeck.add(new SpellCard("Slow", 6, -4, 'e', false));
         }
-        spellDeck.add(new SpellCard("Mana Boost", isFaceUp, 5, 0, 'e', false));
-        spellDeck.add(new SpellCard("Mana Seal", isFaceUp, -5, 0, 'e', false));
-        spellDeck.add(new SpellCard("Giant Growth", isFaceUp, 10, 12, 'e', true));
-        spellDeck.add(new SpellCard("Shrink", isFaceUp, 10, -12, 'e', true));
+        spellDeck.add(new SpellCard("Mana Boost", 5, 0, 'e', false));
+        spellDeck.add(new SpellCard("Mana Seal", -5, 0, 'e', false));
+        spellDeck.add(new SpellCard("Giant Growth", 10, 12, 'e', true));
+        spellDeck.add(new SpellCard("Shrink", 10, -12, 'e', true));
 
         ArrayList<Character> disallowsMoria = new ArrayList<>();
         disallowsMoria.add('s');

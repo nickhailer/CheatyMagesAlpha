@@ -1,9 +1,6 @@
 package edu.up.cs301.game.cheatymages;
 
-import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -35,7 +32,8 @@ public class CMMainActivity extends GameMainActivity {
     Button[] cardButtons;
 
     /**
-     *  Creates a default configuration of the game
+     * Creates a default configuration of the game
+     *
      * @return default configuration
      */
     @Override
@@ -46,7 +44,7 @@ public class CMMainActivity extends GameMainActivity {
         playerTypes.add(new GamePlayerType("Human Player") {
             @Override
             public GamePlayer createPlayer(String name) {
-                return new CMHumanPlayer(name);
+                return new CMHumanPlayer(name, R.layout.cm_human_player);
             }
         });
 
@@ -59,7 +57,7 @@ public class CMMainActivity extends GameMainActivity {
 
         //TODO ONCE IMPLEMENTED ADD OTHER PLAYER TYPES HERE
 
-        GameConfig defaultConfig = new GameConfig(playerTypes, 3,6, "Cheaty Mages", 5213);
+        GameConfig defaultConfig = new GameConfig(playerTypes, 3, 6, "Cheaty Mages", 5213);
 
         //TODO CHANGE THIS TO BE 1 HUMAN PLAYER AND 2 SMART AIS ONCE IMPLEMENTED
         defaultConfig.addPlayer("P1", 0);
@@ -72,19 +70,16 @@ public class CMMainActivity extends GameMainActivity {
     }
 
     /**
-     *
-     * @param gameState
-     *              The desired gameState to start at or null for new game
-     *
+     * @param gameState The desired gameState to start at or null for new game
      * @return
      */
     @Override
     public LocalGame createLocalGame(GameState gameState) {
         //TODO FIX THIS I DONT KNOW HOW BUT IT WILL ALWAYS ASSUME NEW GAMES HAVE 3 PLAYERS
-        if(gameState == null){
+        if (gameState == null) {
             return new CMLocalGame(3);
         }
-        return new CMLocalGame(((CMGameState)gameState).getNumPlayers());
+        return new CMLocalGame(((CMGameState) gameState).getNumPlayers());
     }
 
     /**
@@ -93,6 +88,7 @@ public class CMMainActivity extends GameMainActivity {
      *
      * @param savedInstanceState
      */
+    /*
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,7 +96,7 @@ public class CMMainActivity extends GameMainActivity {
 
 
 
-        CMInterface theView = (CMInterface) findViewById(R.id.surfaceView);
+        CMSurfaceView theView = (CMSurfaceView) findViewById(R.id.surfaceView);
         Button passButton = (Button) findViewById(R.id.passButton);
         Button betButton = (Button) findViewById(R.id.betButton);
         Button detectMagicButton = (Button) findViewById(R.id.detectMagicButton);
@@ -204,7 +200,5 @@ public class CMMainActivity extends GameMainActivity {
         }
 
     }
-
-
-
+     */
 }
