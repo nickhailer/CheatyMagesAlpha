@@ -1,6 +1,8 @@
 package edu.up.cs301.game.cheatymages.Players;
 
+import android.graphics.Point;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import edu.up.cs301.game.cheatymages.Actions.*;
 import edu.up.cs301.game.cheatymages.CMGameState;
 import edu.up.cs301.game.cheatymages.CMSurfaceView;
 
-public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListener{
+public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListener {
 
     // keeps track of what turn it was the last time you were updated information
     protected int playerTurn;
@@ -78,82 +80,88 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListen
 
         // set the surfaceView instance variable
         surfaceView = (CMSurfaceView) myActivity.findViewById(R.id.surfaceView);
-        surfaceView.setOnClickListener(this);
+        surfaceView.setOnTouchListener(this);
     }
 
     @Override
-    public void onClick(View button) {
-        int buttonId = button.getId();
-        if(buttonId == R.id.betButton){
-            ArrayList<Integer> bets = new ArrayList<>();
-            for(int i = 0; i < 5; i++){
-                if(selectedFighters[i]){
-                    bets.add(i);
+    public boolean onTouch(View view, MotionEvent motionEvent) {
+
+        if (motionEvent.getAction() != MotionEvent.ACTION_UP) return true;
+
+        int x = (int) motionEvent.getX();
+        int y = (int) motionEvent.getY();
+        String card = surfaceView.mapPositionToCard(x, y);
+
+        switch (card) {
+            case "Bet Button":
+                ArrayList<Integer> bets = new ArrayList<>();
+                for (int i = 0; i < 5; i++) {
+                    if (selectedFighters[i]) {
+                        bets.add(i);
+                    }
                 }
-            }
-            this.game.sendAction(new BetAction(this, bets));
-        }
-        else if(buttonId == R.id.passButton){
-            this.game.sendAction(new PassAction(this));
-            detectMagic = false;
-        }
-        else if(buttonId == R.id.detectMagicButton){
-            detectMagic = true;
-            //TODO UNCOMMENT THIS ONCE IMPLEMENT
-            //surfaceView.selectDetectMagic()
-        }
-        else if(buttonId == R.id.discardCardsButton){
-            ArrayList<Integer> discards = new ArrayList<>();
-            for(int i = 8; i >= 0; i--){
-                if(selectedSpells[i]){
-                    discards.add(i);
+                this.game.sendAction(new BetAction(this, bets));
+                break;
+            case "Pass Button":
+                this.game.sendAction(new PassAction(this));
+                detectMagic = false;
+                break;
+            case "Detect Magic Button":
+                detectMagic = true;
+                //TODO UNCOMMENT THIS ONCE IMPLEMENT
+                //surfaceView.selectDetectMagic()
+                break;
+            case "Discard Button":
+                ArrayList<Integer> discards = new ArrayList<>();
+                for (int i = 8; i >= 0; i--) {
+                    if (selectedSpells[i]) {
+                        discards.add(i);
+                    }
                 }
-            }
-            game.sendAction(new DiscardCardsAction(this, discards));
-            detectMagic = false;
+                game.sendAction(new DiscardCardsAction(this, discards));
+                detectMagic = false;
+                break;
+            case "Fighter 1":
+                clickFighter(0);
+                break;
+            case "Fighter 2":
+                clickFighter(1);
+                break;
+            case "Fighter 3":
+                clickFighter(2);
+                break;
+            case "Fighter 4":
+                clickFighter(3);
+                break;
+            case "Fighter 5":
+                clickFighter(4);
+                break;
+            case "Spell 1":
+                clickSpell(0);
+                break;
+            case "Spell 2":
+                clickSpell(1);
+                break;
+            case "Spell 3":
+                clickSpell(2);
+                break;
+            case "Spell 4":
+                clickSpell(3);
+                break;
+            case "Spell 5":
+                clickSpell(4);
+                break;
+            case "Spell 6":
+                clickSpell(5);
+                break;
+            case "Spell 7":
+                clickSpell(6);
+                break;
+            case "Spell 8":
+                clickSpell(7);
+                break;
         }
-        else if(buttonId == R.id.f1Button){
-            clickFighter(0);
-        }
-        else if(buttonId == R.id.f2Button){
-            clickFighter(1);
-        }
-        else if(buttonId == R.id.f3Button){
-            clickFighter(2);
-        }
-        else if(buttonId == R.id.f4Button){
-            clickFighter(3);
-        }
-        else if(buttonId == R.id.f5Button){
-            clickFighter(4);
-        }
-        else if(buttonId == R.id.spellC1){
-            clickSpell(0);
-        }
-        else if(buttonId == R.id.spellC2){
-            clickSpell(1);
-        }
-        else if(buttonId == R.id.spellC3){
-            clickSpell(2);
-        }
-        else if(buttonId == R.id.spellC4){
-            clickSpell(3);
-        }
-        else if(buttonId == R.id.spellC5){
-            clickSpell(4);
-        }
-        else if(buttonId == R.id.spellC6){
-            clickSpell(5);
-        }
-        else if(buttonId == R.id.spellC7){
-            clickSpell(6);
-        }
-        else if(buttonId == R.id.spellC8){
-            clickSpell(7);
-        }
-        else{
-            Log.d("CMHumanPlayer", "Unknown Button ID");
-        }
+        return true;
     }
 
     private void clickFighter(int idx){

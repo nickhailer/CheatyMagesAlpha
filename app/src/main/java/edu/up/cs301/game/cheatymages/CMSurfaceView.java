@@ -116,14 +116,13 @@ public class CMSurfaceView extends SurfaceView {
 
         // Draws played spell cards
         for(int i = 0; i < 5; i++){
-            int yCoord = 430 + i*300;
             for(int j=0; j<state.getAttachedSpells()[i].size(); j++) {
                 SpellCard spell = state.getAttachedSpells()[i].get(i);
                 if(spell.getSpellType() == 'e') {
-                    drawFaceDownCard(canvas, 300 + (250*i), yCoord, Color.GRAY);
+                    drawFaceDownCard(canvas, 300 + (250*j), 430 + i*300, Color.GRAY);
                 }
                 else {
-                    drawSpellCard(canvas, 300 + (250*i), yCoord, spell.getName(), spell.getMana(),
+                    drawSpellCard(canvas, 300 + (250*j), 430 + i*300, spell.getName(), spell.getMana(),
                             spell.getSpellType(), spell.getPowerMod(), false, "",
                             spell.isForbidden(), false);
                 }
@@ -134,6 +133,38 @@ public class CMSurfaceView extends SurfaceView {
         drawCoin(canvas, 1400, -45, "C");
 
         invalidate();
+    }
+
+    public String mapPositionToCard(int x, int y){
+        //TODO CHANGE THIS FUNCTION TO WORK WITH CHANGING CARD SPACING
+        if(50 <= x && x >= 50 + cardWidth){
+            for(int i = 0; i < 5; i++){
+                if(430 + 300*i <= y && y <= 430 + 300*i + cardHeight){
+                    return "Fighter " + Integer.toString(i + 1);
+                }
+            }
+        }
+        if(2000 <= y && y <= 2000 + cardHeight){
+            for(int i = 0; i < 8; i++){
+                if(20 + 220*i <= x || x <= 20 + 220*i + cardWidth){
+                    return "Spell " + Integer.toString(i + 1);
+                }
+            }
+        }
+        //TODO IMPLEMENT THIS
+        if(0 <= y && y <= 10 && 0 <= x && x <= 10){
+            return "Bet Button";
+        }
+        if(0 <= y && y <= 10 && 0 <= x && x <= 10){
+            return "Pass Button";
+        }
+        if(0 <= y && y <= 10 && 0 <= x && x <= 10){
+            return "Detect Magic Button";
+        }
+        if(0 <= y && y <= 10 && 0 <= x && x <= 10){
+            return "Discard Button";
+        }
+        return "";
     }
 
     /**

@@ -26,139 +26,6 @@
                 android:textSize="40sp" />
 
             <LinearLayout
-                android:id="@+id/otherPlayerLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="left"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/otherPlayers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="150sp"
-                    android:layout_marginLeft="150sp"
-                    android:text="Other Players"
-                    android:textSize="40sp" />
-
-                <TextView
-                    android:id="@+id/playerNum"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="220sp"
-                    android:layout_marginLeft="220sp"
-                    android:text="PL2        PL3 "
-                    android:textSize="25sp" />
-
-                <LinearLayout
-                    android:id="@+id/opponentGoldLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/opponetsGold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="105sp"
-                        android:layout_marginLeft="105sp"
-                        android:layout_weight="1"
-                        android:text="Gold:"
-                        android:textSize="25sp" />
-
-                    <TextView
-                        android:id="@+id/p2Gold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10sp"
-                        android:layout_marginLeft="10sp"
-                        android:layout_weight="1"
-                        android:text="02"
-                        android:textSize="25sp" />
-
-                    <TextView
-                        android:id="@+id/p3Gold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20sp"
-                        android:layout_marginLeft="20sp"
-                        android:layout_weight="1"
-                        android:text="02"
-                        android:textSize="25sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/opponentsBetLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/betsLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="100sp"
-                        android:layout_marginLeft="100sp"
-                        android:layout_weight="1"
-                        android:text="Bets:"
-                        android:textSize="25sp" />
-
-                    <TextView
-                        android:id="@+id/p2Bets"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="5"
-                        android:textSize="25sp" />
-
-                    <TextView
-                        android:id="@+id/p3Bets"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="4"
-                        android:textSize="25sp" />
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/opponentHandSizeLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/handSizeLabel"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="40sp"
-                        android:layout_marginLeft="40sp"
-                        android:layout_weight="1"
-                        android:text="Hand Size:"
-                        android:textSize="25sp" />
-
-                    <TextView
-                        android:id="@+id/p2HandSize"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="4"
-                        android:textSize="25sp" />
-
-                    <TextView
-                        android:id="@+id/p3HandSize"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="3"
-                        android:textSize="25sp" />
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <LinearLayout
                 android:id="@+id/coinAndRoundLayout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -352,6 +219,139 @@
         android:layout_height="match_parent"
         android:gravity="center|right"
         android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/otherPlayerLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/otherPlayers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="150sp"
+                android:layout_marginLeft="150sp"
+                android:text="Other Players"
+                android:textSize="40sp" />
+
+            <TextView
+                android:id="@+id/playerNum"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="220sp"
+                android:layout_marginLeft="220sp"
+                android:text="PL2        PL3 "
+                android:textSize="25sp" />
+
+            <LinearLayout
+                android:id="@+id/opponentGoldLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/opponetsGold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="105sp"
+                    android:layout_marginLeft="105sp"
+                    android:layout_weight="1"
+                    android:text="Gold:"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/p2Gold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10sp"
+                    android:layout_marginLeft="10sp"
+                    android:layout_weight="1"
+                    android:text="02"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/p3Gold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20sp"
+                    android:layout_marginLeft="20sp"
+                    android:layout_weight="1"
+                    android:text="02"
+                    android:textSize="25sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/opponentsBetLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/betsLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="100sp"
+                    android:layout_marginLeft="100sp"
+                    android:layout_weight="1"
+                    android:text="Bets:"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/p2Bets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="5"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/p3Bets"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="4"
+                    android:textSize="25sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/opponentHandSizeLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/handSizeLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40sp"
+                    android:layout_marginLeft="40sp"
+                    android:layout_weight="1"
+                    android:text="Hand Size:"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/p2HandSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="4"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/p3HandSize"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="3"
+                    android:textSize="25sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
         <Button
             android:id="@+id/playSpellButton"
