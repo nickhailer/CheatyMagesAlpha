@@ -107,7 +107,7 @@ public class CMSurfaceView extends SurfaceView {
         // Draws players hand of spell cards
         for(int i=0; i < state.getHands()[playerId].size(); i++) {
             SpellCard spell = state.getHands()[playerId].get(i);
-            drawSpellCard(canvas, 20 + (210*i), 2000, spell.getName(), spell.getMana(),
+            drawSpellCard(canvas, 20 + (220*i), 2000, spell.getName(), spell.getMana(),
                     spell.getSpellType(), spell.getPowerMod(),false, "",
                     spell.isForbidden(), spellsSelected[i]);
         }
