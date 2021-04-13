@@ -15,18 +15,15 @@ import edu.up.cs301.game.cheatymages.CMSurfaceView;
 
 public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListener{
 
-    //0 = normal, 1 = selecting target for a spell card
-    //2 = selecting spell for detect magic, 3 = selecting target for detect magic
-    //4 = betting, 5 = discarding
-    protected int gamePhase;
+    // keeps track of what turn it was the last time you were updated information
+    protected int playerTurn;
 
     // boolean ArrayList checks if fighter has bet on them
     protected boolean[] selectedFighters = new boolean[5];
 
-    protected int[] lastClicked = new int[3];
+    protected boolean detectMagic;
 
-    // the index of the spell in their hand
-    protected int spell;
+    protected int[] lastClicked = new int[3];
 
     // ArrayList of indices of the cards the player wishes to discard
     protected boolean[] selectedSpells = new boolean[8];
@@ -54,28 +51,21 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListen
     @Override
     public void receiveInfo(GameInfo info) {
 
-        if (surfaceView == null) return;
+        if (surfaceView == null){
+            return;
+        }
 
         if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
             // if the move was out of turn or otherwise illegal, flash the screen
             //TODO IMPLEMENT A FLASH METHOD
             //surfaceView.flash(Color.RED, 50);
         }
-        else if (!(info instanceof CMGameState))
+        else if (!(info instanceof CMGameState)) {
             // if we do not have a TTTState, ignore
             return;
+        }
         else {
-            //TODO THIS MIGHT BREAK STUFF
-            if(((CMGameState) info).getPlayerTurn() == -1){
-               gamePhase = 4;
-            }
-            else if(((CMGameState) info).getPlayerTurn() == -2){
-                gamePhase = 5;
-            }
-            else{
-                gamePhase = 0;
-            }
-            surfaceView.setState((CMGameState)info, this.playerNum);
+            surfaceView.setState((CMGameState) info, this.playerNum);
             surfaceView.invalidate();
         }
     }
@@ -93,9 +83,6 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListen
     @Override
     public void onClick(View button) {
         if(button.getId() == R.id.betButton){
-            if(gamePhase != 4){
-                return;
-            }
             ArrayList<Integer> bets = new ArrayList<>();
             for(int i = 0; i < 5; i++){
                 if(selectedFighters[i]){
@@ -103,285 +90,17 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListen
                 }
             }
             this.game.sendAction(new BetAction(this, bets));
-            return;
         }
-        if(button.getId() == R.id.passButton){
-            if(gamePhase == 4 || gamePhase == 5){
-                return;
-            }
+        else if(button.getId() == R.id.passButton){
             this.game.sendAction(new PassAction(this));
-            return;
+            detectMagic = false;
         }
-        if(button.getId() == R.id.f1Button){
-            if(gamePhase == 1) {
-                this.game.sendAction(new PlaySpellAction(this, spell, 0));
-                return;
-            }
-            if(gamePhase == 3) {
-                this.game.sendAction(new DetectMagicAction(this, spell, 0));
-            }
-            if(gamePhase == 4) {
-                int numBets = 0;
-                for(int i = 0; i < 5; i++) {
-                    if (selectedFighters[i]) {
-                        numBets++;
-                    }
-                }
-                if(numBets > 2) {
-                    selectedFighters[lastClicked[2]] = false;
-                }
-                selectedFighters[0] = true;
-                lastClicked[2] = lastClicked[1];
-                lastClicked[1] = lastClicked[0];
-                lastClicked[0] = 0;
-            }
+        else if(button.getId() == R.id.detectMagicButton){
+            detectMagic = true;
+            //TODO UNCOMMENT THIS ONCE IMPLEMENT
+            //surfaceView.selectDetectMagic()
         }
-        if(button.getId() == R.id.f2Button){
-            if(gamePhase == 1) {
-                this.game.sendAction(new PlaySpellAction(this, spell, 1));
-                return;
-            }
-            if(gamePhase == 3) {
-                this.game.sendAction(new DetectMagicAction(this, spell, 1));
-            }
-            if(gamePhase == 4) {
-                int numBets = 0;
-                for(int i = 0; i < 5; i++) {
-                    if (selectedFighters[i]) {
-                        numBets++;
-                    }
-                }
-                if(numBets > 2) {
-                    selectedFighters[lastClicked[2]] = false;
-                }
-                selectedFighters[1] = true;
-            }
-        }
-        if(button.getId() == R.id.f3Button){
-            if(gamePhase == 1) {
-                this.game.sendAction(new PlaySpellAction(this, spell, 2));
-                return;
-            }
-            if(gamePhase == 3) {
-                this.game.sendAction(new DetectMagicAction(this, spell, 2));
-            }
-            if(gamePhase == 4) {
-                int numBets = 0;
-                for(int i = 0; i < 5; i++) {
-                    if (selectedFighters[i]) {
-                        numBets++;
-                    }
-                }
-                if(numBets > 2) {
-                    selectedFighters[lastClicked[2]] = false;
-                }
-                selectedFighters[2] = true;
-            }
-        }
-        if(button.getId() == R.id.f4Button){
-            if(gamePhase == 1) {
-                this.game.sendAction(new PlaySpellAction(this, spell, 3));
-                return;
-            }
-            if(gamePhase == 3) {
-                this.game.sendAction(new DetectMagicAction(this, spell, 3));
-            }
-            if(gamePhase == 4) {
-                int numBets = 0;
-                for(int i = 0; i < 5; i++) {
-                    if (selectedFighters[i]) {
-                        numBets++;
-                    }
-                }
-                if(numBets > 2) {
-                    selectedFighters[lastClicked[2]] = false;
-                }
-                selectedFighters[3] = true;
-            }
-        }
-        if(button.getId() == R.id.f5Button){
-            if(gamePhase == 1) {
-                this.game.sendAction(new PlaySpellAction(this, spell, 4));
-                return;
-            }
-            if(gamePhase == 3) {
-                this.game.sendAction(new DetectMagicAction(this, spell, 4));
-            }
-            if(gamePhase == 4) {
-                int numBets = 0;
-                for(int i = 0; i < 5; i++) {
-                    if (selectedFighters[i]) {
-                        numBets++;
-                    }
-                }
-                if(numBets > 2) {
-                    selectedFighters[lastClicked[2]] = false;
-                }
-                selectedFighters[4] = true;
-            }
-        }
-        if(button.getId() == R.id.detectMagicButton){
-            if(gamePhase == 4 || gamePhase == 5){
-                return;
-            }
-            gamePhase = 2;
-        }
-        if(button.getId() == R.id.spellC1){
-            if(gamePhase == 0){
-                spell = 0;
-                gamePhase = 1;
-                return;
-            }
-            if(gamePhase == 2){
-                spell = 0;
-                gamePhase = 3;
-                return;
-            }
-            if(gamePhase == 5){
-                if(selectedSpells[0]){
-                    selectedSpells[0] = false;
-                    return;
-                }
-                selectedSpells[0] = true;
-            }
-        }
-        if(button.getId() == R.id.spellC2){
-            if(gamePhase == 0){
-                spell = 1;
-                gamePhase = 1;
-                return;
-            }
-            if(gamePhase == 2){
-                spell = 1;
-                gamePhase = 3;
-                return;
-            }
-            if(gamePhase == 5){
-                if(selectedSpells[1]){
-                    selectedSpells[1] = false;
-                    return;
-                }
-                selectedSpells[1] = true;
-            }
-        }
-        if(button.getId() == R.id.spellC3){
-            if(gamePhase == 0){
-                spell = 2;
-                gamePhase = 1;
-                return;
-            }
-            if(gamePhase == 2){
-                spell = 2;
-                gamePhase = 3;
-                return;
-            }
-            if(gamePhase == 5){
-                if(selectedSpells[2]){
-                    selectedSpells[2] = false;
-                    return;
-                }
-                selectedSpells[2] = true;
-            }
-        }
-        if(button.getId() == R.id.spellC4){
-            if(gamePhase == 0){
-                spell = 3;
-                gamePhase = 1;
-                return;
-            }
-            if(gamePhase == 2){
-                spell = 3;
-                gamePhase = 3;
-                return;
-            }
-            if(gamePhase == 5){
-                if(selectedSpells[3]){
-                    selectedSpells[3] = false;
-                    return;
-                }
-                selectedSpells[3] = true;
-            }
-        }
-        if(button.getId() == R.id.spellC5){
-            if(gamePhase == 0){
-                spell = 4;
-                gamePhase = 1;
-                return;
-            }
-            if(gamePhase == 2){
-                spell = 4;
-                gamePhase = 3;
-                return;
-            }
-            if(gamePhase == 5){
-                if(selectedSpells[4]){
-                    selectedSpells[4] = false;
-                    return;
-                }
-                selectedSpells[4] = true;
-            }
-        }
-        if(button.getId() == R.id.spellC6){
-            if(gamePhase == 0){
-                spell = 5;
-                gamePhase = 1;
-                return;
-            }
-            if(gamePhase == 2){
-                spell = 5;
-                gamePhase = 3;
-                return;
-            }
-            if(gamePhase == 5){
-                if(selectedSpells[5]){
-                    selectedSpells[5] = false;
-                    return;
-                }
-                selectedSpells[5] = true;
-            }
-        }
-        if(button.getId() == R.id.spellC7){
-            if(gamePhase == 0){
-                spell = 6;
-                gamePhase = 1;
-                return;
-            }
-            if(gamePhase == 2){
-                spell = 6;
-                gamePhase = 3;
-                return;
-            }
-            if(gamePhase == 5){
-                if(selectedSpells[6]){
-                    selectedSpells[6] = false;
-                    return;
-                }
-                selectedSpells[6] = true;
-            }
-        }
-        if(button.getId() == R.id.spellC8){
-            if(gamePhase == 0){
-                spell = 7;
-                gamePhase = 1;
-                return;
-            }
-            if(gamePhase == 2){
-                spell = 7;
-                gamePhase = 3;
-                return;
-            }
-            if(gamePhase == 5){
-                if(selectedSpells[7]){
-                    selectedSpells[7] = false;
-                    return;
-                }
-                selectedSpells[7] = true;
-            }
-        }
-        if(button.getId() == R.id.discardCardsButton){
-            if(gamePhase != 5){
-                return;
-            }
+        else if(button.getId() == R.id.discardCardsButton){
             ArrayList<Integer> discards = new ArrayList<>();
             for(int i = 8; i >= 0; i--){
                 if(selectedSpells[i]){
@@ -389,6 +108,111 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListen
                 }
             }
             game.sendAction(new DiscardCardsAction(this, discards));
+            detectMagic = false;
+        }
+        else if(button.getId() == R.id.f1Button){
+            clickFighter(0);
+        }
+        else if(button.getId() == R.id.f2Button){
+            clickFighter(1);
+        }
+        else if(button.getId() == R.id.f3Button){
+            clickFighter(2);
+        }
+        else if(button.getId() == R.id.f4Button){
+            clickFighter(3);
+        }
+        else if(button.getId() == R.id.f5Button){
+            clickFighter(4);
+        }
+        else if(button.getId() == R.id.spellC1){
+            clickSpell(0);
+        }
+        else if(button.getId() == R.id.spellC2){
+            clickSpell(1);
+        }
+        else if(button.getId() == R.id.spellC3){
+            clickSpell(2);
+        }
+        else if(button.getId() == R.id.spellC4){
+            clickSpell(3);
+        }
+        else if(button.getId() == R.id.spellC5){
+            clickSpell(4);
+        }
+        else if(button.getId() == R.id.spellC6){
+            clickSpell(5);
+        }
+        else if(button.getId() == R.id.spellC7){
+            clickSpell(6);
+        }
+        else if(button.getId() == R.id.spellC8){
+            clickSpell(7);
+        }
+    }
+
+    private void clickFighter(int idx){
+        int numSelectedSpells = 0;
+        int spell = -1;
+        for(int i = 0; i < selectedSpells.length; i++){
+            if(selectedSpells[i]){
+                spell = i;
+                numSelectedSpells++;
+            }
+        }
+
+        if(numSelectedSpells == 1){
+            detectMagic = false;
+            this.game.sendAction(new PlaySpellAction(this, spell, idx));
+        }
+
+        else if(detectMagic) {
+            detectMagic = false;
+            this.game.sendAction(new DetectMagicAction(this, spell, idx));
+        }
+
+        else if(playerTurn == -1) {
+
+            int numSelectedFighters = 0;
+            for(boolean isSelected : selectedFighters) {
+                if (isSelected) {
+                    numSelectedFighters++;
+                }
+            }
+
+            if(numSelectedFighters > 2) {
+                selectedFighters[lastClicked[2]] = false;
+                surfaceView.selectSpell(idx, false);
+            }
+
+            selectedFighters[idx] = true;
+            surfaceView.selectSpell(idx, true);
+
+            lastClicked[2] = lastClicked[1];
+            lastClicked[1] = lastClicked[0];
+            lastClicked[0] = idx;
+        }
+    }
+
+    private void clickSpell(int idx){
+        if(playerTurn == -2){
+            selectedSpells[idx] = !selectedSpells[idx];
+            surfaceView.selectSpell(idx, !selectedSpells[idx]);
+        }
+        else{
+            int numSelectedSpells = 0;
+            for (boolean isSelected : selectedSpells) {
+                if (isSelected) {
+                    numSelectedSpells++;
+                }
+            }
+
+            if(numSelectedSpells > 0){
+                surfaceView.clearSpellSelections();
+            }
+
+            selectedSpells[idx] = true;
+            surfaceView.selectSpell(idx, true);
         }
     }
 }

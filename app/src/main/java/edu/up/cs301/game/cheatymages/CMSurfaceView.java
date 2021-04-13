@@ -11,6 +11,7 @@ import android.view.SurfaceView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import edu.up.cs301.game.cheatymages.Cards.JudgeCard;
 import edu.up.cs301.game.cheatymages.Cards.SpellCard;
@@ -52,21 +53,27 @@ public class CMSurfaceView extends SurfaceView {
         this.playerId = playerId;
     }
 
-    public void selectFighterCard(int idx){
-        if(fightersSelected[idx]){
-            fightersSelected[idx] = false;
-            return;
-        }
-        fightersSelected[idx] = true;
+    public void selectFighter(int idx, boolean selected){
+        fightersSelected[idx] = selected;
     }
 
-    public void selectSpellCard(int idx){
-        if(spellsSelected[idx]){
-            spellsSelected[idx] = false;
-            return;
-        }
-        spellsSelected[idx] = true;
+    public void selectSpell(int idx, boolean selected){
+        spellsSelected[idx] = selected;
     }
+
+    public void clearFighterSelections(){
+        Arrays.fill(fightersSelected, false);
+    }
+
+    public void clearSpellSelections(){
+        Arrays.fill(spellsSelected, false);
+    }
+
+    /* TODO IMPLEMENT THIS SO THAT THE DETECT MAGIC BUTTON IS HIGHLIGHTED
+    public void selectDetectMagic(){
+
+    }
+     */
 
     /**
      * onDraw Method draws everything on the screen
