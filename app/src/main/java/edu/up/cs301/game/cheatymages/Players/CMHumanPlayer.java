@@ -1,5 +1,6 @@
 package edu.up.cs301.game.cheatymages.Players;
 
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -82,7 +83,8 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListen
 
     @Override
     public void onClick(View button) {
-        if(button.getId() == R.id.betButton){
+        int buttonId = button.getId();
+        if(buttonId == R.id.betButton){
             ArrayList<Integer> bets = new ArrayList<>();
             for(int i = 0; i < 5; i++){
                 if(selectedFighters[i]){
@@ -91,16 +93,16 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListen
             }
             this.game.sendAction(new BetAction(this, bets));
         }
-        else if(button.getId() == R.id.passButton){
+        else if(buttonId == R.id.passButton){
             this.game.sendAction(new PassAction(this));
             detectMagic = false;
         }
-        else if(button.getId() == R.id.detectMagicButton){
+        else if(buttonId == R.id.detectMagicButton){
             detectMagic = true;
             //TODO UNCOMMENT THIS ONCE IMPLEMENT
             //surfaceView.selectDetectMagic()
         }
-        else if(button.getId() == R.id.discardCardsButton){
+        else if(buttonId == R.id.discardCardsButton){
             ArrayList<Integer> discards = new ArrayList<>();
             for(int i = 8; i >= 0; i--){
                 if(selectedSpells[i]){
@@ -110,44 +112,47 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListen
             game.sendAction(new DiscardCardsAction(this, discards));
             detectMagic = false;
         }
-        else if(button.getId() == R.id.f1Button){
+        else if(buttonId == R.id.f1Button){
             clickFighter(0);
         }
-        else if(button.getId() == R.id.f2Button){
+        else if(buttonId == R.id.f2Button){
             clickFighter(1);
         }
-        else if(button.getId() == R.id.f3Button){
+        else if(buttonId == R.id.f3Button){
             clickFighter(2);
         }
-        else if(button.getId() == R.id.f4Button){
+        else if(buttonId == R.id.f4Button){
             clickFighter(3);
         }
-        else if(button.getId() == R.id.f5Button){
+        else if(buttonId == R.id.f5Button){
             clickFighter(4);
         }
-        else if(button.getId() == R.id.spellC1){
+        else if(buttonId == R.id.spellC1){
             clickSpell(0);
         }
-        else if(button.getId() == R.id.spellC2){
+        else if(buttonId == R.id.spellC2){
             clickSpell(1);
         }
-        else if(button.getId() == R.id.spellC3){
+        else if(buttonId == R.id.spellC3){
             clickSpell(2);
         }
-        else if(button.getId() == R.id.spellC4){
+        else if(buttonId == R.id.spellC4){
             clickSpell(3);
         }
-        else if(button.getId() == R.id.spellC5){
+        else if(buttonId == R.id.spellC5){
             clickSpell(4);
         }
-        else if(button.getId() == R.id.spellC6){
+        else if(buttonId == R.id.spellC6){
             clickSpell(5);
         }
-        else if(button.getId() == R.id.spellC7){
+        else if(buttonId == R.id.spellC7){
             clickSpell(6);
         }
-        else if(button.getId() == R.id.spellC8){
+        else if(buttonId == R.id.spellC8){
             clickSpell(7);
+        }
+        else{
+            Log.d("CMHumanPlayer", "Unknown Button ID");
         }
     }
 
@@ -171,7 +176,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListen
             this.game.sendAction(new DetectMagicAction(this, spell, idx));
         }
 
-        else if(playerTurn == -1) {
+        else{
 
             int numSelectedFighters = 0;
             for(boolean isSelected : selectedFighters) {
@@ -199,7 +204,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnClickListen
             selectedSpells[idx] = !selectedSpells[idx];
             surfaceView.selectSpell(idx, !selectedSpells[idx]);
         }
-        else{
+        else if (playerTurn >= 0){
             int numSelectedSpells = 0;
             for (boolean isSelected : selectedSpells) {
                 if (isSelected) {

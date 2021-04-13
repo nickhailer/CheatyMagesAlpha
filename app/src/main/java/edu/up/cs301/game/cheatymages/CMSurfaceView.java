@@ -13,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import edu.up.cs301.game.cheatymages.Cards.FighterCard;
 import edu.up.cs301.game.cheatymages.Cards.JudgeCard;
 import edu.up.cs301.game.cheatymages.Cards.SpellCard;
 import edu.up.cs301.game.cheatymages.Players.CMHumanPlayer;
@@ -100,8 +101,9 @@ public class CMSurfaceView extends SurfaceView {
 
         // Draws 5 random fighter cards
         for(int i=0; i < 5; i++) {
-            drawFighterCard(canvas, 50, 430 + (300*i), state.getFighter(i).getName(),
-                    state.getFighter(i).getPower(), state.getFighter(i).getPrizeMoney(), false);
+            FighterCard fighter = state.getFighter(i);
+            drawFighterCard(canvas, 50, 430 + (300*i), fighter.getName(),
+                    fighter.getPower(), fighter.getPrizeMoney(), fightersSelected[i]);
         }
 
         // Draws players hand of spell cards
