@@ -93,7 +93,7 @@ public class FlashSurfaceView extends SurfaceView {
     /**
      * helper class to perform the flash
      */
-    private class Flasher implements Runnable {
+    public class Flasher implements Runnable {
 
         // Drawable that we should flash
         private Drawable flashDraw;
