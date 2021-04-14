@@ -91,6 +91,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         int x = (int) motionEvent.getX();
         int y = (int) motionEvent.getY();
         String card = surfaceView.mapPositionToCard(x, y);
+        Log.d("CMHumanPlayer", "You pressed " + card);
 
         switch (card) {
             case "Bet Button":

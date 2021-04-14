@@ -18,10 +18,30 @@ import edu.up.cs301.game.cheatymages.Cards.JudgeCard;
 import edu.up.cs301.game.cheatymages.Cards.SpellCard;
 import edu.up.cs301.game.cheatymages.Players.CMHumanPlayer;
 
+//TODO MAKE PAINTS FINAL
+//TODO MAKE THE CARD POSITIONS FINAL INSTEAD OF HARD CODED
+
 public class CMSurfaceView extends SurfaceView {
 
     protected final float cardHeight = 240;
     protected final float cardWidth = 180;
+
+    protected final float buttonHeight = 90;
+    protected final float buttonWidth = 120;
+
+    protected final float buttonX = 1650;
+    protected final float buttonY = 1800;
+    protected final float buttonYSpacing = 120;
+    protected final float buttonLabelTextSize = 30;
+
+    protected final float fightersX = 50;
+    protected final float fightersY = 430;
+    protected final float fightersYSpacing = 300;
+
+    protected final float handX = 20;
+    protected final float handY = 2000;
+    protected final float handXSpacing = 200;
+
     protected CMGameState state;
     protected int playerId;
     protected boolean[] fightersSelected;
@@ -102,14 +122,14 @@ public class CMSurfaceView extends SurfaceView {
         // Draws 5 random fighter cards
         for(int i=0; i < 5; i++) {
             FighterCard fighter = state.getFighter(i);
-            drawFighterCard(canvas, 50, 430 + (300*i), fighter.getName(),
+            drawFighterCard(canvas, fightersX, fightersY + fightersYSpacing*i, fighter.getName(),
                     fighter.getPower(), fighter.getPrizeMoney(), fightersSelected[i]);
         }
 
         // Draws players hand of spell cards
         for(int i=0; i < state.getHands()[playerId].size(); i++) {
             SpellCard spell = state.getHands()[playerId].get(i);
-            drawSpellCard(canvas, 20 + (220*i), 2000, spell.getName(), spell.getMana(),
+            drawSpellCard(canvas, handX + handXSpacing*i, handY, spell.getName(), spell.getMana(),
                     spell.getSpellType(), spell.getPowerMod(),false, "",
                     spell.isForbidden(), spellsSelected[i]);
         }
@@ -132,36 +152,52 @@ public class CMSurfaceView extends SurfaceView {
         // draws coin label
         drawCoin(canvas, 1400, -45, "C");
 
+        // draws buttons
+        float buttonYPos = buttonY;
+        drawButton(canvas, buttonX, buttonYPos, "Pass");
+        buttonYPos += buttonYSpacing;
+        drawButton(canvas, buttonX, buttonYPos, "Detect");
+        buttonYPos += buttonYSpacing;
+        drawButton(canvas, buttonX, buttonYPos, "Bet");
+        buttonYPos += buttonYSpacing;
+        drawButton(canvas, buttonX, buttonYPos, "Discard");
+        buttonYPos += buttonYSpacing;
+
         invalidate();
     }
 
     public String mapPositionToCard(int x, int y){
         //TODO CHANGE THIS FUNCTION TO WORK WITH CHANGING CARD SPACING
-        if(50 <= x && x >= 50 + cardWidth){
+        if(fightersX <= x && x <= fightersX + cardWidth){
             for(int i = 0; i < 5; i++){
-                if(430 + 300*i <= y && y <= 430 + 300*i + cardHeight){
-                    return "Fighter " + Integer.toString(i + 1);
+                if(fightersY + fightersYSpacing*i <= y && y <= fightersY + fightersYSpacing*i + cardHeight){
+                    return "Fighter " + (i + 1);
                 }
             }
         }
-        if(2000 <= y && y <= 2000 + cardHeight){
+        if(handY <= y && y <= handY + cardHeight){
             for(int i = 0; i < 8; i++){
-                if(20 + 220*i <= x || x <= 20 + 220*i + cardWidth){
-                    return "Spell " + Integer.toString(i + 1);
+                if(handX + handXSpacing*i <= x && x <= handX + handXSpacing*i + cardWidth){
+                    return "Spell " + (i + 1);
                 }
             }
         }
-        //TODO IMPLEMENT THIS
-        if(0 <= y && y <= 10 && 0 <= x && x <= 10){
-            return "Bet Button";
-        }
-        if(0 <= y && y <= 10 && 0 <= x && x <= 10){
+
+        float buttonXPos = buttonX;
+        float buttonYPos = buttonY;
+        if(buttonXPos <= x && x <= buttonXPos + buttonWidth && buttonYPos <= y && y <= buttonYPos + buttonHeight){
             return "Pass Button";
         }
-        if(0 <= y && y <= 10 && 0 <= x && x <= 10){
+        buttonYPos += buttonYSpacing;
+        if(buttonXPos <= x && x <= buttonXPos + buttonWidth && buttonYPos <= y && y <= buttonYPos + buttonHeight){
             return "Detect Magic Button";
         }
-        if(0 <= y && y <= 10 && 0 <= x && x <= 10){
+        buttonYPos += buttonYSpacing;
+        if(buttonXPos <= x && x <= buttonXPos + buttonWidth && buttonYPos <= y && y <= buttonYPos + buttonHeight){
+            return "Bet Button";
+        }
+        buttonYPos += buttonYSpacing;
+        if(buttonXPos <= x && x <= buttonXPos + buttonWidth && buttonYPos <= y && y <= buttonYPos + buttonHeight){
             return "Discard Button";
         }
         return "";
@@ -471,8 +507,22 @@ public class CMSurfaceView extends SurfaceView {
         //draws the text for the fighter's stats
         Paint statText = new Paint();
         statText.setColor(Color.BLACK);
-        statText.setTextSize(50);
+        statText.setTextSize(50.0f);
         statText.setTextAlign(Paint.Align.CENTER);
         canvas.drawText(coinDesign, x + 175.0f, y + 270.0f, statText);
+    }
+
+    protected void drawButton(Canvas canvas, float x, float y, String label){
+        Paint outline = new Paint();
+        outline.setColor(Color.BLACK);
+        outline.setStyle(Paint.Style.STROKE);
+        outline.setStrokeWidth(10.0f);
+        canvas.drawRect(x, y, x + buttonWidth, y + buttonHeight, outline);
+
+        Paint labelText = new Paint();
+        labelText.setColor(Color.BLACK);
+        labelText.setTextSize(buttonLabelTextSize);
+        labelText.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText(label, x + buttonWidth/2, y + buttonHeight/2, labelText);
     }
 }
