@@ -215,6 +215,8 @@ public class CMGameState extends GameState{
             return false;
         }
         playerTurn = rng.nextInt(numPlayers);
+        //TODO COMMENT THIS OUT LATER IT IS ONLY FOR DEBUGGING
+        playerTurn = 0;
         betsPlaced = 0;
         return true;
     }
@@ -553,4 +555,12 @@ public class CMGameState extends GameState{
     }
 
     public int getNumPlayers() { return numPlayers; }
+
+    //THE FOLLOWING FUNCTIONS SHOULD ONLY BE USED FOR DEBUGGING!!!!
+
+    public void setPlayerTurn(int playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+
+
 }

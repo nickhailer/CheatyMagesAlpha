@@ -1,6 +1,5 @@
 package edu.up.cs301.game.cheatymages.Players;
 
-import android.graphics.Point;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,7 +9,6 @@ import java.util.ArrayList;
 import edu.up.cs301.game.GameFramework.GameMainActivity;
 import edu.up.cs301.game.GameFramework.infoMessage.*;
 import edu.up.cs301.game.GameFramework.players.GameHumanPlayer;
-import edu.up.cs301.game.GameFramework.utilities.Logger;
 import edu.up.cs301.game.R;
 import edu.up.cs301.game.cheatymages.Actions.*;
 import edu.up.cs301.game.cheatymages.CMGameState;
@@ -33,7 +31,6 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
 
     private int layoutId;
 
-    //TODO IMPLEMENT THE SURFACE VIEW
     private CMSurfaceView surfaceView;
 
     /**
@@ -90,11 +87,12 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
 
         int x = (int) motionEvent.getX();
         int y = (int) motionEvent.getY();
-        String card = surfaceView.mapPositionToCard(x, y);
-        Log.d("CMHumanPlayer", "You pressed " + card);
+        String item = surfaceView.mapPositionToItem(x, y);
+        //TODO REPLACE THIS WITH AN ACTUAL INDICATION YOU PRESSED SOMETHING
+        Log.d("CMHumanPlayer", "You pressed " + item);
 
-        switch (card) {
-            case "Bet Button":
+        switch (item) {
+            case "Bet":
                 ArrayList<Integer> bets = new ArrayList<>();
                 for (int i = 0; i < 5; i++) {
                     if (selectedFighters[i]) {
@@ -103,16 +101,16 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 }
                 this.game.sendAction(new BetAction(this, bets));
                 break;
-            case "Pass Button":
+            case "Pass":
                 this.game.sendAction(new PassAction(this));
                 detectMagic = false;
                 break;
-            case "Detect Magic Button":
+            case "Detect Magic":
                 detectMagic = true;
                 //TODO UNCOMMENT THIS ONCE IMPLEMENT
                 //surfaceView.selectDetectMagic()
                 break;
-            case "Discard Button":
+            case "Discard":
                 ArrayList<Integer> discards = new ArrayList<>();
                 for (int i = 8; i >= 0; i--) {
                     if (selectedSpells[i]) {
@@ -194,13 +192,26 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 }
             }
 
+            //TODO THERE IS A BUG HERE WHERE YOU CAN SELECT MORE THAN 3 SOMEHOW I DONT FUCKING KNOW MAN
+
+            if(selectedFighters[idx]){
+                selectedFighters[idx] = false;
+                surfaceView.selectFighter(idx, false);
+
+                for(int i = idx + 1; i < 3; i++){
+                    lastClicked[idx] = lastClicked[idx + 1];
+                }
+                lastClicked[2] = 0;
+                return;
+            }
+
             if(numSelectedFighters > 2) {
                 selectedFighters[lastClicked[2]] = false;
-                surfaceView.selectSpell(idx, false);
+                surfaceView.selectFighter(lastClicked[2], false);
             }
 
             selectedFighters[idx] = true;
-            surfaceView.selectSpell(idx, true);
+            surfaceView.selectFighter(idx, true);
 
             lastClicked[2] = lastClicked[1];
             lastClicked[1] = lastClicked[0];

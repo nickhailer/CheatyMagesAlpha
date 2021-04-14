@@ -40,6 +40,13 @@ public class CMGameStateTest extends TestCase {
     }
 
     public void testPlaySpellCard() {
+        CMGameState state = new CMGameState(3);
+        state.setPlayerTurn(0);
+        assertEquals(state.getHands()[0].size(), 8);
+        assertEquals(state.getAttachedSpells()[0].size(), 0);
+        state.playSpellCard(0, 0, 0);
+        assertEquals(state.getHands()[0].size(), 7);
+        assertEquals(state.getAttachedSpells()[0].size(), 1);
     }
 
     public void testDetectMagic() {
