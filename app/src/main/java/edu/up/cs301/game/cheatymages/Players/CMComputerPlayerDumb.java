@@ -29,9 +29,9 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
     protected void receiveInfo(GameInfo info) {
 
         //If it's not your turn don't do anything
-        if(info instanceof NotYourTurnInfo){
+        /*if(info instanceof NotYourTurnInfo){
             return;
-        }
+        }*/
 
         //Makes sure the info message is a game state before sending an action
         if(!(info instanceof GameState)){

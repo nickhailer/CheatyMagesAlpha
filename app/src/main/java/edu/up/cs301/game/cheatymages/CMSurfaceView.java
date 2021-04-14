@@ -184,7 +184,7 @@ public class CMSurfaceView extends SurfaceView {
                 labelY, labelTextPaint);
         String turnText = "";
         if(state.getPlayerTurn() >= 0){
-            turnText = "Turn " + (state.getPlayerTurn() + 1);
+            turnText = "Turn " + (state.getPlayerTurn());
         }
         else if(state.getPlayerTurn() == -1){
             turnText = "Betting Phase";
