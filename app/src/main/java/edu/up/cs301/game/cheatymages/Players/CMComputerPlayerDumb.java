@@ -1,5 +1,7 @@
 package edu.up.cs301.game.cheatymages.Players;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -39,7 +41,8 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
         CMGameState state = (CMGameState) info;
 
         //Simulates the computer thinking
-        sleep(1);
+        //TODO REIMPLEMENT THIS MAYBE WITH THREADING
+        //sleep(1);
 
         //If it's betting phase place a random bet
         if(state.getPlayerTurn() == -1){

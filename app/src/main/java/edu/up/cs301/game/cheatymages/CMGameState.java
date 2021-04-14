@@ -1,6 +1,9 @@
 package edu.up.cs301.game.cheatymages;
 
+import android.util.Log;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Random;
@@ -49,9 +52,10 @@ public class CMGameState extends GameState{
     private Decks decks;
 
     //Checks if everyone has placed their bets
-    private int betsPlaced;
+    private boolean[] hasFinishedBetting;
 
     //Checks if everyone has discarded their cards
+    //TODO CHANGE THIS TO HOW BETTING WORKS
     private int finishedDiscarding;
 
     //Checks if everyone has passed consecutively
@@ -105,7 +109,7 @@ public class CMGameState extends GameState{
         }
         fillPlayerHands();
 
-        betsPlaced = 0;
+        hasFinishedBetting = new boolean[numPlayers];
         finishedDiscarding = 0;
         consecutivePasses = 0;
 
@@ -126,7 +130,7 @@ public class CMGameState extends GameState{
         numPlayers = orig.numPlayers;
         roundNum = orig.roundNum;
         playerTurn = orig.playerTurn;
-        betsPlaced = orig.betsPlaced;
+        hasFinishedBetting = orig.hasFinishedBetting;
         finishedDiscarding = orig.finishedDiscarding;
         consecutivePasses = orig.consecutivePasses;
 
@@ -209,15 +213,19 @@ public class CMGameState extends GameState{
      * @return true if everyone has finished placing their bets
      */
     public boolean placeBet(int id, ArrayList<Integer> bets){
+
+        //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
+        Log.d("GameState", "Player " + id + " placed their bet");
+
         this.bets[id] = bets;
-        betsPlaced++;
-        if(betsPlaced < numPlayers){
-            return false;
+        hasFinishedBetting[id] = true;
+        for(int i = 0; i < hasFinishedBetting.length; i++){
+            if(!hasFinishedBetting[i]){
+                return false;
+            }
         }
         playerTurn = rng.nextInt(numPlayers);
-        //TODO COMMENT THIS OUT LATER IT IS ONLY FOR DEBUGGING
-        playerTurn = 0;
-        betsPlaced = 0;
+        Arrays.fill(hasFinishedBetting, false);
         return true;
     }
 
@@ -226,6 +234,10 @@ public class CMGameState extends GameState{
      * @return 1 if the round is over, 2 if the game is over, 0 if neither is true
      */
     public int pass(){
+
+        //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
+        Log.d("GameState", "Player " + playerTurn + " passed");
+
         //increments pass streak counter
         consecutivePasses++;
         //if not all players have passed consecutively
@@ -251,6 +263,10 @@ public class CMGameState extends GameState{
      * @param target the fighter you wish to use the spell on (1-5)
      */
     public void playSpellCard(int id, int spell, int target){
+
+        //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
+        Log.d("GameState", "Player " + id + " played a spell on fighter " + target);
+
         //breaks pass streak
         consecutivePasses = 0;
         //increments player turn
@@ -278,6 +294,10 @@ public class CMGameState extends GameState{
      * @param target the fighter you wish to use the spell on (1-5)
      */
     public ArrayList<SpellCard> detectMagic(int id, int spell, int target){
+
+        //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
+        Log.d("GameState", "Player " + id + " used detect magic on fighter " + target);
+
         //breaks pass streak
         consecutivePasses = 0;
         //increments player turn
@@ -299,6 +319,9 @@ public class CMGameState extends GameState{
      * @return true if all players have finished discarding
      */
     public boolean discardCards(int id, ArrayList<Integer> discards){
+
+        //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
+        Log.d("GameState", "Player " + id + " finished discarding");
 
         //Removes cards from your hand and adds them to the discard pile
         for(int i = 0; i < discards.size(); i++){
@@ -542,8 +565,8 @@ public class CMGameState extends GameState{
         return decks;
     }
 
-    public int getBetsPlaced() {
-        return betsPlaced;
+    public boolean[] hasFinishedBetting() {
+        return hasFinishedBetting;
     }
 
     public int getFinishedDiscarding() {

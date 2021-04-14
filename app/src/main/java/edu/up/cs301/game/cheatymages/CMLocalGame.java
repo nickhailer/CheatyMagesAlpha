@@ -1,5 +1,7 @@
 package edu.up.cs301.game.cheatymages;
 
+import android.util.Log;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -179,6 +181,11 @@ class CMLocalGame extends LocalGame {
                 if(i < 0 || i >= 5){
                     return false;
                 }
+            }
+
+            //Prevents players from changing their bet
+            if(cmState.hasFinishedBetting()[playerId]){
+                return false;
             }
 
             cmState.placeBet(playerId, betAction.getBets());
