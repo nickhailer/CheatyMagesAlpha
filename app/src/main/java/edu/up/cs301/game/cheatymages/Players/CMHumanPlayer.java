@@ -173,7 +173,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             }
         }
 
-        if(numSelectedSpells == 1){
+        if(numSelectedSpells > 0){
             detectMagic = false;
             this.game.sendAction(new PlaySpellAction(this, spell, idx));
         }

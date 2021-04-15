@@ -418,7 +418,7 @@ public class CMSurfaceView extends SurfaceView {
             judgementTextPaint.setTextSize(30.0f);
             judgementTextPaint.setTextAlign(Paint.Align.RIGHT);
             judgementTextPaint.setAntiAlias(true);
-            canvas.drawText(judgementType, x + cardWidth - 90.0f,y + cardHeight - 75.0f,
+            canvas.drawText(judgementType, x + cardWidth - 20.0f,y + cardHeight - 75.0f,
                     judgementTextPaint);
 
         }

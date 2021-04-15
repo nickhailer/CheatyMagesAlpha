@@ -224,7 +224,8 @@ public class CMGameState extends GameState{
                 return false;
             }
         }
-        playerTurn = rng.nextInt(numPlayers);
+        //playerTurn = rng.nextInt(numPlayers);
+        playerTurn = 0;
         Arrays.fill(hasFinishedBetting, false);
         return true;
     }
@@ -270,7 +271,9 @@ public class CMGameState extends GameState{
         //breaks pass streak
         consecutivePasses = 0;
         //increments player turn
+        System.out.println("Initial: " + playerTurn);
         playerTurn = (playerTurn + 1) % numPlayers;
+        System.out.println("After: " + playerTurn);
         //checks if the spell card violates the judge's rules
         for(int i = 0; i < judge.getDisallowedSpells().size(); i++) {
             //if the spell is disallowed discard it instead

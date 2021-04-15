@@ -29,9 +29,11 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
     protected void receiveInfo(GameInfo info) {
 
         //If it's not your turn don't do anything
-        /*if(info instanceof NotYourTurnInfo){
+        if(info instanceof NotYourTurnInfo){
             return;
-        }*/
+        }
+
+
 
         //Makes sure the info message is a game state before sending an action
         if(!(info instanceof GameState)){
@@ -59,14 +61,14 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
         }
 
         //The dumb AI has a 10% chance of passing
-        if(rng.nextInt(10) == 0){
+        if (rng.nextInt(10) == 0) {
             game.sendAction(new PassAction(this));
             return;
         }
 
         //Otherwise play a spell from your hand
         int handSize = state.getHands()[playerNum].size();
-        if(handSize > 0){
+        if (handSize > 0) {
             game.sendAction(new PlaySpellAction(this, rng.nextInt(handSize), rng.nextInt(5)));
             return;
         }
