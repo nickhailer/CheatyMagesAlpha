@@ -8,56 +8,67 @@ import android.graphics.PixelFormat;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
-import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
-
 import edu.up.cs301.game.cheatymages.Cards.FighterCard;
 import edu.up.cs301.game.cheatymages.Cards.JudgeCard;
 import edu.up.cs301.game.cheatymages.Cards.SpellCard;
-import edu.up.cs301.game.cheatymages.Players.CMHumanPlayer;
 
 //TODO MAKE PAINTS FINAL
 //TODO MAKE THE POSITIONS/SIZES FINAL INSTEAD OF HARD CODED
 
 public class CMSurfaceView extends SurfaceView {
 
-    protected final float cardHeight = 240;
-    protected final float cardWidth = 180;
+    private final float cardHeight = 240;
+    private final float cardWidth = 180;
 
-    protected final float buttonHeight = 90;
-    protected final float buttonWidth = 120;
+    private final float buttonHeight = 90;
+    private final float buttonWidth = 120;
 
-    protected final float buttonX = 1650;
-    protected final float buttonY = 1800;
-    protected final float buttonYSpacing = 120;
-    protected final float buttonLabelTextSize = 30;
+    private final float buttonX = 1650;
+    private final float buttonY = 1800;
+    private final float buttonYSpacing = 120;
 
-    protected final float fightersX = 50;
-    protected final float fightersY = 430;
-    protected final float fightersYSpacing = 300;
+    private final float fightersX = 50;
+    private final float fightersY = 430;
+    private final float fightersYSpacing = 300;
 
-    protected final float attachedSpellsXSpacing = 250;
+    private final float attachedSpellsXSpacing = 250;
 
-    protected final float judgeX = 15;
-    protected final float judgeY = 20;
+    private final float judgeX = 15;
+    private final float judgeY = 20;
 
-    protected final float handX = 20;
-    protected final float handY = 2000;
-    protected final float handXSpacing = 200;
+    private final float handX = 20;
+    private final float handY = 2000;
+    private final float handXSpacing = 200;
 
-    protected final float labelRightMargin = 50;
-    protected final float labelTextSize = 50;
-    protected final float labelY = 50;
-    protected final float labelYSpacing = 70;
+    private final float labelRightMargin = 50;
+    private final float labelY = 50;
+    private final float labelYSpacing = 70;
 
-    protected final float coinOffset = 30;
+    private CMGameState state;
+    private int playerId;
+    private boolean[] fightersSelected;
+    private boolean[] spellsSelected;
+    private boolean[] fightersHighlighted;
 
-    protected CMGameState state;
-    protected int playerId;
-    protected boolean[] fightersSelected;
-    protected boolean[] spellsSelected;
+    private final Paint roundInfoTextPaint = new Paint();
+    private final Paint buttonLabelTextPaint = new Paint();
+    private final Paint selectedCardPaint = new Paint();
+    private final Paint fighterPowerPaint = new Paint();
+    private final Paint goldSymbolPaint = new Paint();
+    private final Paint fighterStatTextPaint = new Paint();
+    private final Paint spellTypeSymbolPaint = new Paint();
+    private final Paint manaTextPaint = new Paint();
+    private final Paint spellEffectTextPaint = new Paint();
+    private final Paint powerModTextPaint = new Paint();
+    private final Paint manaLimitTextPaint = new Paint();
+    private final Paint judgementTextPaint = new Paint();
+    private final Paint cardOutlinePaint = new Paint();
+    private final Paint cardBackFillPaint = new Paint();
+    private final Paint cardBackTextPaint = new Paint();
+    private final Paint titlePaint = new Paint();
+    private final Paint buttonOutlinePaint = new Paint();
 
     /**
      * Constructor
@@ -72,11 +83,72 @@ public class CMSurfaceView extends SurfaceView {
         //code is adapted from https://stackoverflow.com/a/27959612
         this.setZOrderOnTop(true);
         this.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+
+        roundInfoTextPaint.setColor(Color.BLACK);
+        roundInfoTextPaint.setTextSize(50);
+        roundInfoTextPaint.setTextAlign(Paint.Align.RIGHT);
+
+        selectedCardPaint.setColor(0x70FFD700);
+        selectedCardPaint.setStyle(Paint.Style.STROKE);
+        selectedCardPaint.setStrokeWidth(10.0f);
+
+        fighterPowerPaint.setColor(Color.RED);
+        goldSymbolPaint.setColor(0xFFFFD700);
+        fighterStatTextPaint.setColor(Color.BLACK);
+        fighterStatTextPaint.setTextSize(40);
+        fighterStatTextPaint.setTextAlign(Paint.Align.CENTER);
+
+        manaTextPaint.setColor(Color.BLACK);
+        manaTextPaint.setTextAlign(Paint.Align.CENTER);
+        manaTextPaint.setTextSize(40);
+        manaTextPaint.setAntiAlias(true);
+
+        spellEffectTextPaint.setColor(Color.BLACK);
+        spellEffectTextPaint.setTextSize(25);
+        spellEffectTextPaint.setAntiAlias(true);
+
+        powerModTextPaint.setColor(Color.BLACK);
+        powerModTextPaint.setTextSize(40.0f);
+        powerModTextPaint.setAntiAlias(true);
+        powerModTextPaint.setTextAlign(Paint.Align.CENTER);
+
+        manaLimitTextPaint.setColor(Color.BLACK);
+        manaLimitTextPaint.setTextAlign(Paint.Align.CENTER);
+        manaLimitTextPaint.setTextSize(30.0f);
+        manaLimitTextPaint.setAntiAlias(true);
+
+        judgementTextPaint.setColor(Color.BLACK);
+        judgementTextPaint.setTextSize(30.0f);
+        judgementTextPaint.setTextAlign(Paint.Align.RIGHT);
+        judgementTextPaint.setAntiAlias(true);
+
+        cardOutlinePaint.setColor(Color.BLACK);
+        cardOutlinePaint.setStyle(Paint.Style.STROKE);
+        cardOutlinePaint.setStrokeWidth(10.0f);
+
+        cardBackTextPaint.setColor(Color.BLACK);
+        cardBackTextPaint.setTextAlign(Paint.Align.CENTER);
+        cardBackTextPaint.setTextSize(45.0f);
+        cardBackTextPaint.setAntiAlias(true);
+
+        titlePaint.setColor(Color.BLACK);
+        titlePaint.setTextSize(35.0f);
+        titlePaint.setTextAlign(Paint.Align.CENTER);
+        titlePaint.setAntiAlias(true);
+
+        buttonOutlinePaint.setColor(Color.BLACK);
+        buttonOutlinePaint.setStyle(Paint.Style.STROKE);
+        buttonOutlinePaint.setStrokeWidth(10.0f);
+
+        buttonLabelTextPaint.setColor(Color.BLACK);
+        buttonLabelTextPaint.setTextSize(30);
+        buttonLabelTextPaint.setTextAlign(Paint.Align.CENTER);
     }
 
     public void setState(CMGameState state, int playerId){
         this.state = state;
         fightersSelected = new boolean[5];
+        fightersHighlighted = new boolean[5];
         if(state.getNumPlayers() > 4) {
             spellsSelected = new boolean[6];
         }
@@ -133,10 +205,19 @@ public class CMSurfaceView extends SurfaceView {
                         judgementType, judge.getDisallowedSpells(), judge.getName().equals("Tad"));
 
         // Draws 5 random fighter cards
+        if(state.getPlayerTurn() == -1){
+            fightersHighlighted = fightersSelected;
+        }
+        else{
+            ArrayList<Integer> bets = state.getBets()[playerId];
+            for(int i = 0; i < bets.size(); i++){
+                fightersHighlighted[bets.get(i)] = true;
+            }
+        }
         for(int i=0; i < 5; i++) {
             FighterCard fighter = state.getFighter(i);
             drawFighterCard(canvas, fightersX, fightersY + fightersYSpacing*i, fighter.getName(),
-                    fighter.getPower(), fighter.getPrizeMoney(), fightersSelected[i]);
+                    fighter.getPower(), fighter.getPrizeMoney(), fightersHighlighted[i]);
         }
 
         // Draws players hand of spell cards
@@ -176,12 +257,8 @@ public class CMSurfaceView extends SurfaceView {
         buttonYPos += buttonYSpacing;
 
         // draws labels
-        Paint labelTextPaint = new Paint();
-        labelTextPaint.setColor(Color.BLACK);
-        labelTextPaint.setTextSize(labelTextSize);
-        labelTextPaint.setTextAlign(Paint.Align.RIGHT);
         canvas.drawText("Round " + state.getRoundNum(), getWidth() - labelRightMargin,
-                labelY, labelTextPaint);
+                labelY, roundInfoTextPaint);
         String turnText = "";
         if(state.getPlayerTurn() >= 0){
             turnText = "Turn " + (state.getPlayerTurn());
@@ -193,10 +270,9 @@ public class CMSurfaceView extends SurfaceView {
             turnText = "Discarding Phase";
         }
         canvas.drawText(turnText, getWidth() - labelRightMargin,
-                labelY + labelYSpacing, labelTextPaint);
-        canvas.drawText(Integer.toString(state.getGold()[playerId]), getWidth() - labelRightMargin,
-                labelY + labelYSpacing*2, labelTextPaint);
-        drawCoin(canvas, getWidth() - labelRightMargin - coinOffset, labelY + labelYSpacing*2, "C");
+                labelY + labelYSpacing, roundInfoTextPaint);
+        canvas.drawText("Gold: " + Integer.toString(state.getGold()[playerId]),
+                getWidth() - labelRightMargin, labelY + labelYSpacing*2, roundInfoTextPaint);
 
         invalidate();
     }
@@ -254,34 +330,25 @@ public class CMSurfaceView extends SurfaceView {
 
         //draws a yellow translucent border around the card if you've placed a bet on it
         if(hasBet){
-            Paint outlinePaint = new Paint();
-            outlinePaint.setColor(0x70FFD700);
-            outlinePaint.setStyle(Paint.Style.STROKE);
-            outlinePaint.setStrokeWidth(10.0f);
-            canvas.drawRect(x - 10.0f, y - 10.0f, x + cardWidth + 10.0f, y + cardHeight + 10.0f,
-                    outlinePaint);
+            canvas.drawRect(x - 10.0f, y - 10.0f, x + cardWidth + 10.0f,
+                    y + cardHeight + 10.0f, selectedCardPaint);
         }
 
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, fighterName);
 
         //draws the circle for the fighter's power
-        Paint red = new Paint();
-        red.setColor(Color.RED);
-        canvas.drawCircle(x + 40.0f, y + cardHeight - 40.0f, 25.0f, red);
+        canvas.drawCircle(x + 40.0f, y + cardHeight - 40.0f, 25.0f, fighterPowerPaint);
 
         //draws the circle for the fighter's prize gold
-        Paint gold = new Paint();
-        gold.setColor(0xFFFFD700);
-        canvas.drawCircle(x + cardWidth - 40.0f, y + cardHeight - 40.0f, 25.0f, gold);
+        canvas.drawCircle(x + cardWidth - 40.0f, y + cardHeight - 40.0f, 25.0f,
+                goldSymbolPaint);
 
         //draws the text for the fighter's stats
-        Paint statText = new Paint();
-        statText.setColor(Color.BLACK);
-        statText.setTextSize(40);
-        statText.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(Integer.toString(power), x + 40.0f, y + cardHeight - 25.0f, statText);
-        canvas.drawText(Integer.toString(prizeGold), x + cardWidth - 40.0f, y + cardHeight - 25.0f, statText);
+        canvas.drawText(Integer.toString(power), x + 40.0f, y + cardHeight - 25.0f,
+                fighterStatTextPaint);
+        canvas.drawText(Integer.toString(prizeGold), x + cardWidth - 40.0f,
+                y + cardHeight - 25.0f, fighterStatTextPaint);
 
     }
 
@@ -306,12 +373,8 @@ public class CMSurfaceView extends SurfaceView {
                                  String effectText, boolean isForbidden, boolean hasSelected){
 
         if(hasSelected){
-            Paint outlinePaint = new Paint();
-            outlinePaint.setColor(0x70FFD700);
-            outlinePaint.setStyle(Paint.Style.STROKE);
-            outlinePaint.setStrokeWidth(10.0f);
-            canvas.drawRect(x - 10.0f, y - 10.0f, x + cardWidth + 10.0f, y + cardHeight + 10.0f,
-                    outlinePaint);
+            canvas.drawRect(x - 10.0f, y - 10.0f, x + cardWidth + 10.0f,
+                    y + cardHeight + 10.0f, selectedCardPaint);
         }
 
         drawCardOutline(canvas, x, y);
@@ -319,7 +382,6 @@ public class CMSurfaceView extends SurfaceView {
 
         //draws a symbol according to the spell's type
         //colored circles are used as stand ins for now
-        Paint spellTypeSymbolPaint = new Paint();
         if(spellType == 'd') {
             spellTypeSymbolPaint.setColor(Color.RED);
         }
@@ -334,50 +396,33 @@ public class CMSurfaceView extends SurfaceView {
 
         //draws mana cost on the card
         if(mana != 0) {
-            Paint manaTextPaint = new Paint();
-            manaTextPaint.setColor(Color.BLACK);
-            manaTextPaint.setTextAlign(Paint.Align.CENTER);
-            manaTextPaint.setTextSize(40);
-            manaTextPaint.setAntiAlias(true);
             canvas.drawText(Integer.toString(mana), x + cardWidth - 30.0f, y + 90.0f, manaTextPaint);
         }
 
         //draws a forbidden icon (green circle place holder for now) if the card is forbidden
+        spellTypeSymbolPaint.setColor(Color.GREEN);
         if(isForbidden){
-            Paint forbiddenSymbolPaint = new Paint();
-            forbiddenSymbolPaint.setColor(Color.GREEN);
-            canvas.drawCircle(x + 25.0f, y + 95.0f, 12.5f, forbiddenSymbolPaint);
+            canvas.drawCircle(x + 25.0f, y + 95.0f, 12.5f, spellTypeSymbolPaint);
         }
 
         //draws the effect text at the bottom of the card if needed
         if(hasCardText){
-            Paint effectTextPaint = new Paint();
-            effectTextPaint.setColor(Color.BLACK);
-            effectTextPaint.setTextSize(25);
-            effectTextPaint.setAntiAlias(true);
             ArrayList<String> wrappedEffectText = textLineWrap(effectText, cardWidth - 30.0f,
-                    effectTextPaint);
+                    spellEffectTextPaint);
             for(int i = 0; i < wrappedEffectText.size(); i++){
-                canvas.drawText(wrappedEffectText.get(i), x + 10.0f, y + cardHeight - 80.0f + i * 22.5f,
-                        effectTextPaint);
+                canvas.drawText(wrappedEffectText.get(i), x + 10.0f,
+                        y + cardHeight - 80.0f + i * 22.5f, spellEffectTextPaint);
             }
         }
 
         //draws the power modifier on the bottom of the card if no card text is present
         else{
-            Paint powerModTextPaint = new Paint();
-            powerModTextPaint.setColor(Color.BLACK);
-            powerModTextPaint.setTextSize(40.0f);
-            powerModTextPaint.setAntiAlias(true);
-            powerModTextPaint.setTextAlign(Paint.Align.CENTER);
-
             //adds a plus or minus to the front of the modifier
             String powerModText = "";
             if(powerMod > 0){
                 powerModText = "+";
             }
             powerModText += Integer.toString(powerMod);
-
             canvas.drawText(powerModText, x + cardWidth/2, y + cardHeight - 25.0f,
                     powerModTextPaint);
         }
@@ -404,39 +449,28 @@ public class CMSurfaceView extends SurfaceView {
 
         if(!noManaLimit) {
             //writes the mana limit on the card
-            Paint manaLimitTextPaint = new Paint();
-            manaLimitTextPaint.setColor(Color.BLACK);
-            manaLimitTextPaint.setTextAlign(Paint.Align.CENTER);
-            manaLimitTextPaint.setTextSize(30.0f);
-            manaLimitTextPaint.setAntiAlias(true);
             canvas.drawText(Integer.toString(manaLimit), x + 30.0f, y + cardHeight - 75.0f,
                     manaLimitTextPaint);
 
             //writes judgement type on the card
-            Paint judgementTextPaint = new Paint();
-            judgementTextPaint.setColor(Color.BLACK);
-            judgementTextPaint.setTextSize(30.0f);
-            judgementTextPaint.setTextAlign(Paint.Align.RIGHT);
-            judgementTextPaint.setAntiAlias(true);
-            canvas.drawText(judgementType, x + cardWidth - 90.0f,y + cardHeight - 75.0f,
+            canvas.drawText(judgementType, x + cardWidth - 20.0f,y + cardHeight - 75.0f,
                     judgementTextPaint);
 
         }
 
         //draws symbols of cards this judge disallows at bottom of card
-        Paint symbolPaint = new Paint();
         for(int i = 0; i < disallows.size(); i++){
             if (disallows.get(i) == 'd') {
-                symbolPaint.setColor(Color.RED);
+                spellTypeSymbolPaint.setColor(Color.RED);
             } else if (disallows.get(i) == 'e') {
-                symbolPaint.setColor(Color.BLUE);
+                spellTypeSymbolPaint.setColor(Color.BLUE);
             } else if (disallows.get(i) == 's') {
-                symbolPaint.setColor(0xFFFFD700);
+                spellTypeSymbolPaint.setColor(0xFFFFD700);
             } else {
-                symbolPaint.setColor(Color.GREEN);
+                spellTypeSymbolPaint.setColor(Color.GREEN);
             }
             canvas.drawCircle(x + 25.0f + i * 25.0f, y + cardHeight - 40.0f,
-                    12.5f, symbolPaint);
+                    12.5f, spellTypeSymbolPaint);
         }
 
     }
@@ -451,7 +485,6 @@ public class CMSurfaceView extends SurfaceView {
      */
     protected void drawFaceDownCard(Canvas canvas, float x, float y, int cardBackColor){
         //draws the card back's base color first
-        Paint cardBackFillPaint = new Paint();
         cardBackFillPaint.setColor(cardBackColor);
         canvas.drawRect(x, y, x + cardWidth, y + cardHeight, cardBackFillPaint);
 
@@ -459,11 +492,6 @@ public class CMSurfaceView extends SurfaceView {
         drawCardOutline(canvas, x, y);
 
         //prints the "cheaty mages" across the card
-        Paint cardBackTextPaint = new Paint();
-        cardBackTextPaint.setColor(Color.BLACK);
-        cardBackTextPaint.setTextAlign(Paint.Align.CENTER);
-        cardBackTextPaint.setTextSize(45.0f);
-        cardBackTextPaint.setAntiAlias(true);
         canvas.drawText("CHEATY", x + cardWidth/2, y + 110.0f, cardBackTextPaint);
         canvas.drawText("MAGES", x + cardWidth/2, y + cardHeight - 70.0f, cardBackTextPaint);
     }
@@ -476,11 +504,7 @@ public class CMSurfaceView extends SurfaceView {
      * @param y top left corner of the outline
      */
     protected void drawCardOutline(Canvas canvas, float x, float y){
-        Paint outlinePaint = new Paint();
-        outlinePaint.setColor(Color.BLACK);
-        outlinePaint.setStyle(Paint.Style.STROKE);
-        outlinePaint.setStrokeWidth(10.0f);
-        canvas.drawRect(x, y, x + cardWidth, y + cardHeight, outlinePaint);
+        canvas.drawRect(x, y, x + cardWidth, y + cardHeight, cardOutlinePaint);
     }
 
     /**
@@ -492,11 +516,6 @@ public class CMSurfaceView extends SurfaceView {
      * @param text the card title
      */
     protected void drawCardTitle(Canvas canvas, float x, float y, String text){
-        Paint titlePaint = new Paint();
-        titlePaint.setColor(Color.BLACK);
-        titlePaint.setTextSize(35.0f);
-        titlePaint.setTextAlign(Paint.Align.CENTER);
-        titlePaint.setAntiAlias(true);
         canvas.drawText(text, x + cardWidth/2, y + 50.0f, titlePaint);
     }
 
@@ -525,39 +544,8 @@ public class CMSurfaceView extends SurfaceView {
         return splitText;
     }
 
-    /**
-     *  draws a coin on the screen
-     *
-     * @param canvas
-     * @param x top left corner of the coin
-     * @param y top left corner of the coin
-     * @param coinDesign 'C' design on coin
-     */
-    protected void drawCoin(Canvas canvas, float x, float y, String coinDesign) {
-        //draws the circle for the gold coin
-        Paint gold = new Paint();
-        gold.setColor(Color.YELLOW);
-        canvas.drawCircle(x + 175.0f, y + 250.0f, 60.0f, gold);
-
-        //draws the text for the fighter's stats
-        Paint statText = new Paint();
-        statText.setColor(Color.BLACK);
-        statText.setTextSize(50.0f);
-        statText.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(coinDesign, x + 175.0f, y + 270.0f, statText);
-    }
-
     protected void drawButton(Canvas canvas, float x, float y, String label){
-        Paint outline = new Paint();
-        outline.setColor(Color.BLACK);
-        outline.setStyle(Paint.Style.STROKE);
-        outline.setStrokeWidth(10.0f);
-        canvas.drawRect(x, y, x + buttonWidth, y + buttonHeight, outline);
-
-        Paint labelText = new Paint();
-        labelText.setColor(Color.BLACK);
-        labelText.setTextSize(buttonLabelTextSize);
-        labelText.setTextAlign(Paint.Align.CENTER);
-        canvas.drawText(label, x + buttonWidth/2, y + buttonHeight/2, labelText);
+        canvas.drawRect(x, y, x + buttonWidth, y + buttonHeight, buttonOutlinePaint);
+        canvas.drawText(label, x + buttonWidth/2, y + buttonHeight/2, buttonLabelTextPaint);
     }
 }

@@ -112,7 +112,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 break;
             case "Discard":
                 ArrayList<Integer> discards = new ArrayList<>();
-                for (int i = 8; i >= 0; i--) {
+                for (int i = 7; i >= 0; i--) {
                     if (selectedSpells[i]) {
                         discards.add(i);
                     }
