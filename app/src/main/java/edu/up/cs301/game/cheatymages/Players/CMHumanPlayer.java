@@ -1,10 +1,12 @@
 package edu.up.cs301.game.cheatymages.Players;
 
+import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import edu.up.cs301.game.GameFramework.GameMainActivity;
 import edu.up.cs301.game.GameFramework.infoMessage.*;
@@ -19,8 +21,10 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     // keeps track of what turn it was the last time you were updated information
     protected int playerTurn;
 
-    // boolean ArrayList checks if fighter has bet on them
-    protected boolean[] selectedFighters = new boolean[5];
+    // boolean ArrayList contains selected fighters
+    ArrayList<Integer> selectedFighters = new ArrayList<>();
+    // boolean ArrayList contains unselected fighters
+    ArrayList<Integer> unselectedFighters = new ArrayList<>();
 
     protected boolean detectMagic;
 
@@ -41,6 +45,12 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     public CMHumanPlayer(String name, int layoutId) {
         super(name);
         this.layoutId = layoutId;
+
+        // Setting all fighters to unselected
+        for(int i=0; i<5; i++) {
+            unselectedFighters.add(i);
+        }
+
     }
 
     @Override
@@ -58,7 +68,9 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         if (info instanceof IllegalMoveInfo || info instanceof NotYourTurnInfo) {
             // if the move was out of turn or otherwise illegal, flash the screen
             //TODO IMPLEMENT A FLASH METHOD
-            //surfaceView.flash(Color.RED, 50);
+            int myColor = Color.rgb(255, 0, 0);
+            flash(myColor, 10000);
+            return;
         }
         else if (!(info instanceof CMGameState)) {
             // if we do not have a TTTState, ignore
@@ -94,10 +106,8 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         switch (item) {
             case "Bet":
                 ArrayList<Integer> bets = new ArrayList<>();
-                for (int i = 0; i < 5; i++) {
-                    if (selectedFighters[i]) {
-                        bets.add(i);
-                    }
+                for (int i = 0; i < selectedFighters.size(); i++) {
+                    bets.add(selectedFighters.get(i));
                 }
                 this.game.sendAction(new BetAction(this, bets));
                 break;
@@ -182,40 +192,28 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             detectMagic = false;
             this.game.sendAction(new DetectMagicAction(this, spell, idx));
         }
-
         else{
-
-            int numSelectedFighters = 0;
-            for(boolean isSelected : selectedFighters) {
-                if (isSelected) {
-                    numSelectedFighters++;
-                }
-            }
-
-            //TODO THERE IS A BUG HERE WHERE YOU CAN SELECT MORE THAN 3 SOMEHOW I DONT FUCKING KNOW MAN
-
-            if(selectedFighters[idx]){
-                selectedFighters[idx] = false;
+            //removes fighter if the fighter was clicked again
+            if(selectedFighters.contains(idx)){
+                selectedFighters.remove(selectedFighters.indexOf(idx));
+                unselectedFighters.add(idx);
                 surfaceView.selectFighter(idx, false);
-
-                for(int i = idx + 1; i < 3; i++){
-                    lastClicked[idx] = lastClicked[idx + 1];
-                }
-                lastClicked[2] = 0;
-                return;
             }
-
-            if(numSelectedFighters > 2) {
-                selectedFighters[lastClicked[2]] = false;
-                surfaceView.selectFighter(lastClicked[2], false);
+            //if there's 3 fighters selected remove oldest one and selects new one
+            else if(selectedFighters.size() > 2) {
+                surfaceView.selectFighter(selectedFighters.get(0), false);
+                selectedFighters.remove(0);
+                unselectedFighters.add(idx);
+                selectedFighters.add(idx);
+                unselectedFighters.remove(selectedFighters.indexOf(idx));
+                surfaceView.selectFighter(idx, true);
             }
-
-            selectedFighters[idx] = true;
-            surfaceView.selectFighter(idx, true);
-
-            lastClicked[2] = lastClicked[1];
-            lastClicked[1] = lastClicked[0];
-            lastClicked[0] = idx;
+            //adds to selected
+            else {
+                selectedFighters.add(idx);
+                unselectedFighters.remove(selectedFighters.indexOf(idx));
+                surfaceView.selectFighter(idx, true);
+            }
         }
     }
 
