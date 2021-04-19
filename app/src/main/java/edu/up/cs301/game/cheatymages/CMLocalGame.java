@@ -154,6 +154,7 @@ class CMLocalGame extends LocalGame {
             else{
                 cmState.playSpellCard(playerId, spellAction.getSpell(), spellAction.getTarget());
             }
+            return true;
 
         }
 
@@ -189,6 +190,7 @@ class CMLocalGame extends LocalGame {
             }
 
             cmState.placeBet(playerId, betAction.getBets());
+            return true;
 
         }
 
@@ -209,6 +211,7 @@ class CMLocalGame extends LocalGame {
             }
 
             cmState.discardCards(playerId, discardAction.getDiscards());
+            return true;
 
         }
 

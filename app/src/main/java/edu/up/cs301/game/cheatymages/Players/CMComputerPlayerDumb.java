@@ -28,8 +28,6 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
     @Override
     protected void receiveInfo(GameInfo info) {
 
-        Log.d("Computer Dumb " + this.playerNum, "Info received " + info);
-
         //Makes sure the info message is a game state before sending an action
         if(!(info instanceof GameState)){
             return;
@@ -58,7 +56,6 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
         //The dumb AI has a 10% chance of passing
         if(rng.nextInt(10) == 0){
             game.sendAction(new PassAction(this));
-            //System.out.println(state.getPlayerTurn() + " PASSED");
             return;
         }
 
@@ -66,7 +63,6 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
         int handSize = state.getHands()[playerNum].size();
         if(handSize > 0){
             game.sendAction(new PlaySpellAction(this, rng.nextInt(handSize), rng.nextInt(5)));
-            //System.out.println(state.getPlayerTurn() + " PLAYED A SPELL");
             return;
         }
 
