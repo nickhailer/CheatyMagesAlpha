@@ -1,11 +1,14 @@
 package edu.up.cs301;
 
 import junit.framework.TestCase;
+
+import org.junit.Test;
+
 import java.util.ArrayList;
 import edu.up.cs301.game.cheatymages.CMGameState;
 
 public class CMGameStateTest extends TestCase {
-
+    @Test
     public void testPlaceBet() {
         CMGameState state = new CMGameState(3);
         ArrayList<Integer> bet0 = new ArrayList<>();
@@ -30,7 +33,7 @@ public class CMGameStateTest extends TestCase {
         assertEquals((int) state.getBets()[1].get(1), 4);
         assertEquals((int) state.getBets()[2].get(0), 5);
     }
-
+    @Test
     public void testPass() {
         CMGameState state = new CMGameState(3);
         ArrayList<Integer> bets = new ArrayList<>();
@@ -38,7 +41,7 @@ public class CMGameStateTest extends TestCase {
         bets.add(2);
         bets.add(3);
     }
-
+    @Test
     public void testPlaySpellCard() {
         CMGameState state = new CMGameState(3);
         state.setPlayerTurn(0);
@@ -48,10 +51,10 @@ public class CMGameStateTest extends TestCase {
         assertEquals(state.getHands()[0].size(), 7);
         assertEquals(state.getAttachedSpells()[0].size(), 1);
     }
-
+    @Test
     public void testDetectMagic() {
     }
-
+    @Test
     public void testDiscardCards() {
     }
 

@@ -35,7 +35,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
 
     private int layoutId;
 
-    private CMSurfaceView surfaceView;
+    private CMSurfaceView cmSurfaceView;
 
     /**
      * constructor
@@ -61,7 +61,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     @Override
     public void receiveInfo(GameInfo info) {
 
-        if (surfaceView == null){
+        if (cmSurfaceView == null){
             return;
         }
 
@@ -77,8 +77,8 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             return;
         }
         else {
-            surfaceView.setState((CMGameState) info, this.playerNum);
-            surfaceView.invalidate();
+            cmSurfaceView.setState((CMGameState) info, this.playerNum);
+            cmSurfaceView.invalidate();
         }
     }
 
@@ -87,9 +87,9 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         // Load the layout resource for the new configuration
         activity.setContentView(layoutId);
 
-        // set the surfaceView instance variable
-        surfaceView = (CMSurfaceView) myActivity.findViewById(R.id.surfaceView);
-        surfaceView.setOnTouchListener(this);
+        // set the cmSurfaceView instance variable
+        cmSurfaceView = (CMSurfaceView) myActivity.findViewById(R.id.cmSurfaceView);
+        cmSurfaceView.setOnTouchListener(this);
     }
 
     @Override
@@ -99,11 +99,12 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
 
         int x = (int) motionEvent.getX();
         int y = (int) motionEvent.getY();
-        String item = surfaceView.mapPositionToItem(x, y);
+        String item = cmSurfaceView.mapPositionToItem(x, y);
         //TODO REPLACE THIS WITH AN ACTUAL INDICATION YOU PRESSED SOMETHING
         Log.d("CMHumanPlayer", "You pressed " + item);
 
         switch (item) {
+            //TODO PLAYER CAN BET ON NO FIGHTER CARDS
             case "Bet":
                 ArrayList<Integer> bets = new ArrayList<>();
                 for (int i = 0; i < selectedFighters.size(); i++) {
@@ -118,7 +119,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             case "Detect Magic":
                 detectMagic = true;
                 //TODO UNCOMMENT THIS ONCE IMPLEMENT
-                //surfaceView.selectDetectMagic()
+                //cmSurfaceView.selectDetectMagic()
                 break;
             case "Discard":
                 ArrayList<Integer> discards = new ArrayList<>();
@@ -197,22 +198,22 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             if(selectedFighters.contains(idx)){
                 selectedFighters.remove(selectedFighters.indexOf(idx));
                 unselectedFighters.add(idx);
-                surfaceView.selectFighter(idx, false);
+                cmSurfaceView.selectFighter(idx, false);
             }
             //if there's 3 fighters selected remove oldest one and selects new one
             else if(selectedFighters.size() > 2) {
-                surfaceView.selectFighter(selectedFighters.get(0), false);
+                cmSurfaceView.selectFighter(selectedFighters.get(0), false);
                 selectedFighters.remove(0);
                 unselectedFighters.add(idx);
                 selectedFighters.add(idx);
                 unselectedFighters.remove(selectedFighters.indexOf(idx));
-                surfaceView.selectFighter(idx, true);
+                cmSurfaceView.selectFighter(idx, true);
             }
             //adds to selected
             else {
                 selectedFighters.add(idx);
                 unselectedFighters.remove(selectedFighters.indexOf(idx));
-                surfaceView.selectFighter(idx, true);
+                cmSurfaceView.selectFighter(idx, true);
             }
         }
     }
@@ -220,7 +221,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     private void clickSpell(int idx){
         if(playerTurn == -2){
             selectedSpells[idx] = !selectedSpells[idx];
-            surfaceView.selectSpell(idx, !selectedSpells[idx]);
+            cmSurfaceView.selectSpell(idx, !selectedSpells[idx]);
         }
         else if (playerTurn >= 0){
             int numSelectedSpells = 0;
@@ -231,11 +232,11 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             }
 
             if(numSelectedSpells > 0){
-                surfaceView.clearSpellSelections();
+                cmSurfaceView.clearSpellSelections();
             }
 
             selectedSpells[idx] = true;
-            surfaceView.selectSpell(idx, true);
+            cmSurfaceView.selectSpell(idx, true);
         }
     }
 }

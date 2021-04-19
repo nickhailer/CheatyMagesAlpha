@@ -1,10 +1,7 @@
 edu/up/cs301/tictactoe/players/TTTHumanPlayer1.java
  edu.up.cs301.tictactoe.players.TTTHumanPlayer1
-edu/up/cs301/game/GameFramework/GameMainActivity.java
- edu.up.cs301.game.GameFramework.GameMainActivity
- edu.up.cs301.game.GameFramework.GameMainActivity$1
- edu.up.cs301.game.GameFramework.GameMainActivity$2
- edu.up.cs301.game.GameFramework.GameMainActivity$SpinnerListListener
+edu/up/cs301/tictactoe/players/TTTComputerPlayer1.java
+ edu.up.cs301.tictactoe.players.TTTComputerPlayer1
 edu/up/cs301/game/cheatymages/Cards/Card.java
  edu.up.cs301.game.cheatymages.Cards.Card
 edu/up/cs301/game/GameFramework/infoMessage/StartGameInfo.java
@@ -65,8 +62,11 @@ edu/up/cs301/game/GameFramework/LocalGame.java
  edu.up.cs301.game.GameFramework.LocalGame$MyHandler
 edu/up/cs301/game/cheatymages/Actions/PassAction.java
  edu.up.cs301.game.cheatymages.Actions.PassAction
-edu/up/cs301/game/GameFramework/utilities/IPCoder.java
- edu.up.cs301.game.GameFramework.utilities.IPCoder
+edu/up/cs301/game/GameFramework/GameMainActivity.java
+ edu.up.cs301.game.GameFramework.GameMainActivity
+ edu.up.cs301.game.GameFramework.GameMainActivity$1
+ edu.up.cs301.game.GameFramework.GameMainActivity$2
+ edu.up.cs301.game.GameFramework.GameMainActivity$SpinnerListListener
 edu/up/cs301/tictactoe/views/TTTSurfaceView.java
  edu.up.cs301.tictactoe.views.TTTSurfaceView
 edu/up/cs301/game/GameFramework/infoMessage/TimerInfo.java
@@ -138,8 +138,8 @@ edu/up/cs301/game/cheatymages/Actions/DetectMagicAction.java
  edu.up.cs301.game.cheatymages.Actions.DetectMagicAction
 edu/up/cs301/game/GameFramework/infoMessage/BindGameInfo.java
  edu.up.cs301.game.GameFramework.infoMessage.BindGameInfo
-edu/up/cs301/tictactoe/players/TTTComputerPlayer1.java
- edu.up.cs301.tictactoe.players.TTTComputerPlayer1
+edu/up/cs301/game/cheatymages/Players/CMComputerPlayerDumb.java
+ edu.up.cs301.game.cheatymages.Players.CMComputerPlayerDumb
 edu/up/cs301/game/GameFramework/actionMessage/TimerAction.java
  edu.up.cs301.game.GameFramework.actionMessage.TimerAction
 edu/up/cs301/game/GameFramework/infoMessage/GameState.java
@@ -151,8 +151,8 @@ edu/up/cs301/game/GameFramework/utilities/Tickable.java
 edu/up/cs301/game/GameFramework/players/ProxyPlayer.java
  edu.up.cs301.game.GameFramework.players.ProxyPlayer
  edu.up.cs301.game.GameFramework.players.ProxyPlayer$1
-edu/up/cs301/game/cheatymages/Players/CMComputerPlayerDumb.java
- edu.up.cs301.game.cheatymages.Players.CMComputerPlayerDumb
+edu/up/cs301/game/GameFramework/utilities/IPCoder.java
+ edu.up.cs301.game.GameFramework.utilities.IPCoder
 edu/up/cs301/game/cheatymages/Players/CMHumanPlayer.java
  edu.up.cs301.game.cheatymages.Players.CMHumanPlayer
 edu/up/cs301/game/cheatymages/CMMainActivity.java

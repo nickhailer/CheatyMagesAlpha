@@ -191,6 +191,26 @@ public class CMSurfaceView extends SurfaceView {
             return;
         }
         
+        drawRandomJudge(canvas);
+
+        drawRandomFighters(canvas);
+
+        drawPlayerHand(canvas);
+
+        drawPlayedSpellCards(canvas);
+
+        drawActionButtons(canvas);
+
+        drawLabels(canvas);
+
+        invalidate();
+    }
+
+    /**
+     * drawRandomJudge is a helper method that will draw the random judge from CMGameState
+     * @param canvas
+     */
+    public void drawRandomJudge(Canvas canvas) {
         // Determines judges judgement
         //TODO CHANGE THIS
         String judgementType;
@@ -203,8 +223,14 @@ public class CMSurfaceView extends SurfaceView {
         // Draws judge card
         JudgeCard judge = state.getJudge();
         drawJudgeCard(canvas, judgeX, judgeY, judge.getName(), judge.getManaLimit(),
-                        judgementType, judge.getDisallowedSpells(), judge.getName().equals("Tad"));
+                judgementType, judge.getDisallowedSpells(), judge.getName().equals("Tad"));
+    }
 
+    /**
+     * drawRandomFighter is a helper method that draws the random 5 fighter cards from CMGameState
+     * @param canvas
+     */
+    public void drawRandomFighters(Canvas canvas) {
         // Draws 5 random fighter cards
         if(state.getPlayerTurn() == -1){
             fightersHighlighted = fightersSelected;
@@ -220,7 +246,13 @@ public class CMSurfaceView extends SurfaceView {
             drawFighterCard(canvas, fightersX, fightersY + fightersYSpacing*i, fighter.getName(),
                     fighter.getPower(), fighter.getPrizeMoney(), fightersHighlighted[i]);
         }
+    }
 
+    /**
+     * drawPlayerHand is a helper method that draws the users hand of spell cards on the screen
+     * @param canvas
+     */
+    public void drawPlayerHand(Canvas canvas){
         // Draws players hand of spell cards
         for(int i=0; i < state.getHands()[playerId].size(); i++) {
             SpellCard spell = state.getHands()[playerId].get(i);
@@ -228,7 +260,14 @@ public class CMSurfaceView extends SurfaceView {
                     spell.getSpellType(), spell.getPowerMod(),false, "",
                     spell.isForbidden(), spellsSelected[i]);
         }
+    }
 
+    /**
+     * drawPlayedSpellCards is a helper method that draws the played spell cards to next
+     * to the fighter card played on
+     * @param canvas
+     */
+    public void drawPlayedSpellCards(Canvas canvas) {
         // Draws played spell cards
         for(int i = 0; i < 5; i++){
             for(int j=0; j<state.getAttachedSpells()[i].size(); j++) {
@@ -245,18 +284,13 @@ public class CMSurfaceView extends SurfaceView {
                 }
             }
         }
+    }
 
-        // draws buttons
-        float buttonYPos = buttonY;
-        drawButton(canvas, buttonX, buttonYPos, "Pass");
-        buttonYPos += buttonYSpacing;
-        drawButton(canvas, buttonX, buttonYPos, "Detect");
-        buttonYPos += buttonYSpacing;
-        drawButton(canvas, buttonX, buttonYPos, "Bet");
-        buttonYPos += buttonYSpacing;
-        drawButton(canvas, buttonX, buttonYPos, "Discard");
-        buttonYPos += buttonYSpacing;
-
+    /**
+     * drawLabels is a helper method that draws the round, phase/turn, and gold total on screen
+     * @param canvas
+     */
+    public void drawLabels(Canvas canvas){
         // draws labels
         canvas.drawText("Round " + state.getRoundNum(), getWidth() - labelRightMargin,
                 labelY, roundInfoTextPaint);
@@ -275,9 +309,32 @@ public class CMSurfaceView extends SurfaceView {
         canvas.drawText("Gold: " + Integer.toString(state.getGold()[playerId]),
                 getWidth() - labelRightMargin, labelY + labelYSpacing*2, roundInfoTextPaint);
 
-        invalidate();
     }
 
+    /**
+     * drawActionButtons is a helper method that draws the Action buttons (PASS, DETECT MAGIC,
+     * BET, AND DISCARD) on screen
+     * @param canvas
+     */
+    public void drawActionButtons(Canvas canvas){
+        // draws buttons
+        float buttonYPos = buttonY;
+        drawButton(canvas, buttonX, buttonYPos, "Pass");
+        buttonYPos += buttonYSpacing;
+        drawButton(canvas, buttonX, buttonYPos, "Detect");
+        buttonYPos += buttonYSpacing;
+        drawButton(canvas, buttonX, buttonYPos, "Bet");
+        buttonYPos += buttonYSpacing;
+        drawButton(canvas, buttonX, buttonYPos, "Discard");
+        buttonYPos += buttonYSpacing;
+    }
+
+    /**
+     *
+     * @param x
+     * @param y
+     * @return
+     */
     public String mapPositionToItem(int x, int y){
         //TODO CHANGE THIS FUNCTION TO WORK WITH CHANGING CARD SPACING
         if(fightersX <= x && x <= fightersX + cardWidth){

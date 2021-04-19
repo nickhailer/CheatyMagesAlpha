@@ -711,6 +711,7 @@ id checkbox
 id chronometer
 id clip_horizontal
 id clip_vertical
+id cmSurfaceView
 id collapseActionView
 id configTableLayout
 id content
