@@ -589,5 +589,4 @@ public class CMGameState extends GameState{
         this.playerTurn = playerTurn;
     }
 
-
 }

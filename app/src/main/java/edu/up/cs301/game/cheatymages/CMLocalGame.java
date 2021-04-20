@@ -210,6 +210,11 @@ class CMLocalGame extends LocalGame {
                 }
             }
 
+            //Prevents players from discarding multiple times
+            if(cmState.hasFinishedDiscarding()[playerId]){
+                return false;
+            }
+
             cmState.discardCards(playerId, discardAction.getDiscards());
             return true;
 
