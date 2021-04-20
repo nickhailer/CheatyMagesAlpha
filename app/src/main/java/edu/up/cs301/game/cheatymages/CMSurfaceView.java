@@ -14,6 +14,7 @@ import java.util.Arrays;
 import edu.up.cs301.game.cheatymages.Cards.FighterCard;
 import edu.up.cs301.game.cheatymages.Cards.JudgeCard;
 import edu.up.cs301.game.cheatymages.Cards.SpellCard;
+import edu.up.cs301.game.cheatymages.Players.CMHumanPlayer;
 
 //TODO MAKE PAINTS FINAL
 //TODO MAKE THE POSITIONS/SIZES FINAL INSTEAD OF HARD CODED

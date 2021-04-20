@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -100,8 +101,11 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         int x = (int) motionEvent.getX();
         int y = (int) motionEvent.getY();
         String item = cmSurfaceView.mapPositionToItem(x, y);
-        //TODO REPLACE THIS WITH AN ACTUAL INDICATION YOU PRESSED SOMETHING
-        Log.d("CMHumanPlayer", "You pressed " + item);
+
+        //Tells human player what they pressed
+        CharSequence text = "You pressed " + item;
+        Toast playerMessage = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+        playerMessage.show();
 
         switch (item) {
             //TODO PLAYER CAN BET ON NO FIGHTER CARDS

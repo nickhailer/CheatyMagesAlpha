@@ -191,7 +191,6 @@ class CMLocalGame extends LocalGame {
 
             cmState.placeBet(playerId, betAction.getBets());
             return true;
-
         }
 
         if(action instanceof DiscardCardsAction){
@@ -217,7 +216,6 @@ class CMLocalGame extends LocalGame {
 
             cmState.discardCards(playerId, discardAction.getDiscards());
             return true;
-
         }
 
         return false;
