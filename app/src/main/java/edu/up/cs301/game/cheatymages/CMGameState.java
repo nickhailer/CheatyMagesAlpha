@@ -4,8 +4,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.Random;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
@@ -55,8 +53,7 @@ public class CMGameState extends GameState{
     private boolean[] hasFinishedBetting;
 
     //Checks if everyone has discarded their cards
-    //TODO CHANGE THIS TO HOW BETTING WORKS
-    private int finishedDiscarding;
+    private boolean[] hasFinishedDiscarding;
 
     //Checks if everyone has passed consecutively
     private int consecutivePasses;
@@ -110,7 +107,7 @@ public class CMGameState extends GameState{
         fillPlayerHands();
 
         hasFinishedBetting = new boolean[numPlayers];
-        finishedDiscarding = 0;
+        hasFinishedDiscarding = new boolean[numPlayers];
         consecutivePasses = 0;
 
         rng = new Random();
@@ -131,7 +128,7 @@ public class CMGameState extends GameState{
         roundNum = orig.roundNum;
         playerTurn = orig.playerTurn;
         hasFinishedBetting = orig.hasFinishedBetting;
-        finishedDiscarding = orig.finishedDiscarding;
+        hasFinishedDiscarding = orig.hasFinishedDiscarding;
         consecutivePasses = orig.consecutivePasses;
 
         fighters = new FighterCard[5];
@@ -330,11 +327,18 @@ public class CMGameState extends GameState{
         //Draws you new cards
         drawCards(id);
 
+        //Notes that this player has finished discarding
+        hasFinishedDiscarding[id] = true;
+
         //Checks if all players have finished discarding
-        finishedDiscarding++;
-        if(finishedDiscarding < numPlayers){
-            return false;
+        for(int i = 0; i < hasFinishedDiscarding.length; i++){
+            if(!hasFinishedBetting[i]){
+                return false;
+            }
         }
+
+        //Resets the finished discarding array
+        Arrays.fill(hasFinishedDiscarding, false);
 
         //Moves game to the betting phase
         playerTurn = -1;
@@ -569,8 +573,8 @@ public class CMGameState extends GameState{
         return hasFinishedBetting;
     }
 
-    public int getFinishedDiscarding() {
-        return finishedDiscarding;
+    public boolean[] hasFinishedDiscarding() {
+        return hasFinishedDiscarding;
     }
 
     public int getConsecutivePasses() {
@@ -584,6 +588,5 @@ public class CMGameState extends GameState{
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
     }
-
 
 }

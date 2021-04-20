@@ -28,7 +28,6 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
     @Override
     protected void receiveInfo(GameInfo info) {
 
-        Log.d("Computer Dumb " + this.playerNum, "Info received " + info);
         //Makes sure the info message is a game state before sending an action
         if(!(info instanceof GameState)){
             return;

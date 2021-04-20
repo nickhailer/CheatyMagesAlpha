@@ -154,6 +154,7 @@ class CMLocalGame extends LocalGame {
             else{
                 cmState.playSpellCard(playerId, spellAction.getSpell(), spellAction.getTarget());
             }
+            return true;
 
         }
 
@@ -189,6 +190,7 @@ class CMLocalGame extends LocalGame {
             }
 
             cmState.placeBet(playerId, betAction.getBets());
+            return true;
 
         }
 
@@ -208,7 +210,13 @@ class CMLocalGame extends LocalGame {
                 }
             }
 
+            //Prevents players from discarding multiple times
+            if(cmState.hasFinishedDiscarding()[playerId]){
+                return false;
+            }
+
             cmState.discardCards(playerId, discardAction.getDiscards());
+            return true;
 
         }
 
