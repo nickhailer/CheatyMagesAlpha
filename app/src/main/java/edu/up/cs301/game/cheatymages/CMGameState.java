@@ -322,6 +322,8 @@ public class CMGameState extends GameState{
 
         //Removes cards from your hand and adds them to the discard pile
         for(int i = 0; i < discards.size(); i++){
+            //TODO WTF
+            Log.d("GameState", "Player " + id + " is discarding card " + discards.get(i));
             discardPile.add(hands[id].remove((int) discards.get(i)));
         }
         //Draws you new cards
@@ -332,7 +334,7 @@ public class CMGameState extends GameState{
 
         //Checks if all players have finished discarding
         for(int i = 0; i < hasFinishedDiscarding.length; i++){
-            if(!hasFinishedBetting[i]){
+            if(!hasFinishedDiscarding[i]){
                 return false;
             }
         }
@@ -358,7 +360,7 @@ public class CMGameState extends GameState{
         if(numPlayers == 6){
             handSize = 5;
         }
-        if(numPlayers == 5){
+        else if(numPlayers == 5){
             handSize = 6;
         }
         else{
