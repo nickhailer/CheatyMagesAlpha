@@ -108,11 +108,13 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         playerMessage.show();
 
         switch (item) {
-            //TODO PLAYER CAN BET ON NO FIGHTER CARDS
             case "Bet":
                 ArrayList<Integer> bets = new ArrayList<>();
                 for (int i = 0; i < selectedFighters.size(); i++) {
                     bets.add(selectedFighters.get(i));
+                }
+                if(selectedFighters.size() < 1) {
+                    break;
                 }
                 this.game.sendAction(new BetAction(this, bets));
                 break;

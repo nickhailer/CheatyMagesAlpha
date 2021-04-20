@@ -1,6 +1,7 @@
 package edu.up.cs301.game.cheatymages;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +9,7 @@ import java.util.Random;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 import edu.up.cs301.game.cheatymages.Cards.*;
+import edu.up.cs301.game.cheatymages.Players.CMHumanPlayer;
 
 public class CMGameState extends GameState{
 
