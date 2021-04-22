@@ -2,6 +2,7 @@ package edu.up.cs301.game.cheatymages.Players;
 
 import android.graphics.Color;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Toast;
@@ -30,7 +31,9 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     protected boolean detectMagic;
 
     // ArrayList of indices of the cards the player wishes to discard
-    protected boolean[] selectedSpells = new boolean[8];
+    ArrayList<Integer> selectedSpells = new ArrayList<>();
+    // boolean ArrayList contains unselected fighters
+    ArrayList<Integer> unselectedSpells = new ArrayList<>();
 
     private int layoutId;
 
@@ -48,6 +51,11 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         // Setting all fighters to unselected
         for(int i=0; i<5; i++) {
             unselectedFighters.add(i);
+        }
+
+        // Setting all spells to unselected
+        for(int i=0; i<8; i++) {
+            unselectedSpells.add(i);
         }
 
     }
@@ -76,6 +84,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             return;
         }
         else {
+            playerTurn = ((CMGameState) info).getPlayerTurn();
             cmSurfaceView.setState((CMGameState) info, this.playerNum);
             cmSurfaceView.invalidate();
         }
@@ -100,12 +109,16 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         int y = (int) motionEvent.getY();
         String item = cmSurfaceView.mapPositionToItem(x, y);
 
-        //Tells human player what they pressed
-        Toast playerMessage = Toast.makeText(getActivity(), "You pressed " + item, Toast.LENGTH_SHORT);
-        playerMessage.show();
+        Log.i("SELECTED", String.valueOf(selectedSpells.size()));
+        Log.i("NOT SELECTED", String.valueOf(unselectedSpells.size()));
 
         switch (item) {
             case "Bet":
+                //Tells human player that they placed their bet
+                Toast betMessage = Toast.makeText(getActivity(), "You placed your bet ", Toast.LENGTH_SHORT);
+                betMessage.setGravity(Gravity.TOP, 0,100);
+                betMessage.show();
+
                 ArrayList<Integer> bets = new ArrayList<>();
                 for (int i = 0; i < selectedFighters.size(); i++) {
                     bets.add(selectedFighters.get(i));
@@ -116,7 +129,10 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 this.game.sendAction(new BetAction(this, bets));
                 break;
             case "Pass":
-                Log.i("STUPID", "PLAYER TURN IS: ");
+                //prints a message to the screen that you passed
+                Toast passMessage = Toast.makeText(getActivity(), "You Passed", Toast.LENGTH_SHORT);
+                passMessage.setGravity(Gravity.TOP, 0,100);
+                passMessage.show();
                 this.game.sendAction(new PassAction(this));
                 detectMagic = false;
                 break;
@@ -128,10 +144,12 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             case "Discard":
                 ArrayList<Integer> discards = new ArrayList<>();
                 for (int i = 7; i >= 0; i--) {
-                    if (selectedSpells[i]) {
-                        discards.add(i);
-                    }
+                    discards.add(selectedSpells.get(i));
                 }
+                //prints a message to the screen that you discarded cards
+                Toast discardMessage = Toast.makeText(getActivity(), "You discarded " + discards.size() + " cards", Toast.LENGTH_SHORT);
+                discardMessage.setGravity(Gravity.TOP, 0,100);
+                discardMessage.show();
                 game.sendAction(new DiscardCardsAction(this, discards));
                 detectMagic = false;
                 break;
@@ -179,27 +197,21 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     }
 
     private void clickFighter(int idx){
-        int numSelectedSpells = 0;
-        int spell = -1;
-
-        for (int i = 0; i < selectedSpells.length; i++) {
-            if (selectedSpells[i]) {
-                spell = i;
-                numSelectedSpells++;
-            }
-        }
-
-        Log.i("HI", "CLICKED FIGHTER CARD");
-        Log.i("MAGIC", String.valueOf(numSelectedSpells) );
-        if(numSelectedSpells == 1){
+        if(selectedSpells.size() == 1){
+            //Tells human player that they played a spell card
+            Toast betMessage = Toast.makeText(getActivity(), "You played a spell card on fighter " + (idx+1), Toast.LENGTH_SHORT);
+            betMessage.setGravity(Gravity.TOP, 0,100);
+            betMessage.show();
             detectMagic = false;
-            this.game.sendAction(new PlaySpellAction(this, spell, idx));
-            Log.i("HELLO", "played spell CARD");
+            this.game.sendAction(new PlaySpellAction(this, selectedSpells.get(0), idx));
         }
+        /*
         else if(detectMagic) {
             detectMagic = false;
             this.game.sendAction(new DetectMagicAction(this, spell, idx));
         }
+
+         */
         else{
             //removes fighter if the fighter was clicked again
             if(selectedFighters.contains(idx)){
@@ -225,30 +237,47 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         }
     }
 
-    private void clickSpell(int idx){
+    private void clickSpell(int idx) {
         //If its the discarding phase the spell will unhighlight if it was already selected
         //or highlight if it was not selected already
-        if(playerTurn == -2){
-            selectedSpells[idx] = !selectedSpells[idx];
-            cmSurfaceView.selectSpell(idx, !selectedSpells[idx]);
+        if (playerTurn == -2) {
+            //removes spell if the fighter was clicked again
+            if (selectedSpells.contains(idx)) {
+                selectedSpells.remove(selectedSpells.indexOf(idx));
+                unselectedSpells.add(idx);
+                cmSurfaceView.selectSpell(idx, false);
+            }
+            //adds to selected
+            else {
+                selectedSpells.add(idx);
+                unselectedSpells.remove(selectedSpells.indexOf(idx));
+                cmSurfaceView.selectFighter(idx, true);
+            }
         }
         //If its a players turn
-        else if (playerTurn >= 0){
-            int numSelectedSpells = 0;
-            for (boolean isSelected : selectedSpells) {
-                if (isSelected) {
-                    numSelectedSpells++;
-                }
+        else if (playerTurn >= 0) {
+            //removes spell if the fighter was clicked again
+            if (selectedSpells.contains(idx)) {
+                selectedSpells.remove(selectedSpells.indexOf(idx));
+                unselectedSpells.add(idx);
+                cmSurfaceView.selectSpell(idx, false);
             }
-
-            //Removes highlights from all spell cards
-            if(numSelectedSpells > 0){
-                cmSurfaceView.clearSpellSelections();
+            // if there's more than one card selected remove old card and select new one
+            else if (selectedSpells.size() > 0) {
+                cmSurfaceView.selectSpell(selectedSpells.get(0), false);
+                selectedSpells.remove(0);
+                unselectedSpells.add(idx);
+                selectedSpells.add(idx);
+                unselectedSpells.remove(selectedSpells.indexOf(idx));
+                cmSurfaceView.selectSpell(idx, true);
             }
-
-            //Highlights last fighter selected
-            selectedSpells[idx] = true;
-            cmSurfaceView.selectSpell(idx, true);
+            //adds to selected
+            else {
+                selectedSpells.add(idx);
+                unselectedSpells.remove(selectedSpells.indexOf(idx));
+                cmSurfaceView.selectSpell(idx, true);
+            }
         }
     }
+
 }
