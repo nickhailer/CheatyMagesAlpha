@@ -21,17 +21,14 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     // keeps track of what turn it was the last time you were updated information
     protected int playerTurn;
 
-    // boolean ArrayList contains selected fighters
     ArrayList<Integer> selectedFighters = new ArrayList<>();
-    // boolean ArrayList contains unselected fighters
-    ArrayList<Integer> unselectedFighters = new ArrayList<>();
+    //ArrayList<Integer> unselectedFighters = new ArrayList<>();
 
     protected boolean detectMagic;
 
-    protected int[] lastClicked = new int[3];
-
-    // ArrayList of indices of the cards the player wishes to discard
     protected boolean[] selectedSpells = new boolean[8];
+
+    private int selectedSpell = -1;
 
     private int layoutId;
 
@@ -47,9 +44,9 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         this.layoutId = layoutId;
 
         // Setting all fighters to unselected
-        for(int i=0; i<5; i++) {
+        /*for(int i=0; i<5; i++) {
             unselectedFighters.add(i);
-        }
+        }*/
 
     }
 
@@ -78,6 +75,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         }
         else {
             surfaceView.setState((CMGameState) info, this.playerNum);
+            playerTurn = ((CMGameState) info).getPlayerTurn();
             surfaceView.invalidate();
         }
     }
@@ -128,6 +126,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                     }
                 }
                 game.sendAction(new DiscardCardsAction(this, discards));
+                surfaceView.clearSpellSelections();
                 detectMagic = false;
                 break;
             case "Fighter 1":
@@ -174,25 +173,35 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     }
 
     private void clickFighter(int idx){
-        int numSelectedSpells = 0;
-        int spell = -1;
-        for(int i = 0; i < selectedSpells.length; i++){
-            if(selectedSpells[i]){
-                spell = i;
-                numSelectedSpells++;
-            }
-        }
 
-        if(numSelectedSpells == 1){
+        if(playerTurn >= 0){
             detectMagic = false;
-            this.game.sendAction(new PlaySpellAction(this, spell, idx));
+            this.game.sendAction(new PlaySpellAction(this, selectedSpell, idx));
         }
 
         else if(detectMagic) {
             detectMagic = false;
-            this.game.sendAction(new DetectMagicAction(this, spell, idx));
+            this.game.sendAction(new DetectMagicAction(this, selectedSpell, idx));
         }
-        else{
+
+        else if(playerTurn == -1){
+
+            //if the fighter is already selected just deselect it
+            if(selectedFighters.contains(idx)){
+                surfaceView.selectFighter(selectedFighters.remove(selectedFighters.indexOf(idx)), false);
+            }
+            else {
+
+                //if there are more than 3 fighters selected remove the oldest one
+                if (selectedFighters.size() > 2) {
+                    surfaceView.selectFighter(selectedFighters.remove(0), false);
+                }
+
+                selectedFighters.add(idx);
+                surfaceView.selectFighter(idx, true);
+            }
+
+            /*
             //removes fighter if the fighter was clicked again
             if(selectedFighters.contains(idx)){
                 selectedFighters.remove(selectedFighters.indexOf(idx));
@@ -214,6 +223,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 unselectedFighters.remove(selectedFighters.indexOf(idx));
                 surfaceView.selectFighter(idx, true);
             }
+             */
         }
     }
 
@@ -223,18 +233,8 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             surfaceView.selectSpell(idx, !selectedSpells[idx]);
         }
         else if (playerTurn >= 0){
-            int numSelectedSpells = 0;
-            for (boolean isSelected : selectedSpells) {
-                if (isSelected) {
-                    numSelectedSpells++;
-                }
-            }
-
-            if(numSelectedSpells > 0){
-                surfaceView.clearSpellSelections();
-            }
-
-            selectedSpells[idx] = true;
+            selectedSpell = idx;
+            surfaceView.clearSpellSelections();
             surfaceView.selectSpell(idx, true);
         }
     }
