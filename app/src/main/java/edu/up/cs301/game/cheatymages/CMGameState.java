@@ -1,5 +1,6 @@
 package edu.up.cs301.game.cheatymages;
 
+import android.app.Activity;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -213,9 +214,6 @@ public class CMGameState extends GameState{
      */
     public boolean placeBet(int id, ArrayList<Integer> bets){
 
-        //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
-        Log.d("GameState", "Player " + id + " placed their bet");
-
         this.bets[id] = bets;
         hasFinishedBetting[id] = true;
         for(int i = 0; i < hasFinishedBetting.length; i++){
@@ -233,9 +231,6 @@ public class CMGameState extends GameState{
      * @return 1 if the round is over, 2 if the game is over, 0 if neither is true
      */
     public int pass(){
-
-        //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
-        Log.d("GameState", "Player " + playerTurn + " passed");
 
         //increments pass streak counter
         consecutivePasses++;
@@ -264,7 +259,7 @@ public class CMGameState extends GameState{
     public void playSpellCard(int id, int spell, int target){
 
         //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
-        Log.d("GameState", "Player " + id + " played a spell on fighter " + target);
+        //Log.d("GameState", "Player " + id + " played a spell on fighter " + target);
 
         //breaks pass streak
         consecutivePasses = 0;
@@ -320,7 +315,7 @@ public class CMGameState extends GameState{
     public boolean discardCards(int id, ArrayList<Integer> discards){
 
         //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
-        Log.d("GameState", "Player " + id + " finished discarding");
+        //Log.d("GameState", "Player " + id + " finished discarding");
 
         //Removes cards from your hand and adds them to the discard pile
         for(int i = 0; i < discards.size(); i++){

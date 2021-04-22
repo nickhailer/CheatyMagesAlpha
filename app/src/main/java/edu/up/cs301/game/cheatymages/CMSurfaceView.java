@@ -71,6 +71,8 @@ public class CMSurfaceView extends SurfaceView {
     private final Paint cardBackTextPaint = new Paint();
     private final Paint titlePaint = new Paint();
     private final Paint buttonOutlinePaint = new Paint();
+    private final Paint buttonBackgroundPaint = new Paint();
+    private final Paint cardBackgroundPaint = new Paint();
 
     /**
      * Constructor
@@ -132,6 +134,7 @@ public class CMSurfaceView extends SurfaceView {
         cardBackTextPaint.setTextAlign(Paint.Align.CENTER);
         cardBackTextPaint.setTextSize(45.0f);
         cardBackTextPaint.setAntiAlias(true);
+        cardBackgroundPaint.setColor(Color.WHITE);
 
         titlePaint.setColor(Color.BLACK);
         titlePaint.setTextSize(35.0f);
@@ -141,6 +144,7 @@ public class CMSurfaceView extends SurfaceView {
         buttonOutlinePaint.setColor(Color.BLACK);
         buttonOutlinePaint.setStyle(Paint.Style.STROKE);
         buttonOutlinePaint.setStrokeWidth(10.0f);
+        buttonBackgroundPaint.setColor(Color.WHITE);
 
         buttonLabelTextPaint.setColor(Color.BLACK);
         buttonLabelTextPaint.setTextSize(30);
@@ -392,6 +396,9 @@ public class CMSurfaceView extends SurfaceView {
             canvas.drawRect(x - 10.0f, y - 10.0f, x + cardWidth + 10.0f,
                     y + cardHeight + 10.0f, selectedCardPaint);
         }
+        //Draws white card background
+        canvas.drawRect(x, y, x + cardWidth,
+                y + cardHeight, cardBackgroundPaint);
 
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, fighterName);
@@ -435,6 +442,9 @@ public class CMSurfaceView extends SurfaceView {
             canvas.drawRect(x - 10.0f, y - 10.0f, x + cardWidth + 10.0f,
                     y + cardHeight + 10.0f, selectedCardPaint);
         }
+        //Draws white card background
+        canvas.drawRect(x, y, x + cardWidth,
+                y + cardHeight, cardBackgroundPaint);
 
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, spellName);
@@ -502,6 +512,10 @@ public class CMSurfaceView extends SurfaceView {
     protected void drawJudgeCard(Canvas canvas, float x, float y, String judgeName, int manaLimit,
                                  String judgementType, ArrayList<Character> disallows,
                                  boolean noManaLimit) {
+
+        //Draws white card background
+        canvas.drawRect(x, y, x + cardWidth,
+                y + cardHeight, cardBackgroundPaint);
 
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, judgeName);
@@ -604,6 +618,7 @@ public class CMSurfaceView extends SurfaceView {
     }
 
     protected void drawButton(Canvas canvas, float x, float y, String label){
+        canvas.drawRect(x, y, x + buttonWidth, y + buttonHeight, buttonBackgroundPaint);
         canvas.drawRect(x, y, x + buttonWidth, y + buttonHeight, buttonOutlinePaint);
         canvas.drawText(label, x + buttonWidth/2, y + buttonHeight/2, buttonLabelTextPaint);
     }

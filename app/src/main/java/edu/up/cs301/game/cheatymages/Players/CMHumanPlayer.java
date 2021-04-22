@@ -29,8 +29,6 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
 
     protected boolean detectMagic;
 
-    protected int[] lastClicked = new int[3];
-
     // ArrayList of indices of the cards the player wishes to discard
     protected boolean[] selectedSpells = new boolean[8];
 
@@ -103,8 +101,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         String item = cmSurfaceView.mapPositionToItem(x, y);
 
         //Tells human player what they pressed
-        CharSequence text = "You pressed " + item;
-        Toast playerMessage = Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT);
+        Toast playerMessage = Toast.makeText(getActivity(), "You pressed " + item, Toast.LENGTH_SHORT);
         playerMessage.show();
 
         switch (item) {
@@ -119,6 +116,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 this.game.sendAction(new BetAction(this, bets));
                 break;
             case "Pass":
+                Log.i("STUPID", "PLAYER TURN IS: ");
                 this.game.sendAction(new PassAction(this));
                 detectMagic = false;
                 break;
@@ -183,18 +181,21 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     private void clickFighter(int idx){
         int numSelectedSpells = 0;
         int spell = -1;
-        for(int i = 0; i < selectedSpells.length; i++){
-            if(selectedSpells[i]){
+
+        for (int i = 0; i < selectedSpells.length; i++) {
+            if (selectedSpells[i]) {
                 spell = i;
                 numSelectedSpells++;
             }
         }
 
+        Log.i("HI", "CLICKED FIGHTER CARD");
+        Log.i("MAGIC", String.valueOf(numSelectedSpells) );
         if(numSelectedSpells == 1){
             detectMagic = false;
             this.game.sendAction(new PlaySpellAction(this, spell, idx));
+            Log.i("HELLO", "played spell CARD");
         }
-
         else if(detectMagic) {
             detectMagic = false;
             this.game.sendAction(new DetectMagicAction(this, spell, idx));
@@ -225,10 +226,13 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     }
 
     private void clickSpell(int idx){
+        //If its the discarding phase the spell will unhighlight if it was already selected
+        //or highlight if it was not selected already
         if(playerTurn == -2){
             selectedSpells[idx] = !selectedSpells[idx];
             cmSurfaceView.selectSpell(idx, !selectedSpells[idx]);
         }
+        //If its a players turn
         else if (playerTurn >= 0){
             int numSelectedSpells = 0;
             for (boolean isSelected : selectedSpells) {
@@ -237,10 +241,12 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 }
             }
 
+            //Removes highlights from all spell cards
             if(numSelectedSpells > 0){
                 cmSurfaceView.clearSpellSelections();
             }
 
+            //Highlights last fighter selected
             selectedSpells[idx] = true;
             cmSurfaceView.selectSpell(idx, true);
         }

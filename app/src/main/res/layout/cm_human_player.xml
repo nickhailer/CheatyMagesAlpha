@@ -3,7 +3,7 @@
     android:id="@+id/top_gui_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:background="@drawable/background">
 
     <edu.up.cs301.game.cheatymages.CMSurfaceView
         android:id="@+id/cmSurfaceView"
