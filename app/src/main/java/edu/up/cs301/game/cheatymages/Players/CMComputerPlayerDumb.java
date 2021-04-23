@@ -1,11 +1,14 @@
 package edu.up.cs301.game.cheatymages.Players;
 
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 import edu.up.cs301.game.GameFramework.LocalGame;
+import edu.up.cs301.game.GameFramework.utilities.Logger;
 import edu.up.cs301.game.cheatymages.Actions.*;
 import edu.up.cs301.game.GameFramework.infoMessage.*;
 import edu.up.cs301.game.GameFramework.players.GameComputerPlayer;
@@ -36,7 +39,6 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
 
         //Simulates the computer thinking
         //TODO REIMPLEMENT THIS MAYBE WITH THREADING
-        sleep(2);
 
         //If it's betting phase place a random bet
         if(state.getPlayerTurn() == -1){
@@ -52,15 +54,18 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
             game.sendAction(new DiscardCardsAction(this, new ArrayList<Integer>()));
         }
 
+        int playerTurn = ((CMGameState) info).getPlayerTurn();
+        Logger.log("Player ", String.valueOf(((CMGameState) info).getPlayerTurn()));
+
         //The dumb AI has a 10% chance of passing
-        if(rng.nextInt(10) == 0){
+        if(rng.nextInt(10) == 0 && playerTurn > 0){
             game.sendAction(new PassAction(this));
             return;
         }
 
         //Otherwise play a spell from your hand
         int handSize = state.getHands()[playerNum].size();
-        if(handSize > 0){
+        if(handSize > 0 && playerTurn > 0){
             game.sendAction(new PlaySpellAction(this, rng.nextInt(handSize), rng.nextInt(5)));
             return;
         }

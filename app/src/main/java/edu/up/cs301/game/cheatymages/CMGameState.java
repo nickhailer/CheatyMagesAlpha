@@ -2,6 +2,7 @@ package edu.up.cs301.game.cheatymages;
 
 import android.app.Activity;
 import android.util.Log;
+import android.view.Gravity;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -231,7 +232,6 @@ public class CMGameState extends GameState{
      * @return 1 if the round is over, 2 if the game is over, 0 if neither is true
      */
     public int pass(){
-
         //increments pass streak counter
         consecutivePasses++;
         //if not all players have passed consecutively

@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import edu.up.cs301.game.GameFramework.GameMainActivity;
@@ -109,9 +110,6 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         int y = (int) motionEvent.getY();
         String item = cmSurfaceView.mapPositionToItem(x, y);
 
-        Log.i("SELECTED", String.valueOf(selectedSpells.size()));
-        Log.i("NOT SELECTED", String.valueOf(unselectedSpells.size()));
-
         switch (item) {
             case "Bet":
                 //Tells human player that they placed their bet
@@ -143,8 +141,12 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 break;
             case "Discard":
                 ArrayList<Integer> discards = new ArrayList<>();
-                for (int i = 7; i >= 0; i--) {
-                    discards.add(selectedSpells.get(i));
+                for (int i = selectedSpells.size() - 1; i >= 0; i--) {
+                    if(selectedSpells.size() != 0) {
+                        int max = Collections.max(selectedSpells);
+                        discards.add(selectedSpells.indexOf(max));
+                        selectedSpells.remove(selectedSpells.indexOf(max));
+                    }
                 }
                 //prints a message to the screen that you discarded cards
                 Toast discardMessage = Toast.makeText(getActivity(), "You discarded " + discards.size() + " cards", Toast.LENGTH_SHORT);
@@ -251,7 +253,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             else {
                 selectedSpells.add(idx);
                 unselectedSpells.remove(selectedSpells.indexOf(idx));
-                cmSurfaceView.selectFighter(idx, true);
+                cmSurfaceView.selectSpell(idx, true);
             }
         }
         //If its a players turn
