@@ -152,8 +152,18 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 Toast discardMessage = Toast.makeText(getActivity(), "You discarded " + discards.size() + " cards", Toast.LENGTH_SHORT);
                 discardMessage.setGravity(Gravity.TOP, 0,100);
                 discardMessage.show();
+
                 game.sendAction(new DiscardCardsAction(this, discards));
-                Log.i("DISCARDTEST", String.valueOf(playerTurn));
+
+                //Resets selected and unselected spells after discard action
+                selectedSpells.clear();
+
+                // Setting all spells to unselected
+                for(int i=0; i<8; i++) {
+                    unselectedSpells.add(i);
+                }
+
+
                 detectMagic = false;
                 break;
             case "Fighter 1":
@@ -253,7 +263,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             //adds to selected
             else {
                 selectedSpells.add(idx);
-                unselectedSpells.remove(unselectedSpells.indexOf(idx));
+                unselectedSpells.remove(selectedSpells.indexOf(idx));
                 cmSurfaceView.selectSpell(idx, true);
             }
         }

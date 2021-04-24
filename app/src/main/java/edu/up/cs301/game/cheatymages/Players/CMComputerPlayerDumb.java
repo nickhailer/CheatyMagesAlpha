@@ -39,6 +39,7 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
 
         //Simulates the computer thinking
         //TODO REIMPLEMENT THIS MAYBE WITH THREADING
+        sleep(2);
 
         //If it's betting phase place a random bet
         if(state.getPlayerTurn() == -1){

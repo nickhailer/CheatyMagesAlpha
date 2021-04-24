@@ -234,12 +234,17 @@ public class CMGameState extends GameState{
     public int pass(){
         //increments pass streak counter
         consecutivePasses++;
+        Log.i("BEFORE", "PASS PASS");
+        Log.i("NUMPASS", String.valueOf(consecutivePasses));
         //if not all players have passed consecutively
         if(consecutivePasses < numPlayers){
             //increments player turn
+            Log.i("PTurnBEFORE", String.valueOf(playerTurn));
             playerTurn = (playerTurn + 1) % numPlayers;
+            Log.i("PTurnAFTER", String.valueOf(playerTurn));
             return 0;
         }
+        Log.i("AFTER", "AFTER AFTER");
         //resets pass streak counter
         consecutivePasses = 0;
         //ends round
@@ -326,20 +331,17 @@ public class CMGameState extends GameState{
 
         //Notes that this player has finished discarding
         hasFinishedDiscarding[id] = true;
-        Log.i("BEFORE", "BEFORE BEFORE");
         //Checks if all players have finished discarding
         for(int i = 0; i < hasFinishedDiscarding.length; i++){
             if(!hasFinishedDiscarding[i]){
                 return false;
             }
         }
-        Log.i("AFTER", "AFTER AFTER");
         //Resets the finished discarding array
         Arrays.fill(hasFinishedDiscarding, false);
 
         //Moves game to the betting phase
         playerTurn = -1;
-        Log.i("GAMESTATE", String.valueOf(playerTurn));
         return true;
 
     }
@@ -424,6 +426,15 @@ public class CMGameState extends GameState{
     }
 
     /**
+     * Clears all attached spells
+     */
+    private void resetAttachedCards(){
+        for(int i = 0; i< 5; i++) {
+            attachedSpells[i].clear();
+        }
+    }
+
+    /**
      * Checks for fighters above the mana limit and applies the judge's judgement
      */
     private void applyJudgement(){
@@ -493,13 +504,13 @@ public class CMGameState extends GameState{
             for(int j = 0; j < bets[i].size(); j++){
                 if(bets[i].get(j) == winner){
                     //Awards gold to player
-                    if(bets[i].size() == 3){
+                    if(bets[i].size() == 1){
                         gold[i] += fighters[winner].getPrizeMoney() * 2;
                     }
                     else if(bets[i].size() == 2){
                         gold[i] += fighters[winner].getPrizeMoney();
                     }
-                    else if(bets[i].size() == 1){
+                    else if(bets[i].size() == 3){
                         gold[i] += Math.ceil( (double)(fighters[winner].getPrizeMoney()) / 2);
                     }
                     break;
@@ -519,6 +530,15 @@ public class CMGameState extends GameState{
 
         //Finds the winning fighter and awards gold to the players
         awardGold(findWinner());
+
+        // Redraws random judge card
+        resetJudge();
+
+        // Redraws random fighters
+        resetFighters();
+
+        // Removes all played spell cards
+        resetAttachedCards();
 
         //Moves game to the next round
         roundNum++;
