@@ -79,7 +79,7 @@ class CMLocalGame extends LocalGame {
             for(int i = 1; i < arr.length; i++) {
 
                 //if the current pair of elements are in the wrong order they are swapped
-                if(arr[indices[i] - 1] > arr[indices[i]]){
+                if(arr[indices[i - 1]] > arr[indices[i]]){
                     temp = indices[i];
                     indices[i] = indices[i-1];
                     indices[i-1] = temp;

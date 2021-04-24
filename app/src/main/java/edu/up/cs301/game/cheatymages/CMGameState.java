@@ -187,7 +187,7 @@ public class CMGameState extends GameState{
 
         hands = new ArrayList[numPlayers];
         for(int i = 0; i < numPlayers; i++){
-            hands[i] = new ArrayList<SpellCard>();
+            hands[i] = new ArrayList<>();
             if(i != id){
                 for(int j = 0; j < orig.hands[i].size(); j++){
                     hands[i].add(new SpellCard("ISFACEDOWN", 0, 0,
@@ -234,17 +234,12 @@ public class CMGameState extends GameState{
     public int pass(){
         //increments pass streak counter
         consecutivePasses++;
-        Log.i("BEFORE", "PASS PASS");
-        Log.i("NUMPASS", String.valueOf(consecutivePasses));
         //if not all players have passed consecutively
         if(consecutivePasses < numPlayers){
             //increments player turn
-            Log.i("PTurnBEFORE", String.valueOf(playerTurn));
             playerTurn = (playerTurn + 1) % numPlayers;
-            Log.i("PTurnAFTER", String.valueOf(playerTurn));
             return 0;
         }
-        Log.i("AFTER", "AFTER AFTER");
         //resets pass streak counter
         consecutivePasses = 0;
         //ends round
@@ -415,7 +410,7 @@ public class CMGameState extends GameState{
      */
     private void discardCardsFromFighter(int fighter){
         for(int i = attachedSpells[fighter].size() - 1; i >= 0; i--){
-            discardPile.remove(attachedSpells[fighter].get(i));
+            discardPile.remove(attachedSpells[fighter].remove(i));
         }
     }
 
@@ -430,11 +425,11 @@ public class CMGameState extends GameState{
     /**
      * Clears all attached spells
      */
-    private void resetAttachedCards(){
+    /*private void resetAttachedCards(){
         for(int i = 0; i< 5; i++) {
             attachedSpells[i].clear();
         }
-    }
+    }*/
 
     /**
      * Checks for fighters above the mana limit and applies the judge's judgement
@@ -540,7 +535,7 @@ public class CMGameState extends GameState{
         resetFighters();
 
         // Removes all played spell cards
-        resetAttachedCards();
+        //resetAttachedCards();
 
         //Moves game to the next round
         roundNum++;

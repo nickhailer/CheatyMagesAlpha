@@ -40,10 +40,34 @@ public class CMGameStateTest extends TestCase {
     @Test
     public void testPass() {
         CMGameState state = new CMGameState(3);
-        ArrayList<Integer> bets = new ArrayList<>();
-        bets.add(1);
-        bets.add(2);
-        bets.add(3);
+
+        state.setPlayerTurn(0);
+        state.pass();
+        assertEquals(1, state.getPlayerTurn());
+        state.pass();
+        assertEquals(2, state.getPlayerTurn());
+        state.pass();
+        assertEquals(-2, state.getPlayerTurn());
+
+        state.setPlayerTurn(0);
+        state.pass();
+        assertEquals(1, state.getPlayerTurn());
+        state.playSpellCard(0, 0, 0);
+        assertEquals(2, state.getPlayerTurn());
+        state.pass();
+        assertEquals(0, state.getPlayerTurn());
+        state.pass();
+        assertEquals(1, state.getPlayerTurn());
+        state.pass();
+        assertEquals(-2, state.getPlayerTurn());
+
+        state.setPlayerTurn(0);
+        state.pass();
+        assertEquals(1, state.getPlayerTurn());
+        state.pass();
+        assertEquals(2, state.getPlayerTurn());
+        state.playSpellCard(0, 0, 0);
+        assertEquals(0, state.getPlayerTurn());
     }
     @Test
     public void testPlaySpellCard() {
@@ -57,7 +81,7 @@ public class CMGameStateTest extends TestCase {
     }
     @Test
     public void testDetectMagic() {
-
+        //NOT IMPLEMENTED THIS DOESNT MATTER FOR NOW
     }
 
     /**

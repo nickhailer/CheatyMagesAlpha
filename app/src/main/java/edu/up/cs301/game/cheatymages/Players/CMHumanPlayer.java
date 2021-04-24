@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -226,7 +227,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         //or highlight if it was not selected already
         if(playerTurn == -2){
             selectedSpells[idx] = !selectedSpells[idx];
-            surfaceView.selectSpell(idx, !selectedSpells[idx]);
+            surfaceView.selectSpell(idx, selectedSpells[idx]);
         }
         else if (playerTurn >= 0){
             selectedSpell = idx;

@@ -38,8 +38,7 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
         CMGameState state = (CMGameState) info;
 
         //Simulates the computer thinking
-        //TODO REIMPLEMENT THIS MAYBE WITH THREADING
-        sleep(2);
+        sleep(0.5);
 
         //If it's betting phase place a random bet
         if(state.getPlayerTurn() == -1){
@@ -48,29 +47,31 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
                 bets.add(rng.nextInt(5));
             }
             game.sendAction(new BetAction(this, bets));
+            return;
         }
 
         //If it's discarding phase choose to discard no cards
         if(state.getPlayerTurn() == -2){
             game.sendAction(new DiscardCardsAction(this, new ArrayList<Integer>()));
+            return;
         }
 
         int playerTurn = ((CMGameState) info).getPlayerTurn();
-        //Logger.log("Player ", String.valueOf(((CMGameState) info).getPlayerTurn()));
 
         //The dumb AI has a 10% chance of passing
-        if(rng.nextInt(10) == 0 && playerTurn > 0){
+        if(rng.nextInt(10) == 0 && playerTurn >= 0){
             game.sendAction(new PassAction(this));
             return;
         }
 
         //Otherwise play a spell from your hand
         int handSize = state.getHands()[playerNum].size();
-        if(handSize > 0 && playerTurn > 0){
+        if(handSize > 0 && playerTurn >= 0){
             game.sendAction(new PlaySpellAction(this, rng.nextInt(handSize), rng.nextInt(5)));
             return;
         }
 
+        Log.d("Computer " + playerNum, "I cant do shit");
         //If you can't do anything else pass
         game.sendAction(new PassAction(this));
     }
