@@ -150,7 +150,7 @@ public abstract class GameHumanPlayer implements GamePlayer, Tickable {
         // get the top view, ignoring if null
         View top = this.getTopView();
         if (top == null) return;
-
+        Log.i("HEllO", "FLASH");
         // save the original background color; set the new background
         // color
         int savedColor = getBackgroundColor(top);

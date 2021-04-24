@@ -1,6 +1,9 @@
 package edu.up.cs301.game.cheatymages;
 
+import android.app.Activity;
 import android.util.Log;
+import android.view.Gravity;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,6 +11,7 @@ import java.util.Random;
 
 import edu.up.cs301.game.GameFramework.infoMessage.GameState;
 import edu.up.cs301.game.cheatymages.Cards.*;
+import edu.up.cs301.game.cheatymages.Players.CMHumanPlayer;
 
 public class CMGameState extends GameState{
 
@@ -211,9 +215,6 @@ public class CMGameState extends GameState{
      */
     public boolean placeBet(int id, ArrayList<Integer> bets){
 
-        //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
-        Log.d("GameState", "Player " + id + " placed their bet");
-
         this.bets[id] = bets;
         hasFinishedBetting[id] = true;
         for(int i = 0; i < hasFinishedBetting.length; i++){
@@ -231,18 +232,19 @@ public class CMGameState extends GameState{
      * @return 1 if the round is over, 2 if the game is over, 0 if neither is true
      */
     public int pass(){
-
-        //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
-        Log.d("GameState", "Player " + playerTurn + " passed");
-
         //increments pass streak counter
         consecutivePasses++;
+        Log.i("BEFORE", "PASS PASS");
+        Log.i("NUMPASS", String.valueOf(consecutivePasses));
         //if not all players have passed consecutively
         if(consecutivePasses < numPlayers){
             //increments player turn
+            Log.i("PTurnBEFORE", String.valueOf(playerTurn));
             playerTurn = (playerTurn + 1) % numPlayers;
+            Log.i("PTurnAFTER", String.valueOf(playerTurn));
             return 0;
         }
+        Log.i("AFTER", "AFTER AFTER");
         //resets pass streak counter
         consecutivePasses = 0;
         //ends round
@@ -262,7 +264,7 @@ public class CMGameState extends GameState{
     public void playSpellCard(int id, int spell, int target){
 
         //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
-        Log.d("GameState", "Player " + id + " played a spell on fighter " + target);
+        //Log.d("GameState", "Player " + id + " played a spell on fighter " + target);
 
         //breaks pass streak
         consecutivePasses = 0;
@@ -318,7 +320,7 @@ public class CMGameState extends GameState{
     public boolean discardCards(int id, ArrayList<Integer> discards){
 
         //TODO REPLACE THIS WITH AN ACTUAL INDICATOR
-        Log.d("GameState", "Player " + id + " finished discarding");
+        //Log.d("GameState", "Player " + id + " finished discarding");
 
         //Removes cards from your hand and adds them to the discard pile
         for(int i = 0; i < discards.size(); i++){
@@ -331,14 +333,12 @@ public class CMGameState extends GameState{
 
         //Notes that this player has finished discarding
         hasFinishedDiscarding[id] = true;
-
         //Checks if all players have finished discarding
         for(int i = 0; i < hasFinishedDiscarding.length; i++){
             if(!hasFinishedDiscarding[i]){
                 return false;
             }
         }
-
         //Resets the finished discarding array
         Arrays.fill(hasFinishedDiscarding, false);
 
@@ -428,6 +428,15 @@ public class CMGameState extends GameState{
     }
 
     /**
+     * Clears all attached spells
+     */
+    private void resetAttachedCards(){
+        for(int i = 0; i< 5; i++) {
+            attachedSpells[i].clear();
+        }
+    }
+
+    /**
      * Checks for fighters above the mana limit and applies the judge's judgement
      */
     private void applyJudgement(){
@@ -497,13 +506,13 @@ public class CMGameState extends GameState{
             for(int j = 0; j < bets[i].size(); j++){
                 if(bets[i].get(j) == winner){
                     //Awards gold to player
-                    if(bets[i].size() == 3){
+                    if(bets[i].size() == 1){
                         gold[i] += fighters[winner].getPrizeMoney() * 2;
                     }
                     else if(bets[i].size() == 2){
                         gold[i] += fighters[winner].getPrizeMoney();
                     }
-                    else if(bets[i].size() == 1){
+                    else if(bets[i].size() == 3){
                         gold[i] += Math.ceil( (double)(fighters[winner].getPrizeMoney()) / 2);
                     }
                     break;
@@ -523,6 +532,15 @@ public class CMGameState extends GameState{
 
         //Finds the winning fighter and awards gold to the players
         awardGold(findWinner());
+
+        // Redraws random judge card
+        resetJudge();
+
+        // Redraws random fighters
+        resetFighters();
+
+        // Removes all played spell cards
+        resetAttachedCards();
 
         //Moves game to the next round
         roundNum++;

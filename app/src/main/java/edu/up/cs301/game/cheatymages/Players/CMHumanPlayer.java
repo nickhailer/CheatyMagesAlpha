@@ -2,10 +2,13 @@ package edu.up.cs301.game.cheatymages.Players;
 
 import android.graphics.Color;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 import edu.up.cs301.game.GameFramework.GameMainActivity;
@@ -22,7 +25,6 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     protected int playerTurn;
 
     ArrayList<Integer> selectedFighters = new ArrayList<>();
-    //ArrayList<Integer> unselectedFighters = new ArrayList<>();
 
     protected boolean detectMagic;
 
@@ -85,8 +87,8 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         // Load the layout resource for the new configuration
         activity.setContentView(layoutId);
 
-        // set the surfaceView instance variable
-        surfaceView = (CMSurfaceView) myActivity.findViewById(R.id.surfaceView);
+        // set the cmSurfaceView instance variable
+        surfaceView = (CMSurfaceView) myActivity.findViewById(R.id.cmSurfaceView);
         surfaceView.setOnTouchListener(this);
     }
 
@@ -98,25 +100,35 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
         int x = (int) motionEvent.getX();
         int y = (int) motionEvent.getY();
         String item = surfaceView.mapPositionToItem(x, y);
-        //TODO REPLACE THIS WITH AN ACTUAL INDICATION YOU PRESSED SOMETHING
-        Log.d("CMHumanPlayer", "You pressed " + item);
 
         switch (item) {
             case "Bet":
+                //Tells human player that they placed their bet
+                Toast betMessage = Toast.makeText(getActivity(), "You placed your bet ", Toast.LENGTH_SHORT);
+                betMessage.setGravity(Gravity.TOP, 0,100);
+                betMessage.show();
+
                 ArrayList<Integer> bets = new ArrayList<>();
                 for (int i = 0; i < selectedFighters.size(); i++) {
                     bets.add(selectedFighters.get(i));
                 }
+                if(selectedFighters.size() < 1) {
+                    break;
+                }
                 this.game.sendAction(new BetAction(this, bets));
                 break;
             case "Pass":
+                //prints a message to the screen that you passed
+                Toast passMessage = Toast.makeText(getActivity(), "You Passed", Toast.LENGTH_SHORT);
+                passMessage.setGravity(Gravity.TOP, 0,100);
+                passMessage.show();
                 this.game.sendAction(new PassAction(this));
                 detectMagic = false;
                 break;
             case "Detect Magic":
                 detectMagic = true;
                 //TODO UNCOMMENT THIS ONCE IMPLEMENT
-                //surfaceView.selectDetectMagic()
+                //cmSurfaceView.selectDetectMagic()
                 break;
             case "Discard":
                 ArrayList<Integer> discards = new ArrayList<>();
@@ -125,8 +137,14 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                         discards.add(i);
                     }
                 }
+                //prints a message to the screen that you discarded cards
+                Toast discardMessage = Toast.makeText(getActivity(), "You discarded " + discards.size() + " cards", Toast.LENGTH_SHORT);
+                discardMessage.setGravity(Gravity.TOP, 0,100);
+                discardMessage.show();
+
                 game.sendAction(new DiscardCardsAction(this, discards));
                 surfaceView.clearSpellSelections();
+                Arrays.fill(selectedSpells, false);
                 detectMagic = false;
                 break;
             case "Fighter 1":
@@ -173,17 +191,17 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     }
 
     private void clickFighter(int idx){
-
         if(playerTurn >= 0){
+            /*if(detectMagic) {
+                detectMagic = false;
+                this.game.sendAction(new DetectMagicAction(this, selectedSpell, idx));
+            }*/
+            Toast betMessage = Toast.makeText(getActivity(), "You played a spell card on fighter " + (idx+1), Toast.LENGTH_SHORT);
+            betMessage.setGravity(Gravity.TOP, 0,100);
+            betMessage.show();
             detectMagic = false;
             this.game.sendAction(new PlaySpellAction(this, selectedSpell, idx));
         }
-
-        else if(detectMagic) {
-            detectMagic = false;
-            this.game.sendAction(new DetectMagicAction(this, selectedSpell, idx));
-        }
-
         else if(playerTurn == -1){
 
             //if the fighter is already selected just deselect it
@@ -200,34 +218,12 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 selectedFighters.add(idx);
                 surfaceView.selectFighter(idx, true);
             }
-
-            /*
-            //removes fighter if the fighter was clicked again
-            if(selectedFighters.contains(idx)){
-                selectedFighters.remove(selectedFighters.indexOf(idx));
-                unselectedFighters.add(idx);
-                surfaceView.selectFighter(idx, false);
-            }
-            //if there's 3 fighters selected remove oldest one and selects new one
-            else if(selectedFighters.size() > 2) {
-                surfaceView.selectFighter(selectedFighters.get(0), false);
-                selectedFighters.remove(0);
-                unselectedFighters.add(idx);
-                selectedFighters.add(idx);
-                unselectedFighters.remove(selectedFighters.indexOf(idx));
-                surfaceView.selectFighter(idx, true);
-            }
-            //adds to selected
-            else {
-                selectedFighters.add(idx);
-                unselectedFighters.remove(selectedFighters.indexOf(idx));
-                surfaceView.selectFighter(idx, true);
-            }
-             */
         }
     }
 
-    private void clickSpell(int idx){
+    private void clickSpell(int idx) {
+        //If its the discarding phase the spell will unhighlight if it was already selected
+        //or highlight if it was not selected already
         if(playerTurn == -2){
             selectedSpells[idx] = !selectedSpells[idx];
             surfaceView.selectSpell(idx, !selectedSpells[idx]);
