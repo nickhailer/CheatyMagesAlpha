@@ -141,10 +141,10 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 break;
             case "Discard":
                 ArrayList<Integer> discards = new ArrayList<>();
-                for (int i = selectedSpells.size() - 1; i >= 0; i--) {
+                for(int i = selectedSpells.size() - 1; i >= 0; i--) {
                     if(selectedSpells.size() != 0) {
                         int max = Collections.max(selectedSpells);
-                        discards.add(selectedSpells.indexOf(max));
+                        discards.add(max);
                         selectedSpells.remove(selectedSpells.indexOf(max));
                     }
                 }
@@ -153,6 +153,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 discardMessage.setGravity(Gravity.TOP, 0,100);
                 discardMessage.show();
                 game.sendAction(new DiscardCardsAction(this, discards));
+                Log.i("DISCARDTEST", String.valueOf(playerTurn));
                 detectMagic = false;
                 break;
             case "Fighter 1":
@@ -252,7 +253,7 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             //adds to selected
             else {
                 selectedSpells.add(idx);
-                unselectedSpells.remove(selectedSpells.indexOf(idx));
+                unselectedSpells.remove(unselectedSpells.indexOf(idx));
                 cmSurfaceView.selectSpell(idx, true);
             }
         }

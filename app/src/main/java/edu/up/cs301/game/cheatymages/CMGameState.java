@@ -326,19 +326,20 @@ public class CMGameState extends GameState{
 
         //Notes that this player has finished discarding
         hasFinishedDiscarding[id] = true;
-
+        Log.i("BEFORE", "BEFORE BEFORE");
         //Checks if all players have finished discarding
         for(int i = 0; i < hasFinishedDiscarding.length; i++){
-            if(!hasFinishedBetting[i]){
+            if(!hasFinishedDiscarding[i]){
                 return false;
             }
         }
-
+        Log.i("AFTER", "AFTER AFTER");
         //Resets the finished discarding array
         Arrays.fill(hasFinishedDiscarding, false);
 
         //Moves game to the betting phase
         playerTurn = -1;
+        Log.i("GAMESTATE", String.valueOf(playerTurn));
         return true;
 
     }

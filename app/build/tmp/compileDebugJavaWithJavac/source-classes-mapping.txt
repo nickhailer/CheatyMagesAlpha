@@ -29,8 +29,8 @@ edu/up/cs301/game/cheatymages/Cards/FighterCard.java
  edu.up.cs301.game.cheatymages.Cards.FighterCard
 edu/up/cs301/game/cheatymages/Actions/PlaySpellAction.java
  edu.up.cs301.game.cheatymages.Actions.PlaySpellAction
-edu/up/cs301/game/cheatymages/CMLocalGame.java
- edu.up.cs301.game.cheatymages.CMLocalGame
+edu/up/cs301/game/cheatymages/Cards/Decks.java
+ edu.up.cs301.game.cheatymages.Cards.Decks
 edu/up/cs301/game/GameFramework/players/ProxyPlayer.java
  edu.up.cs301.game.GameFramework.players.ProxyPlayer
  edu.up.cs301.game.GameFramework.players.ProxyPlayer$1
@@ -111,8 +111,8 @@ edu/up/cs301/game/GameFramework/utilities/NetworkObjectPasser.java
  edu.up.cs301.game.GameFramework.utilities.NetworkObjectPasser$MsgRunnable
  edu.up.cs301.game.GameFramework.utilities.NetworkObjectPasser$RunnerStatus
  edu.up.cs301.game.GameFramework.utilities.NetworkObjectPasser$ServerSocketMap
-edu/up/cs301/game/cheatymages/CMGameState.java
- edu.up.cs301.game.cheatymages.CMGameState
+edu/up/cs301/game/GameFramework/utilities/Tickable.java
+ edu.up.cs301.game.GameFramework.utilities.Tickable
 edu/up/cs301/game/GameFramework/gameConfiguration/GameConfig.java
  edu.up.cs301.game.GameFramework.gameConfiguration.GameConfig
  edu.up.cs301.game.GameFramework.gameConfiguration.GameConfig$1
@@ -145,17 +145,17 @@ edu/up/cs301/game/GameFramework/actionMessage/TimerAction.java
  edu.up.cs301.game.GameFramework.actionMessage.TimerAction
 edu/up/cs301/game/GameFramework/infoMessage/GameState.java
  edu.up.cs301.game.GameFramework.infoMessage.GameState
-edu/up/cs301/game/cheatymages/Cards/Decks.java
- edu.up.cs301.game.cheatymages.Cards.Decks
-edu/up/cs301/game/GameFramework/utilities/Tickable.java
- edu.up.cs301.game.GameFramework.utilities.Tickable
-edu/up/cs301/game/cheatymages/Players/CMComputerPlayerDumb.java
- edu.up.cs301.game.cheatymages.Players.CMComputerPlayerDumb
-edu/up/cs301/game/cheatymages/CMMainActivity.java
- edu.up.cs301.game.cheatymages.CMMainActivity
- edu.up.cs301.game.cheatymages.CMMainActivity$1
- edu.up.cs301.game.cheatymages.CMMainActivity$2
+edu/up/cs301/game/cheatymages/CMLocalGame.java
+ edu.up.cs301.game.cheatymages.CMLocalGame
 edu/up/cs301/game/cheatymages/CMSurfaceView.java
  edu.up.cs301.game.cheatymages.CMSurfaceView
 edu/up/cs301/game/cheatymages/Players/CMHumanPlayer.java
  edu.up.cs301.game.cheatymages.Players.CMHumanPlayer
+edu/up/cs301/game/cheatymages/CMMainActivity.java
+ edu.up.cs301.game.cheatymages.CMMainActivity
+ edu.up.cs301.game.cheatymages.CMMainActivity$1
+ edu.up.cs301.game.cheatymages.CMMainActivity$2
+edu/up/cs301/game/cheatymages/CMGameState.java
+ edu.up.cs301.game.cheatymages.CMGameState
+edu/up/cs301/game/cheatymages/Players/CMComputerPlayerDumb.java
+ edu.up.cs301.game.cheatymages.Players.CMComputerPlayerDumb

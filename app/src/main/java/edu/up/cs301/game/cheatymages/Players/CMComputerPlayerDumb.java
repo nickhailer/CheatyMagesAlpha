@@ -55,7 +55,7 @@ public class CMComputerPlayerDumb extends GameComputerPlayer {
         }
 
         int playerTurn = ((CMGameState) info).getPlayerTurn();
-        Logger.log("Player ", String.valueOf(((CMGameState) info).getPlayerTurn()));
+        //Logger.log("Player ", String.valueOf(((CMGameState) info).getPlayerTurn()));
 
         //The dumb AI has a 10% chance of passing
         if(rng.nextInt(10) == 0 && playerTurn > 0){
