@@ -48,6 +48,11 @@ public class CMSurfaceView extends SurfaceView {
     private final float labelY = 50;
     private final float labelYSpacing = 70;
 
+    private final float labelX = 1200;
+    private final float labelXSpacing = 1150;
+    private final float xNumSpacing = 150;
+    private final float titleSpacing = 850;
+
     private CMGameState state;
     private int playerId;
     private boolean[] fightersSelected;
@@ -191,11 +196,11 @@ public class CMSurfaceView extends SurfaceView {
      * @param canvas
      */
     protected void onDraw(Canvas canvas){
-        
+
         if(state == null){
             return;
         }
-        
+
         drawRandomJudge(canvas);
 
         drawRandomFighters(canvas);
@@ -207,6 +212,8 @@ public class CMSurfaceView extends SurfaceView {
         drawActionButtons(canvas);
 
         drawLabels(canvas);
+
+        drawOpponentTable(canvas);
 
         invalidate();
     }
@@ -314,6 +321,29 @@ public class CMSurfaceView extends SurfaceView {
         canvas.drawText("Gold: " + Integer.toString(state.getGold()[playerId]),
                 getWidth() - labelRightMargin, labelY + labelYSpacing*2, roundInfoTextPaint);
 
+    }
+
+    public void drawOpponentTable(Canvas canvas){
+        canvas.drawText("Other Players", getWidth() - titleSpacing, labelY, roundInfoTextPaint);
+        // draws all player numbers
+        for(int i = 1; i < state.getNumPlayers(); i++) {
+            canvas.drawText("P" + i, getWidth() - labelX + (xNumSpacing*i), labelY + labelYSpacing, roundInfoTextPaint);
+        }
+        // draws gold label with gold total
+        canvas.drawText("Gold:", getWidth()-labelXSpacing, labelY + (2*labelYSpacing), roundInfoTextPaint);
+        for(int i = 1; i < state.getNumPlayers(); i++) {
+            canvas.drawText(String.valueOf(state.getGold()[i]), getWidth() - labelX + (xNumSpacing*i), labelY + (2*labelYSpacing), roundInfoTextPaint);
+        }
+        // draws bets label with number of bets
+        canvas.drawText("Bets:", getWidth()-labelXSpacing, labelY + (3*labelYSpacing), roundInfoTextPaint);
+        for(int i = 1; i < state.getNumPlayers(); i++) {
+            canvas.drawText(String.valueOf(state.getBets()[i].size()), getWidth() - labelX + (xNumSpacing*i), labelY + (3*labelYSpacing), roundInfoTextPaint);
+        }
+        // draws hand size with the amount of cards in opponents hands
+        canvas.drawText("Hand Size:", getWidth()-labelXSpacing, labelY + (4*labelYSpacing), roundInfoTextPaint);
+        for(int i = 1; i < state.getNumPlayers(); i++) {
+            canvas.drawText(String.valueOf(state.getHands()[i].size()), getWidth() - labelX + (xNumSpacing*i), labelY + (4*labelYSpacing), roundInfoTextPaint);
+        }
     }
 
     /**
