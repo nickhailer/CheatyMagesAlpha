@@ -324,24 +324,16 @@ public class CMSurfaceView extends SurfaceView {
     }
 
     public void drawOpponentTable(Canvas canvas){
+        // draws other players, gold, bets, and hand size label
         canvas.drawText("Other Players", getWidth() - titleSpacing, labelY, roundInfoTextPaint);
-        // draws all player numbers
+        canvas.drawText("Gold:", getWidth()-labelXSpacing, labelY + (2*labelYSpacing), roundInfoTextPaint);
+        canvas.drawText("Bets:", getWidth()-labelXSpacing, labelY + (3*labelYSpacing), roundInfoTextPaint);
+        canvas.drawText("Hand Size:", getWidth()-labelXSpacing, labelY + (4*labelYSpacing), roundInfoTextPaint);
+        // draws all player numbers, total gold, total bets, and hand size
         for(int i = 1; i < state.getNumPlayers(); i++) {
             canvas.drawText("P" + i, getWidth() - labelX + (xNumSpacing*i), labelY + labelYSpacing, roundInfoTextPaint);
-        }
-        // draws gold label with gold total
-        canvas.drawText("Gold:", getWidth()-labelXSpacing, labelY + (2*labelYSpacing), roundInfoTextPaint);
-        for(int i = 1; i < state.getNumPlayers(); i++) {
             canvas.drawText(String.valueOf(state.getGold()[i]), getWidth() - labelX + (xNumSpacing*i), labelY + (2*labelYSpacing), roundInfoTextPaint);
-        }
-        // draws bets label with number of bets
-        canvas.drawText("Bets:", getWidth()-labelXSpacing, labelY + (3*labelYSpacing), roundInfoTextPaint);
-        for(int i = 1; i < state.getNumPlayers(); i++) {
             canvas.drawText(String.valueOf(state.getBets()[i].size()), getWidth() - labelX + (xNumSpacing*i), labelY + (3*labelYSpacing), roundInfoTextPaint);
-        }
-        // draws hand size with the amount of cards in opponents hands
-        canvas.drawText("Hand Size:", getWidth()-labelXSpacing, labelY + (4*labelYSpacing), roundInfoTextPaint);
-        for(int i = 1; i < state.getNumPlayers(); i++) {
             canvas.drawText(String.valueOf(state.getHands()[i].size()), getWidth() - labelX + (xNumSpacing*i), labelY + (4*labelYSpacing), roundInfoTextPaint);
         }
     }
