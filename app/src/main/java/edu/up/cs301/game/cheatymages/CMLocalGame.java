@@ -42,15 +42,23 @@ class CMLocalGame extends LocalGame {
 
             //Adds each player's name to the return string in order of gold
             String returnStr = "";
-            for(int i = 0; i < leaderBoard.length - 1; i++){
-                returnStr += playerNames[leaderBoard[i]] + ", ";
+            for(int i = leaderBoard.length - 1; i >= 0; i--){
+                if(i == 0) {
+                    returnStr += "3rd: ";
+                }
+                else if(i == 1) {
+                    returnStr += "2nd: ";
+                }
+                else{
+                    returnStr += "1st: ";
+                }
+                returnStr += playerNames[leaderBoard[i]] + " with " + ((CMGameState) state).getGold()[leaderBoard[i]] + " gold\n" ;
             }
-            returnStr += playerNames[leaderBoard[leaderBoard.length - 1]];
-
             return returnStr;
         }
         return null;
     }
+
 
     /**
      * Performs a bubble sort on an array of numbers

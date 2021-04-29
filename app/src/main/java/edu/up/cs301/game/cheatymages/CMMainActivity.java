@@ -52,9 +52,9 @@ public class CMMainActivity extends GameMainActivity {
         GameConfig defaultConfig = new GameConfig(playerTypes, 3, 6, "Cheaty Mages", 5213);
 
         //TODO CHANGE THIS TO BE 1 HUMAN PLAYER AND 2 SMART AIS ONCE IMPLEMENTED
-        defaultConfig.addPlayer("P1", 0);
+        defaultConfig.addPlayer("P0", 0);
+        defaultConfig.addPlayer("P1", 1);
         defaultConfig.addPlayer("P2", 1);
-        defaultConfig.addPlayer("P3", 1);
 
         defaultConfig.setRemoteData("Remote Player", "", 0);
 
