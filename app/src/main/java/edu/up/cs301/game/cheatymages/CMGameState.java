@@ -214,7 +214,6 @@ public class CMGameState extends GameState{
      * @return true if everyone has finished placing their bets
      */
     public boolean placeBet(int id, ArrayList<Integer> bets){
-
         this.bets[id] = bets;
         hasFinishedBetting[id] = true;
         for(int i = 0; i < hasFinishedBetting.length; i++){
@@ -569,6 +568,8 @@ public class CMGameState extends GameState{
     }
 
     public FighterCard getFighter(int idx) { return fighters[idx]; }
+
+    public FighterCard[] getFighterArray(){return fighters;}
 
     public ArrayList<SpellCard>[] getAttachedSpells() { return attachedSpells; }
 

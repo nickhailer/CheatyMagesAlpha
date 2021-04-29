@@ -40,6 +40,13 @@ public class CMMainActivity extends GameMainActivity {
             }
         });
 
+        playerTypes.add(new GamePlayerType("Computer Player Smart") {
+            @Override
+            public GamePlayer createPlayer(String name) {
+                return new CMComputerPlayerSmart(name);
+            }
+        });
+
         //TODO ONCE IMPLEMENTED ADD OTHER PLAYER TYPES HERE
 
         GameConfig defaultConfig = new GameConfig(playerTypes, 3, 6, "Cheaty Mages", 5213);
