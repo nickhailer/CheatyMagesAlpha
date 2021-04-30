@@ -52,7 +52,7 @@ public class Decks {
         ArrayList<Character> disallowsOrlair = new ArrayList<>();
         disallowsOrlair.add('d');
 
-        judgeDeck.add(new JudgeCard("Moria", 12, 'd', disallowsMoria));
+        judgeDeck.add(new JudgeCard("Morla", 12, 'd', disallowsMoria));
         judgeDeck.add(new JudgeCard("Adoth", 10, 'e', disallowsAdoth));
         judgeDeck.add(new JudgeCard("Zapp", 15, 'd', disallowsZapp));
         judgeDeck.add(new JudgeCard("Orlair", 12, 'e', disallowsOrlair));

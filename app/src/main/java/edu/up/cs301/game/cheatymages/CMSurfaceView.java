@@ -1,6 +1,8 @@
 package edu.up.cs301.game.cheatymages;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,6 +13,8 @@ import android.util.Log;
 import android.view.SurfaceView;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import edu.up.cs301.game.R;
 import edu.up.cs301.game.cheatymages.Cards.FighterCard;
 import edu.up.cs301.game.cheatymages.Cards.JudgeCard;
 import edu.up.cs301.game.cheatymages.Cards.SpellCard;
@@ -35,7 +39,7 @@ public class CMSurfaceView extends SurfaceView {
     private final float fightersY = 430;
     private final float fightersYSpacing = 300;
 
-    private final float attachedSpellsXSpacing = 250;
+    private final float initialAttachedSpellsXSpacing = 250;
 
     private final float judgeX = 15;
     private final float judgeY = 20;
@@ -78,6 +82,7 @@ public class CMSurfaceView extends SurfaceView {
     private final Paint buttonOutlinePaint = new Paint();
     private final Paint buttonBackgroundPaint = new Paint();
     private final Paint cardBackgroundPaint = new Paint();
+    private final Paint cardArtPaint = new Paint();
 
     /**
      * Constructor
@@ -154,6 +159,8 @@ public class CMSurfaceView extends SurfaceView {
         buttonLabelTextPaint.setColor(Color.BLACK);
         buttonLabelTextPaint.setTextSize(30);
         buttonLabelTextPaint.setTextAlign(Paint.Align.CENTER);
+
+        cardArtPaint.setColor(Color.BLACK);
     }
 
     public void setState(CMGameState state, int playerId){
@@ -281,17 +288,26 @@ public class CMSurfaceView extends SurfaceView {
      */
     public void drawPlayedSpellCards(Canvas canvas) {
         // Draws played spell cards
-        for(int i = 0; i < 5; i++){
-            for(int j=0; j<state.getAttachedSpells()[i].size(); j++) {
+        float attachedSpellsXSpacing;
+
+        for(int i = 0; i < 5; i++) {
+
+            attachedSpellsXSpacing = initialAttachedSpellsXSpacing;
+            if (state.getAttachedSpells()[i].size() > 6) {
+                attachedSpellsXSpacing = initialAttachedSpellsXSpacing * 6 / state.getAttachedSpells()[i].size();
+            }
+
+            for (int j = 0; j < state.getAttachedSpells()[i].size(); j++) {
                 SpellCard spell = state.getAttachedSpells()[i].get(j);
-                if(spell.getSpellType() == ' ') {
-                    drawFaceDownCard(canvas, fightersX + attachedSpellsXSpacing*(j+1),
-                            fightersY + fightersYSpacing*i, Color.GRAY);
-                }
-                else {
-                    drawSpellCard(canvas, fightersX + attachedSpellsXSpacing*(j+1),
-                            fightersY + fightersYSpacing*i, spell.getName(), spell.getMana(),
-                            spell.getSpellType(), spell.getPowerMod(), false, "",
+                if (spell.getSpellType() == ' ') {
+                    drawFaceDownCard(canvas, fightersX + attachedSpellsXSpacing * j +
+                                    initialAttachedSpellsXSpacing, fightersY + fightersYSpacing * i,
+                            Color.GRAY);
+                } else {
+                    drawSpellCard(canvas, fightersX + attachedSpellsXSpacing * j
+                                    + initialAttachedSpellsXSpacing, fightersY + fightersYSpacing * i,
+                            spell.getName(), spell.getMana(), spell.getSpellType(),
+                            spell.getPowerMod(), false, "",
                             spell.isForbidden(), false);
                 }
             }
@@ -425,6 +441,51 @@ public class CMSurfaceView extends SurfaceView {
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, fighterName);
 
+        // draws fighter card art
+        switch (fighterName) {
+            case "Goblin":
+                Bitmap goblinImage = BitmapFactory.decodeResource(getResources(), R.drawable.goblin);
+                canvas.drawBitmap(goblinImage, x+20.0f,y+55.0f, cardArtPaint);
+                break;
+            case "Orc":
+                Bitmap orcImage = BitmapFactory.decodeResource(getResources(), R.drawable.orc);
+                canvas.drawBitmap(orcImage, x+20.0f,y+55.0f, cardArtPaint);
+                break;
+            case "Skeleton":
+                Bitmap skeletonImage = BitmapFactory.decodeResource(getResources(), R.drawable.skeleton);
+                canvas.drawBitmap(skeletonImage, x+20.0f,y+55.0f, cardArtPaint);
+                break;
+            case "Lizardman":
+                Bitmap lizardmanImage = BitmapFactory.decodeResource(getResources(), R.drawable.lizardman);
+                canvas.drawBitmap(lizardmanImage, x+20.0f,y+55.0f, cardArtPaint);
+                break;
+            case "Ghost":
+                Bitmap ghostImage = BitmapFactory.decodeResource(getResources(), R.drawable.ghost);
+                canvas.drawBitmap(ghostImage, x+20.0f,y+55.0f, cardArtPaint);
+                break;
+            case "Succubus":
+                Bitmap succubusImage = BitmapFactory.decodeResource(getResources(), R.drawable.succubus);
+                canvas.drawBitmap(succubusImage, x+20.0f,y+55.0f, cardArtPaint);
+                break;
+            case "Dark Elf":
+                Bitmap darkElfImage = BitmapFactory.decodeResource(getResources(), R.drawable.darkelf);
+                canvas.drawBitmap(darkElfImage, x+20.0f,y+55.0f, cardArtPaint);
+                break;
+            case "Minotaur":
+                Bitmap minotaurImage = BitmapFactory.decodeResource(getResources(), R.drawable.minotaur);
+                canvas.drawBitmap(minotaurImage, x+20.0f,y+55.0f, cardArtPaint);
+                break;
+            case "Demon":
+                Bitmap demonImage = BitmapFactory.decodeResource(getResources(), R.drawable.demon);
+                canvas.drawBitmap(demonImage, x+20.0f,y+55.0f, cardArtPaint);
+                break;
+            case "Dragon":
+                Bitmap dragonImage = BitmapFactory.decodeResource(getResources(), R.drawable.dragon);
+                canvas.drawBitmap(dragonImage, x+20.0f,y+55.0f, cardArtPaint);
+                break;
+
+        }
+
         //draws the circle for the fighter's power
         canvas.drawCircle(x + 40.0f, y + cardHeight - 40.0f, 25.0f, fighterPowerPaint);
 
@@ -542,13 +603,41 @@ public class CMSurfaceView extends SurfaceView {
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, judgeName);
 
+        // draws judges card art
+        switch (judgeName) {
+            case "Morla":
+                Bitmap morlaImage = BitmapFactory.decodeResource(getResources(), R.drawable.morla);
+                canvas.drawBitmap(morlaImage, x + 9.0f,y + 55.0f, cardArtPaint);
+                break;
+            case "Tad":
+                Bitmap tadImage = BitmapFactory.decodeResource(getResources(), R.drawable.tad);
+                canvas.drawBitmap(tadImage, x + 9.0f, y + 55.0f, cardArtPaint);
+                break;
+            case "Zapp":
+                Bitmap zappImage = BitmapFactory.decodeResource(getResources(), R.drawable.zapp);
+                canvas.drawBitmap(zappImage, x + 9.0f, y + 55.0f, cardArtPaint);
+                break;
+            case "Orlair":
+                Bitmap orlairImage = BitmapFactory.decodeResource(getResources(), R.drawable.orlair);
+                canvas.drawBitmap(orlairImage, x + 9.0f, y + 55.0f, cardArtPaint);
+                break;
+            case "Lawty":
+                Bitmap lawtyImage = BitmapFactory.decodeResource(getResources(), R.drawable.lawty);
+                canvas.drawBitmap(lawtyImage, x + 9.0f, y + 55.0f, cardArtPaint);
+                break;
+            case "Adoth":
+                Bitmap adothImage = BitmapFactory.decodeResource(getResources(), R.drawable.adoth);
+                canvas.drawBitmap(adothImage, x + 9.0f, y + 55.0f, cardArtPaint);
+                break;
+        }
+
         if(!noManaLimit) {
             //writes the mana limit on the card
-            canvas.drawText(Integer.toString(manaLimit), x + 30.0f, y + cardHeight - 75.0f,
+            canvas.drawText(Integer.toString(manaLimit), x + 30.0f, y + cardHeight - 55.0f,
                     manaLimitTextPaint);
 
             //writes judgement type on the card
-            canvas.drawText(judgementType, x + cardWidth - 20.0f,y + cardHeight - 75.0f,
+            canvas.drawText(judgementType, x + cardWidth - 40.0f,y + cardHeight - 55.0f,
                     judgementTextPaint);
 
         }
@@ -564,7 +653,7 @@ public class CMSurfaceView extends SurfaceView {
             } else {
                 spellTypeSymbolPaint.setColor(Color.GREEN);
             }
-            canvas.drawCircle(x + 25.0f + i * 25.0f, y + cardHeight - 40.0f,
+            canvas.drawCircle(x + 25.0f + i * 25.0f, y + cardHeight - 30.0f,
                     12.5f, spellTypeSymbolPaint);
         }
 

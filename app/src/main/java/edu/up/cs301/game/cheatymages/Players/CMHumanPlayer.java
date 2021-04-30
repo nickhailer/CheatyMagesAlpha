@@ -129,7 +129,10 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
             case "Detect Magic":
                 detectMagic = true;
                 //TODO UNCOMMENT THIS ONCE IMPLEMENT
-                //cmSurfaceView.selectDetectMagic()
+                //surfaceView.
+                Toast detectMagicMessage = Toast.makeText(getActivity(), "You used detect magic", Toast.LENGTH_SHORT);
+                detectMagicMessage.setGravity(Gravity.TOP, 0,100);
+                detectMagicMessage.show();
                 break;
             case "Discard":
                 ArrayList<Integer> discards = new ArrayList<>();
@@ -193,10 +196,10 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
 
     private void clickFighter(int idx){
         if(playerTurn >= 0){
-            /*if(detectMagic) {
+            if(detectMagic) {
                 detectMagic = false;
                 this.game.sendAction(new DetectMagicAction(this, selectedSpell, idx));
-            }*/
+            }
             Toast betMessage = Toast.makeText(getActivity(), "You played a spell card on fighter " + (idx+1), Toast.LENGTH_SHORT);
             betMessage.setGravity(Gravity.TOP, 0,100);
             betMessage.show();
