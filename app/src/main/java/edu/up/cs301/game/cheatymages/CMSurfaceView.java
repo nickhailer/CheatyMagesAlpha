@@ -532,6 +532,66 @@ public class CMSurfaceView extends SurfaceView {
         drawCardOutline(canvas, x, y);
         drawCardTitle(canvas, x, y, spellName);
 
+        // draws card art for all spell cards
+        switch (spellName) {
+            case "Healing":
+                Bitmap healingImage = BitmapFactory.decodeResource(getResources(), R.drawable.healing);
+                canvas.drawBitmap(healingImage, x + 6.0f,y + 95.0f, cardArtPaint);
+                break;
+            case "Magic Missile":
+                Bitmap magicMissileImage = BitmapFactory.decodeResource(getResources(), R.drawable.magicmissile);
+                canvas.drawBitmap(magicMissileImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Blizzard":
+                Bitmap blizzardImage = BitmapFactory.decodeResource(getResources(), R.drawable.blizzard);
+                canvas.drawBitmap(blizzardImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Might":
+                Bitmap mightImage = BitmapFactory.decodeResource(getResources(), R.drawable.might);
+                canvas.drawBitmap(mightImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Giant Growth":
+                Bitmap giantGrowthImage = BitmapFactory.decodeResource(getResources(), R.drawable.giantgrowth);
+                canvas.drawBitmap(giantGrowthImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Mana Seal":
+                Bitmap manaSealImage = BitmapFactory.decodeResource(getResources(), R.drawable.manaseal);
+                canvas.drawBitmap(manaSealImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Mana Boost":
+                Bitmap manaBoostImage = BitmapFactory.decodeResource(getResources(), R.drawable.manaboost);
+                canvas.drawBitmap(manaBoostImage, x + 6.0f,y + 95.0f, cardArtPaint);
+                break;
+            case "Shrink":
+                Bitmap shrinkImage = BitmapFactory.decodeResource(getResources(), R.drawable.shrink);
+                canvas.drawBitmap(shrinkImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Regeneration":
+                Bitmap regenerationImage = BitmapFactory.decodeResource(getResources(), R.drawable.regeneration);
+                canvas.drawBitmap(regenerationImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Weaken":
+                Bitmap weakenImage = BitmapFactory.decodeResource(getResources(), R.drawable.weaken);
+                canvas.drawBitmap(weakenImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Strengthen":
+                Bitmap strengthenImage = BitmapFactory.decodeResource(getResources(), R.drawable.strengthen);
+                canvas.drawBitmap(strengthenImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Cure":
+                Bitmap cureImage = BitmapFactory.decodeResource(getResources(), R.drawable.cure);
+                canvas.drawBitmap(cureImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Fireball":
+                Bitmap fireballImage = BitmapFactory.decodeResource(getResources(), R.drawable.fireball);
+                canvas.drawBitmap(fireballImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+            case "Slow":
+                Bitmap slowImage = BitmapFactory.decodeResource(getResources(), R.drawable.slow);
+                canvas.drawBitmap(slowImage, x + 6.0f, y + 95.0f, cardArtPaint);
+                break;
+        }
+
         //draws a symbol according to the spell's type
         //colored circles are used as stand ins for now
         if(spellType == 'd') {
@@ -554,7 +614,7 @@ public class CMSurfaceView extends SurfaceView {
         //draws a forbidden icon (green circle place holder for now) if the card is forbidden
         spellTypeSymbolPaint.setColor(Color.GREEN);
         if(isForbidden){
-            canvas.drawCircle(x + 25.0f, y + 95.0f, 12.5f, spellTypeSymbolPaint);
+            canvas.drawCircle(x + 25.0f, y + 90.0f, 12.5f, spellTypeSymbolPaint);
         }
 
         //draws the effect text at the bottom of the card if needed
@@ -575,7 +635,7 @@ public class CMSurfaceView extends SurfaceView {
                 powerModText = "+";
             }
             powerModText += Integer.toString(powerMod);
-            canvas.drawText(powerModText, x + cardWidth/2, y + cardHeight - 25.0f,
+            canvas.drawText(powerModText, x + cardWidth/2, y + cardHeight - 15.0f,
                     powerModTextPaint);
         }
 
