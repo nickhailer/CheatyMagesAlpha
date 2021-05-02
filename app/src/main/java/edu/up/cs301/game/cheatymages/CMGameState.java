@@ -35,6 +35,9 @@ public class CMGameState extends GameState{
     //Holds the fighters currently in play
     private FighterCard[] fighters;
 
+    //Hold a copy of the current fighter cards in play
+    private FighterCard[] fighterCopy;
+
     //Holds on spells placed on fighters in play
     private ArrayList<SpellCard>[] attachedSpells;
 
@@ -397,7 +400,7 @@ public class CMGameState extends GameState{
         FighterCard temp;
         for(int i = 0; i < 5; i++){
             temp = decks.drawFighterCard();
-            decks.addFighterCard(fighters[i]);
+            decks.addFighterCard(fighterCopy[i]);
             discardCardsFromFighter(i);
             fighters[i] = temp;
         }
@@ -422,21 +425,16 @@ public class CMGameState extends GameState{
     }
 
     /**
-     * Clears all attached spells
-     */
-    /*private void resetAttachedCards(){
-        for(int i = 0; i< 5; i++) {
-            attachedSpells[i].clear();
-        }
-    }*/
-
-    /**
      * Checks for fighters above the mana limit and applies the judge's judgement
      */
     private void applyJudgement(){
         //Iterates through each fighter and checks their mana total
         int manaTotal;
+        fighterCopy = new FighterCard[5];
         for(int i = 0; i < 5; i++){
+            //Copies all current fighters in case of eject
+            fighterCopy[i] = fighters[i];
+
             //Adds up the mana of all attached spells
             manaTotal = 0;
             for(int j = 0; j < attachedSpells[i].size(); j++){

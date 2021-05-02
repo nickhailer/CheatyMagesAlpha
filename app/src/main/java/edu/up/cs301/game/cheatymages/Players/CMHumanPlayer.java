@@ -138,6 +138,10 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 game.sendAction(new DiscardCardsAction(this, discards));
                 surfaceView.clearSpellSelections();
                 Arrays.fill(selectedSpells, false);
+                // resets all bets
+                for(int i = selectedFighters.size() - 1; i >= 0; i--){
+                    selectedFighters.remove(i);
+                }
                 detectMagic = false;
 
                 //prints a message to the screen that you discarded cards
