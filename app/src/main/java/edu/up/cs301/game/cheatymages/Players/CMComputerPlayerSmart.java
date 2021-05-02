@@ -62,10 +62,11 @@ public class CMComputerPlayerSmart extends GameComputerPlayer {
         // the index of the fighter that has the highest power level that it did not bet on
         int highestPowerIdx = findMaxPowerIdx(state);
         int handSize = state.getHands()[playerNum].size();
+        int attachedSize = state.getAttachedSpells()[highestPowerIdx].size();
 
         if(handSize > 0 && playerTurn >= 0){
             // if the judgement is eject, play spell cards on fighter with highest power that it did not bet on
-            if(state.getJudge().getJudgementType() == 'e'){
+            if(state.getJudge().getJudgementType() == 'e' && attachedSize < 6){
                 game.sendAction(new PlaySpellAction(this, rng.nextInt(handSize), highestPowerIdx));
                 return;
             }
