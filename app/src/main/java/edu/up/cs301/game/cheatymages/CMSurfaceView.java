@@ -290,25 +290,27 @@ public class CMSurfaceView extends SurfaceView {
         // Draws played spell cards
         float attachedSpellsXSpacing;
 
-        for(int i = 0; i < 5; i++) {
+
+        for(int i = 0; i < 5; i++){
 
             attachedSpellsXSpacing = initialAttachedSpellsXSpacing;
-            if (state.getAttachedSpells()[i].size() > 6) {
+            if(state.getAttachedSpells()[i].size() > 6){
                 attachedSpellsXSpacing = initialAttachedSpellsXSpacing * 6 / state.getAttachedSpells()[i].size();
             }
 
-            for (int j = 0; j < state.getAttachedSpells()[i].size(); j++) {
+            for(int j=0; j<state.getAttachedSpells()[i].size(); j++) {
                 SpellCard spell = state.getAttachedSpells()[i].get(j);
-                if (spell.getSpellType() == ' ') {
-                    drawFaceDownCard(canvas, fightersX + attachedSpellsXSpacing * j +
-                                    initialAttachedSpellsXSpacing, fightersY + fightersYSpacing * i,
-                            Color.GRAY);
-                } else {
-                    drawSpellCard(canvas, fightersX + attachedSpellsXSpacing * j
-                                    + initialAttachedSpellsXSpacing, fightersY + fightersYSpacing * i,
-                            spell.getName(), spell.getMana(), spell.getSpellType(),
-                            spell.getPowerMod(), false, "",
-                            spell.isForbidden(), false);
+                if(spell.getSpellType() == ' ') {
+                    drawFaceDownCard(canvas, fightersX + attachedSpellsXSpacing*j +
+                                    initialAttachedSpellsXSpacing, fightersY + fightersYSpacing*i,
+                                    Color.GRAY);
+                }
+                else {
+                    drawSpellCard(canvas, fightersX + attachedSpellsXSpacing*j
+                                    + initialAttachedSpellsXSpacing, fightersY + fightersYSpacing*i,
+                                    spell.getName(), spell.getMana(), spell.getSpellType(),
+                                    spell.getPowerMod(), false, "",
+                                    spell.isForbidden(), false);
                 }
             }
         }
