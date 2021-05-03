@@ -120,13 +120,6 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 passMessage.setGravity(Gravity.TOP, 0,100);
                 passMessage.show();
                 detectMagic = false;
-
-                //indicates which fighter won
-                if(gameState.getConsecutivePasses() == 1) {
-                    Toast winMessage = Toast.makeText(getActivity(), "Fighter " + gameState.findWinner() + " won", Toast.LENGTH_SHORT);
-                    winMessage.show();
-
-                }
                 break;
             case "Detect Magic":
                 detectMagic = true;

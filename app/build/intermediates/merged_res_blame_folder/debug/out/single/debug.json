@@ -1,94 +1,214 @@
 [
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_cm_human_player.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\cm_human_player.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_tad.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/tad.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_purple_delete_button.png.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\drawable-hdpi\\purple_delete_button.png"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_lizardman.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/lizardman.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_launcher.png.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\drawable-hdpi\\ic_launcher.png"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_dragon.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/dragon.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_background.jpeg.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\drawable-xhdpi\\background.jpeg"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_might.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/might.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-mdpi_ic_launcher.png.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\mipmap-mdpi\\ic_launcher.png"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_cure.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/cure.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_game_player_list_row.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\game_player_list_row.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_manaboost.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/manaboost.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_ic_launcher.png.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\mipmap-xxhdpi\\ic_launcher.png"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_strengthen.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/strengthen.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\drawable-hdpi_ic_action_search.png.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\drawable-hdpi\\ic_action_search.png"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_demon.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/demon.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_ic_launcher.png.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\mipmap-hdpi\\ic_launcher.png"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_action_search.png.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/ic_action_search.png"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\menu_game_main.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\menu\\game_main.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_orc.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/orc.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_ic_launcher.png.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\mipmap-xhdpi\\ic_launcher.png"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_ttt_human_player1_flipped.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/ttt_human_player1_flipped.xml"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_game_config_tabhost.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\game_config_tabhost.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_game_local_tab.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/game_local_tab.xml"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_game_no_gui.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\game_no_gui.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_skeleton.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/skeleton.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_ttt_human_player2.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\ttt_human_player2.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_ic_launcher.png.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/ic_launcher.png"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_game_local_tab.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\game_local_tab.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_succubus.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/succubus.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_game_settings_tab.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\game_settings_tab.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_game_player_list_row.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/game_player_list_row.xml"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_ttt_human_player1_flipped.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\ttt_human_player1_flipped.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_manaseal.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/manaseal.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_ttt_human_player1.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\ttt_human_player1.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_regeneration.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/regeneration.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\drawable-xhdpi_ic_action_search.png.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\drawable-xhdpi\\ic_action_search.png"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_zapp.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/zapp.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_game_remote_tab.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\game_remote_tab.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_ghost.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/ghost.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_ic_launcher.png.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\mipmap-xxxhdpi\\ic_launcher.png"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_healing.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/healing.jpeg"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\layout_game_config_main.xml.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\layout\\game_config_main.xml"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_ttt_human_player2.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/ttt_human_player2.xml"
     },
     {
-        "merged": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\res\\merged\\debug\\drawable-mdpi_ic_action_search.png.flat",
-        "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\drawable-mdpi\\ic_action_search.png"
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_game_config_tabhost.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/game_config_tabhost.xml"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_weaken.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/weaken.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_game_config_main.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/game_config_main.xml"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_shrink.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/shrink.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_minotaur.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/minotaur.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-xhdpi_ic_action_search.png.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-xhdpi/ic_action_search.png"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_ic_action_search.png.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/ic_action_search.png"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/menu_game_main.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/menu/game_main.xml"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_cm_human_player.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/cm_human_player.xml"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_blizzard.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/blizzard.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_morla.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/morla.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-xhdpi_background.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-xhdpi/background.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_slow.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/slow.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_game_settings_tab.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/game_settings_tab.xml"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_game_remote_tab.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/game_remote_tab.xml"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_darkelf.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/darkelf.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_game_no_gui.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/game_no_gui.xml"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_orlair.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/orlair.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_goblin.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/goblin.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_adoth.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/adoth.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_fireball.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/fireball.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_purple_delete_button.png.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/purple_delete_button.png"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/layout_ttt_human_player1.xml.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/layout/ttt_human_player1.xml"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-hdpi_lawty.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-hdpi/lawty.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_magicmissile.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/magicmissile.jpeg"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/res/merged/debug/drawable-mdpi_giantgrowth.jpeg.flat",
+        "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/drawable-mdpi/giantgrowth.jpeg"
     }
 ]

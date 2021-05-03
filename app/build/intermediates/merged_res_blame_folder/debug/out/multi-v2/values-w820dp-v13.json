@@ -1,16 +1,16 @@
 {
     "logs": [
         {
-            "outputFile": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\build\\intermediates\\incremental\\mergeDebugResources\\merged.dir\\values-w820dp-v13\\values-w820dp-v13.xml",
+            "outputFile": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/build/intermediates/incremental/mergeDebugResources/merged.dir/values-w820dp-v13/values-w820dp-v13.xml",
             "map": [
                 {
-                    "source": "C:\\CheatyMagesGame\\CheatyMagesAlpha\\app\\src\\main\\res\\values-w820dp\\color.xml",
+                    "source": "/Users/tyleruyeno/Desktop/CheatyMagesAlpha/app/src/main/res/values-w820dp/color.xml",
                     "from": {
                         "startLines": "2,5,3,4",
                         "startColumns": "4,4,4,4",
-                        "startOffsets": "57,172,95,133",
+                        "startOffsets": "55,167,92,129",
                         "endColumns": "36,38,36,37",
-                        "endOffsets": "89,206,127,166"
+                        "endOffsets": "87,201,124,162"
                     },
                     "to": {
                         "startLines": "2,3,4,5",
