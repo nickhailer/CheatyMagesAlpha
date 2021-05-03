@@ -465,7 +465,7 @@ public class CMGameState extends GameState{
      * Finds the winning fighter
      * @return the index of the fighter who won combat
      */
-    private int findWinner(){
+    public int findWinner(){
         //Iterates through each fighter and finds the winner
         int maxPower = -999;
         int winningFighter = -1;

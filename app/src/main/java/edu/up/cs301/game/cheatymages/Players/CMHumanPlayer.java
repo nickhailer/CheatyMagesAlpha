@@ -37,6 +37,8 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
 
     private CMSurfaceView surfaceView;
 
+    private CMGameState gameState;
+
     /**
      * constructor
      *
@@ -125,6 +127,13 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                 passMessage.show();
                 this.game.sendAction(new PassAction(this));
                 detectMagic = false;
+
+                //indicates which fighter won
+                if(gameState.getConsecutivePasses() == 1) {
+                    Toast winMessage = Toast.makeText(getActivity(), "Fighter " + gameState.findWinner() + " won", Toast.LENGTH_SHORT);
+                    winMessage.show();
+
+                }
                 break;
             case "Detect Magic":
                 detectMagic = true;
