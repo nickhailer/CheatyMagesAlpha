@@ -45,12 +45,6 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
     public CMHumanPlayer(String name, int layoutId) {
         super(name);
         this.layoutId = layoutId;
-
-        // Setting all fighters to unselected
-        /*for(int i=0; i<5; i++) {
-            unselectedFighters.add(i);
-        }*/
-
     }
 
     @Override
@@ -104,11 +98,6 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
 
         switch (item) {
             case "Bet":
-                //Tells human player that they placed their bet
-                Toast betMessage = Toast.makeText(getActivity(), "You placed your bet ", Toast.LENGTH_SHORT);
-                betMessage.setGravity(Gravity.TOP, 0,100);
-                betMessage.show();
-
                 ArrayList<Integer> bets = new ArrayList<>();
                 for (int i = 0; i < selectedFighters.size(); i++) {
                     bets.add(selectedFighters.get(i));
@@ -117,19 +106,26 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                     break;
                 }
                 this.game.sendAction(new BetAction(this, bets));
+                //Tells human player that they placed their bet
+                Toast betMessage = Toast.makeText(getActivity(), "You placed your bet ", Toast.LENGTH_SHORT);
+                betMessage.setGravity(Gravity.TOP, 0,100);
+                betMessage.show();
                 break;
             case "Pass":
+                this.game.sendAction(new PassAction(this));
                 //prints a message to the screen that you passed
                 Toast passMessage = Toast.makeText(getActivity(), "You Passed", Toast.LENGTH_SHORT);
                 passMessage.setGravity(Gravity.TOP, 0,100);
                 passMessage.show();
-                this.game.sendAction(new PassAction(this));
                 detectMagic = false;
                 break;
             case "Detect Magic":
                 detectMagic = true;
                 //TODO UNCOMMENT THIS ONCE IMPLEMENT
-                //cmSurfaceView.selectDetectMagic()
+                //surfaceView.
+                Toast detectMagicMessage = Toast.makeText(getActivity(), "You used detect magic", Toast.LENGTH_SHORT);
+                detectMagicMessage.setGravity(Gravity.TOP, 0,100);
+                detectMagicMessage.show();
                 break;
             case "Discard":
                 ArrayList<Integer> discards = new ArrayList<>();
@@ -138,15 +134,20 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
                         discards.add(i);
                     }
                 }
-                //prints a message to the screen that you discarded cards
-                Toast discardMessage = Toast.makeText(getActivity(), "You discarded " + discards.size() + " cards", Toast.LENGTH_SHORT);
-                discardMessage.setGravity(Gravity.TOP, 0,100);
-                discardMessage.show();
 
                 game.sendAction(new DiscardCardsAction(this, discards));
                 surfaceView.clearSpellSelections();
                 Arrays.fill(selectedSpells, false);
+                // resets all bets
+                for(int i = selectedFighters.size() - 1; i >= 0; i--){
+                    selectedFighters.remove(i);
+                }
                 detectMagic = false;
+
+                //prints a message to the screen that you discarded cards
+                Toast discardMessage = Toast.makeText(getActivity(), "You discarded " + discards.size() + " cards", Toast.LENGTH_SHORT);
+                discardMessage.setGravity(Gravity.TOP, 0,100);
+                discardMessage.show();
                 break;
             case "Fighter 1":
                 clickFighter(0);
@@ -193,10 +194,10 @@ public class CMHumanPlayer extends GameHumanPlayer implements View.OnTouchListen
 
     private void clickFighter(int idx){
         if(playerTurn >= 0){
-            /*if(detectMagic) {
+            if(detectMagic) {
                 detectMagic = false;
                 this.game.sendAction(new DetectMagicAction(this, selectedSpell, idx));
-            }*/
+            }
             Toast betMessage = Toast.makeText(getActivity(), "You played a spell card on fighter " + (idx+1), Toast.LENGTH_SHORT);
             betMessage.setGravity(Gravity.TOP, 0,100);
             betMessage.show();
